@@ -8,18 +8,25 @@ import '../style/App.css';
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
 
-  useEffect(() => {
-    // follow this pattern inside your useEffect calls:
-    // first, create an async function that will wrap your axios service adapter
-    // invoke the adapter, await the response, and set the data
-    const getAPIStatus = async () => {
-      const { healthy } = await getAPIHealth();
-      setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
-    };
+  //UseState for various properties
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [getUserToken, setUserToken] = useState('');
+  const [getUserCartItems, setUserCartItems] = useState([]);
+  const [isItemAvailable, setItemAvailable] = useState(true);
+  const [isUserAdmin, setUserAdmin] = useState(false);
 
-    // second, after you've defined your getter above
-    // invoke it immediately after its declaration, inside the useEffect callback
-    getAPIStatus();
+  //Helper Functions
+
+  //Reset all user state on logout
+  const resetUserStates = () => {
+    setUserToken(localStorage.clear());
+    setLoggedIn(false);
+    setUserCartItems([]);
+  }
+ 
+
+  useEffect(() => {
+    
   }, []);
 
   return (
