@@ -7,6 +7,7 @@ const {
 
 async function buildTables() {
   try {
+    console.log("Connecting to client");
     client.connect();
 
     console.log('Dropping All Tables...');
@@ -23,6 +24,7 @@ async function buildTables() {
         password VARCHAR(255) NOT NULL
       );
     `)
+    console.log("Finished building tables");
   } catch (error) {
     throw error;
   }
