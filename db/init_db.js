@@ -1,5 +1,6 @@
 const {
   client,
+  User
   // declare your model imports here
   // for example, User
 } = require('./');
@@ -8,9 +9,20 @@ async function buildTables() {
   try {
     client.connect();
 
+    console.log('Dropping All Tables...');
     // drop tables in correct order
-
+    await client.query(`
+      DROP TABLE IF EXISTS users
+    `)
     // build tables in correct order
+    console.log("Starting to build tables...");
+    await client.query(`
+      CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL
+      );
+    `)
   } catch (error) {
     throw error;
   }
