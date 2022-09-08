@@ -6,6 +6,7 @@ module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
+  makeAdmin
 };
 
 async function getAllUsers() {
@@ -16,16 +17,26 @@ async function getAllUsers() {
   return rows
 }
 
-async function createUser({ username, password }) {
+async function createUser({ email, password }) {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
   const { rows: [ user ] } = await client.query(`
-    INSERT INTO users(username, password)
+    INSERT INTO users(email, password)
     VALUES ($1, $2)
-    ON CONFLICT (username) DO NOTHING
-    RETURNING id, username;
-  `, [ username, hashedPassword]);
+    ON CONFLICT (email) DO NOTHING
+    RETURNING id, email;
+  `, [ email, hashedPassword ]);
 
   return user
+}
+
+async function makeAdmin({ email }) {
+  const { rows: [ admin ] } = await client.query(`
+    UPDATE users
+    SET "isAdmin" = true
+    WHERE email = $1
+    RETURNING email, "isAdmin";
+  `, [ email ])
+  return admin
 }
