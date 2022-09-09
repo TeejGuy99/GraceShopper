@@ -7,13 +7,14 @@ module.exports = {
   getAllUsers,
   createUser,
   makeAdmin,
-  getUserById
+  getUserById,
+  getUserByEmail
 };
 
 async function getAllUsers() {
   /* this adapter should fetch a list of users from your db */
   const { rows } = await client.query(`
-    SELECT * FROM users;
+    SELECT id, email FROM users;
   `)
   return rows
 }
@@ -56,4 +57,19 @@ async function getUserById({ id }) {
   user.cart = cart
 
   return user
+}
+
+async function getUserByEmail(email) {
+  const { rows: [ user ] } = await client.query(`
+    SELECT *
+    FROM users
+    WHERE email=$1;
+  `, [email]);
+
+
+  if(!user) {
+    return null;
+  }
+
+  return user;
 }

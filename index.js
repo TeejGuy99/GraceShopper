@@ -1,3 +1,6 @@
+// Adding the line below so application reads the environment variables
+require("dotenv").config()
+
 // This is the Web Server
 const express = require('express');
 const server = express();

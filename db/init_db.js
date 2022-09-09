@@ -10,7 +10,6 @@ const {
   // declare your model imports here
   // for example, User
 } = require('./');
-const { getUserById } = require('./models/user');
 
 async function buildTables() {
   try {
@@ -205,7 +204,7 @@ async function populateInitialData() {
     console.log("Finished creating carts!");
 
     console.log("Checking the cart belonging to user with id=5:");
-    const userWithCart = await getUserById({ id: 5})
+    const userWithCart = await User.getUserById({ id: 5})
     console.log(userWithCart);
     console.log("Finished checking cart!");
 
