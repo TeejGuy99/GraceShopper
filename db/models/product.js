@@ -4,7 +4,8 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllProducts,
-    createProduct
+    createProduct,
+    getProductById
   };
 
   async function getAllProducts() {
@@ -15,13 +16,22 @@ module.exports = {
     return rows
   }
 
-  async function createProduct({ name, description, price, qtyAvailable }) {
+  async function createProduct({ name, description, price, qtyAvailable, category }) {
     const { rows: [ product ] } = await client.query(`
-      INSERT INTO products(name, description, price, "qtyAvailable")
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO products(name, description, price, "qtyAvailable", category)
+      VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (name) DO NOTHING
       RETURNING *;
-    `, [ name, description, price, qtyAvailable ]);
+    `, [ name, description, price, qtyAvailable, category ]);
   
+    return product
+  }
+
+  async function getProductById({ id }) {
+    const { rows: [ product ] } = await client.query(`
+      SELECT * FROM products
+      WHERE id=$1;
+    `, [ id ])
+
     return product
   }

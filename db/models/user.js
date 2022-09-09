@@ -6,7 +6,8 @@ module.exports = {
   // add your database adapter fns here
   getAllUsers,
   createUser,
-  makeAdmin
+  makeAdmin,
+  getUserById
 };
 
 async function getAllUsers() {
@@ -39,4 +40,20 @@ async function makeAdmin({ email }) {
     RETURNING email, "isAdmin";
   `, [ email ])
   return admin
+}
+
+async function getUserById({ id }) {
+  const { rows: [ cart ] } = await client.query(`
+    SELECT * FROM carts
+    WHERE "cartUserId"=$1;
+  `, [ id ])
+
+  const { rows: [ user ] } = await client.query(`
+    SELECT id AS "userId", email FROM users
+    WHERE id = $1;
+  `, [ id ])
+
+  user.cart = cart
+
+  return user
 }
