@@ -15,12 +15,12 @@ module.exports = {
     return rows
   }
 
-  async function createPhoto({ description, link }) {
+  async function createPhoto({ description, link, productId }) {
     const { rows: [ photo ] } = await client.query(`
-      INSERT INTO photos(description, link)
-      VALUES ($1, $2)
+      INSERT INTO photos(description, link, "productId")
+      VALUES ($1, $2, $3)
       RETURNING *;
-    `, [ description, link ]);
+    `, [ description, link, productId ]);
   
     return photo
   }

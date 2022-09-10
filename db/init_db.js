@@ -21,8 +21,6 @@ async function buildTables() {
     console.log('Dropping All Tables...');
     // drop tables in correct order
     await client.query(`
-      DROP TABLE IF EXISTS product_photos;
-      DROP TABLE IF EXISTS product_reviews;
       DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS carts;
       DROP TABLE IF EXISTS photos;
@@ -55,6 +53,7 @@ async function buildTables() {
       CREATE TABLE reviews (
         id SERIAL PRIMARY KEY,
         "creatorId" INTEGER REFERENCES users(id),
+        "productId" INTEGER REFERENCES products(id),
         name VARCHAR(255),
         description VARCHAR(1000) UNIQUE NOT NULL
       );
@@ -73,7 +72,8 @@ async function buildTables() {
       CREATE TABLE photos (
         id SERIAL PRIMARY KEY,
         description VARCHAR(1000) NOT NULL,
-        link VARCHAR(1000) NOT NULL
+        link VARCHAR(1000) NOT NULL,
+        "productId" INTEGER REFERENCES products(id)
       );
 
       CREATE TABLE carts (
@@ -137,7 +137,7 @@ async function populateInitialData() {
     const productsToCreate = [
       { name: "Candle1", description: "This is the first candle for sale", price: 10.99, qtyAvailable: 10, category: "Candle" },
       { name: "Candle2", description: "This is the second candle for sale", price: 15.99, qtyAvailable: 20, category: "Candle" },
-      { name: "Candle3", description: "This is the third candle for sale", price: 8.99, qtyAvailable: 4, category: "Candle" },
+      { name: "Candle3", description: "This is the third candle for sale", price: 8.99, qtyAvailable: 15, category: "Candle" },
       { name: "Candle4", description: "This is the fourth candle for sale", price: 49.99, qtyAvailable: 50, category: "Candle" },
       { name: "Wax Melt1", description: "This is the first wax melt for sale", price: 5.99, qtyAvailable: 30, category: "Wax Melt" },
       { name: "Wax Melt2", description: "This is the second wax melt for sale", price: 5.99, qtyAvailable: 40, category: "Wax Melt" },
@@ -152,10 +152,10 @@ async function populateInitialData() {
     //INITIAL REVIEWS DATA**********************************************************************
     console.log("Starting to add reviews...");
     const reviewsToCreate = [
-      { creatorId: 1, name: "Review 1", description: "This is the first review" },
-      { creatorId: 3, name: "Review 2", description: "This is the second review" },
-      { creatorId: 4, name: "Review 3", description: "This is the third review" },
-      { creatorId: 2, name: "Review 4", description: "This is the fourth review" },
+      { creatorId: 1, productId: 1, name: "Review 1", description: "This is the first review" },
+      { creatorId: 3, productId: 2, name: "Review 2", description: "This is the second review" },
+      { creatorId: 4, productId: 3, name: "Review 3", description: "This is the third review" },
+      { creatorId: 2, productId: 1, name: "Review 4", description: "This is the fourth review" },
     ]
     const reviews = await Promise.all(reviewsToCreate.map(Review.createReview))
 
@@ -192,9 +192,9 @@ async function populateInitialData() {
     //INITIAL PHOTOS DATA**********************************************************************
     console.log("Starting to create photos...");
     const photosToCreate = [
-      { description: "Candle 1", link: "https://image.shutterstock.com/image-photo/luxury-lighting-aromatic-scent-candle-260nw-1908721786.jpg"},
-      { description: "Candle 2", link: "https://image.shutterstock.com/image-photo/burning-candles-on-table-indoors-600w-1124996348.jpg"},
-      { description: "Candle 3", link: "https://image.shutterstock.com/image-photo/cozy-home-interior-decor-burning-600w-1037164117.jpg"},
+      { description: "Candle 1", link: "https://image.shutterstock.com/image-photo/luxury-lighting-aromatic-scent-candle-260nw-1908721786.jpg", productId: 1 },
+      { description: "Candle 2", link: "https://image.shutterstock.com/image-photo/burning-candles-on-table-indoors-600w-1124996348.jpg", productId: 2 },
+      { description: "Candle 1 Multiple", link: "https://image.shutterstock.com/image-photo/cozy-home-interior-decor-burning-600w-1037164117.jpg", productId: 1 },
     ]
     const photos = await Promise.all(photosToCreate.map(Photo.createPhoto))
 

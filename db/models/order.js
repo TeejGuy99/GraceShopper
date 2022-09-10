@@ -4,6 +4,7 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllOrders,
+    getOrderById,
     createOrder,
     createOrderFromCart
   };
@@ -16,14 +17,30 @@ module.exports = {
     return rows
   }
 
+  async function getOrderById({ id }) {
+    const { rows: [ order ] } = await client.query(`
+      SELECT id FROM orders
+      WHERE id=$1;
+    `, [ id ])
+
+    const { rows: cart } = await client.query(`
+      SELECT * FROM carts
+      WHERE "orderId"=$1;
+    `, [ id ])
+
+    order.cart = cart
+
+    return order
+  }
+
   async function createOrder({ isUserId=null, isGuestId=null }) {
-    const { rows: [ product ] } = await client.query(`
+    const { rows: [ order ] } = await client.query(`
       INSERT INTO orders("isUserId", "isGuestId")
       VALUES ($1, $2)
       RETURNING *;
     `, [ isUserId, isGuestId ]);
   
-    return product
+    return order
   }
 
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
@@ -41,14 +58,14 @@ module.exports = {
 
     order.cart = cart
 
-    const { rows: [ assignOrderId ] } = await client.query(`
+    await client.query(`
       UPDATE carts
       SET "orderId"=$1
       WHERE ("cartUserId"=$2 OR "cartGuestId"=$3)
       AND ("isActive"=true);
     `, [ order.id, isUserId, isGuestId ])
 
-    const { rows: [ closeCart ] } = await client.query(`
+    await client.query(`
       UPDATE carts 
       SET "isActive"=false
       WHERE ("cartUserId"=$1 OR "cartGuestId"=$2);

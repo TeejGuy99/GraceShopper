@@ -5,9 +5,23 @@ const { Product } = require('../db');
 // GET /api/product
 router.get('/', async(req, res, next) => {
     try {
-        const users = await Product.getAllProducts();
-        console.log(req.body);
-        res.send(users)
+        const products = await Product.getAllProducts();
+
+        res.send(products)
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+// GET /api/product/:productid
+router.get('/:productid', async(req, res, next) => {
+    try {
+        const { productid } = req.params;
+
+        let product = await Product.getProductById({ id:productid })
+
+        res.send(product)
+
     } catch (error) {
         console.error(error)
     }

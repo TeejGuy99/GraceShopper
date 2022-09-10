@@ -79,6 +79,14 @@ apiRouter.use('/product', productRouter);
 const orderRouter = require('./order');
 apiRouter.use('/order', orderRouter);
 
+//ROUTER: /api/photo
+const photoRouter = require('./photo');
+apiRouter.use('/photo', photoRouter);
+
+//ROUTER: /api/review
+const reviewRouter = require('./review');
+apiRouter.use('/review', reviewRouter);
+
 
 apiRouter.use((error, req, res, next) => {
   res.send({

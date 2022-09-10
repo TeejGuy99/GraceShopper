@@ -15,13 +15,13 @@ module.exports = {
     return rows
   }
 
-  async function createReview({ creatorId, name, description }) {
+  async function createReview({ creatorId, productId, name, description }) {
     const { rows: [ review ] } = await client.query(`
-      INSERT INTO reviews("creatorId", name, description)
-      VALUES ($1, $2, $3)
+      INSERT INTO reviews("creatorId", "productId", name, description)
+      VALUES ($1, $2, $3, $4)
       ON CONFLICT (description) DO NOTHING
       RETURNING *;
-    `, [ creatorId, name, description ]);
+    `, [ creatorId, productId, name, description ]);
   
     return review
   }

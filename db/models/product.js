@@ -28,10 +28,23 @@ module.exports = {
   }
 
   async function getProductById({ id }) {
+    const { rows: photos } = await client.query(`
+      SELECT * FROM photos
+      WHERE "productId"=$1;
+    `, [ id ])
+
+    const { rows: reviews } = await client.query(`
+      SELECT * FROM reviews
+      WHERE "productId"=$1;
+    `, [ id ])
+
     const { rows: [ product ] } = await client.query(`
       SELECT * FROM products
       WHERE id=$1;
     `, [ id ])
+
+    product.photos = photos
+    product.reviews = reviews
 
     return product
   }
