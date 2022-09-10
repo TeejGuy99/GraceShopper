@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth } from '../axios-services';
 import '../style/App.css';
+import { AdBanner, AdminPage, HomePage, ItemCard, LoginForm} from './index';
+import { getAllUsers } from '../api';
 
 const App = () => {
-  const [APIHealth, setAPIHealth] = useState('');
-
   //UseState for various properties
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [getUserToken, setUserToken] = useState('');
@@ -18,21 +17,23 @@ const App = () => {
   //Helper Functions
 
   //Reset all user state on logout
-  const resetUserStates = () => {
-    setUserToken(localStorage.clear());
-    setLoggedIn(false);
-    setUserCartItems([]);
-  }
- 
+  // const resetUserStates = () => {
+  //   setUserToken(localStorage.clear());
+  //   setLoggedIn(false);
+  //   setUserCartItems([]);
+  // }
 
   useEffect(() => {
-    
+    console.log(getAllUsers());
   }, []);
 
   return (
     <div className="app-container">
-      <h1>Hello, World!</h1>
-      <p>API Status: {APIHealth}</p>
+      <AdBanner/>
+      <AdminPage isUserAdmin={isUserAdmin} getUserCartItems={getUserCartItems} isLoggedIn={isLoggedIn} setItemAvailable={setItemAvailable} />
+      <HomePage getUserToken={getUserToken} isItemAvailable={isItemAvailable} />
+      <ItemCard isItemAvailable={isItemAvailable} />
+      <LoginForm isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} setUserToken={setUserToken} getUserToken={getUserToken} setUserAdmin={setUserAdmin} />
     </div>
   );
 };
