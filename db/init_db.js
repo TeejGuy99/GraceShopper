@@ -84,7 +84,8 @@ async function buildTables() {
         "productQty" INTEGER CHECK ("productQty" <= "productQtyAvailable"),
         "cartUserId" INTEGER REFERENCES users(id),
         "cartGuestId" INTEGER REFERENCES guests(id),
-        "isActive" BOOLEAN DEFAULT true 
+        "isActive" BOOLEAN DEFAULT true,
+        "orderId" INTEGER
       );
 
       CREATE TABLE order_products (
@@ -207,6 +208,7 @@ async function populateInitialData() {
       { productId: 1, productQty: 3, cartUserId: 5 },
       { productId: 3, productQty: 3, cartGuestId: 2 },
       { productId: 6, productQty: 3, cartUserId: 3 },
+      { productId: 2, productQty: 5, cartUserId: 5 },
     ]
     const carts = await Promise.all(cartsToCreate.map(Cart.addToCart))
 
@@ -217,6 +219,18 @@ async function populateInitialData() {
     console.log("Checking the cart belonging to user with id=5:");
     const userWithCart = await User.getUserById({ id: 5})
     console.log(userWithCart);
+    console.log("Finished checking cart!");
+
+    //TRY ADDING CART TO ORDER*********************************************************************
+    console.log("Creating order from cart belonging to user with id=5:");
+    const userId5Order = await Order.createOrderFromCart({ isUserId: 5 })
+    console.log("Order created:");
+    console.log(userId5Order);
+    console.log("Finished creating order!");
+
+    console.log("Checking the cart belonging to user with id=5 after order creation:");
+    const userId5Cart = await User.getUserById({ id: 5})
+    console.log(userId5Cart);
     console.log("Finished checking cart!");
 
     //INITIAL ORDER_PRODUCTS DATA**********************************************************************

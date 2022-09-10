@@ -44,6 +44,14 @@ apiRouter.use((req, res, next) => {
   next();
 });
 
+apiRouter.use((req, res, next) => {
+  console.log("<__Body Logger START__>");
+  console.log(req.body);
+  console.log("<__Body Logger END__>");
+
+  next();
+});
+
 apiRouter.get('/', (req, res, next) => {
   res.send({
     message: 'API is under construction!',
@@ -63,8 +71,13 @@ const { Router } = require('express');
 const userRouter = require('./user');
 apiRouter.use('/user', userRouter);
 
+//ROUTER: /api/product
 const productRouter = require('./product');
 apiRouter.use('/product', productRouter);
+
+//ROUTER: /api/order
+const orderRouter = require('./order');
+apiRouter.use('/order', orderRouter);
 
 
 apiRouter.use((error, req, res, next) => {
