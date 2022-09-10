@@ -4,7 +4,8 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllReviews,
-    createReview
+    createReview,
+    getReviewsByProductId
   };
 
   async function getAllReviews() {
@@ -24,4 +25,13 @@ module.exports = {
     `, [ creatorId, productId, name, description ]);
   
     return review
+  }
+
+  async function getReviewsByProductId( { productId } ) {
+    const { rows: reviews } = await client.query(`
+      SELECT * FROM reviews
+      WHERE "productId"=$1;
+    `, [ productId ])
+
+    return reviews
   }

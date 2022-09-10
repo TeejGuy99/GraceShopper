@@ -88,17 +88,22 @@ router.get('/', async(req, res, next) => {
     }
 })
 
-// GET /api/user/:userid
-router.get('/:userid', async(req, res, next) => {
+// GET /api/user/:userId
+router.get('/:userId', async(req, res, next) => {
     try {
-        const { userid } = req.params;
+        // if (!req.user) {
+        //     throw new Error(`You must be logged in to perform this action`)
+        // }
+
+        const { userId } = req.params;
         
-        let user = await User.getUserById({ id: userid })
+        let user = await User.getUserById({ id: userId })
 
         res.send(user)
 
     } catch (error) {
         console.error(error)
+        next(error)
     }
 })
 

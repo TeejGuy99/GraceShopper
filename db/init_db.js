@@ -21,7 +21,6 @@ async function buildTables() {
     console.log('Dropping All Tables...');
     // drop tables in correct order
     await client.query(`
-      DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS carts;
       DROP TABLE IF EXISTS photos;
       DROP TABLE IF EXISTS orders;
@@ -86,15 +85,6 @@ async function buildTables() {
         "cartGuestId" INTEGER REFERENCES guests(id),
         "isActive" BOOLEAN DEFAULT true,
         "orderId" INTEGER
-      );
-
-      CREATE TABLE order_products (
-        id SERIAL PRIMARY KEY,
-        "orderId" INTEGER REFERENCES orders(id),
-        "productPrice" NUMERIC(19,2),
-        "productId" INTEGER REFERENCES products(id),
-        "productQtyAvailable" INTEGER,
-        "productQty" INTEGER CHECK ("productQty" <= "productQtyAvailable") 
       );
 
     `)

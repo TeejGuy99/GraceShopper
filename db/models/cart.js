@@ -17,6 +17,7 @@ module.exports = {
     return rows
   }
 
+  // UPDATE THIS FUNCTION TO CREATE A GUEST ENTRY IF NO USER IS LOGGED IN
   async function addToCart({ productId, productQty, cartUserId=null, cartGuestId=null }) {
     const product = await getProductById({ id: productId })
     console.log("addToCart product:", product);

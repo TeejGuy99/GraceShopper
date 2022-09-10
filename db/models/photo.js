@@ -4,7 +4,8 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllPhotos,
-    createPhoto
+    createPhoto,
+    getPhotosByProductId
   };
 
   async function getAllPhotos() {
@@ -23,4 +24,13 @@ module.exports = {
     `, [ description, link, productId ]);
   
     return photo
+  }
+
+  async function getPhotosByProductId( { productId } ) {
+    const { rows: photos } = await client.query(`
+      SELECT * FROM photos
+      WHERE "productId"=$1;
+    `, [ productId ])
+
+    return photos
   }

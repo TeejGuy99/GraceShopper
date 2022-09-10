@@ -23,12 +23,12 @@ module.exports = {
       WHERE id=$1;
     `, [ id ])
 
-    const { rows: cart } = await client.query(`
+    const { rows: products } = await client.query(`
       SELECT * FROM carts
       WHERE "orderId"=$1;
     `, [ id ])
 
-    order.cart = cart
+    order.products = products
 
     return order
   }
