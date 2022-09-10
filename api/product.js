@@ -14,3 +14,16 @@ router.get('/', async(req, res, next) => {
 })
 
 module.exports = router;
+
+// POST *ADD TO USER CART FOR GUESTS OR REGISTERED USERS*
+
+// DELETE *REMOVE FROM USER CART FOR GUESTS OR REGISTERED USERS*
+
+
+
+
+// ADMIN ROUTES*************************************************
+// PATCH *UPDATE PRICE OF PRODUCT*
+// DELETE *DELETE PRODUCT*
+// POST *ADD PRODUCT*
+// 

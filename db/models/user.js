@@ -44,9 +44,17 @@ async function makeAdmin({ email }) {
 }
 
 async function getUserById({ id }) {
-  const { rows: [ cart ] } = await client.query(`
+  const { rows: cart } = await client.query(`
     SELECT * FROM carts
-    WHERE "cartUserId"=$1;
+    WHERE "cartUserId"=$1
+    AND "isActive"=true;
+  `, [ id ])
+
+  const { rows: orders } = await client.query(`
+    SELECT orders.id, carts."productId", carts."productPrice", carts."productQty"
+    FROM orders
+    JOIN carts ON orders.id=carts."orderId"
+    WHERE "isUserId"=$1;
   `, [ id ])
 
   const { rows: [ user ] } = await client.query(`
@@ -55,6 +63,7 @@ async function getUserById({ id }) {
   `, [ id ])
 
   user.cart = cart
+  user.orders = orders
 
   return user
 }

@@ -8,13 +8,9 @@ module.exports = {
   };
 
   async function getAllOrderProducts() {
-    /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
       SELECT * FROM order_products;
     `)
     return rows
   }
 
-//   async function addToOrder({  }) {
-
-//   }

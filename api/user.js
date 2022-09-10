@@ -88,4 +88,23 @@ router.get('/', async(req, res, next) => {
     }
 })
 
+// GET /api/user/:userid
+router.get('/:userid', async(req, res, next) => {
+    try {
+        const { userid } = req.params;
+        
+        let user = await User.getUserById({ id: userid })
+
+        res.send(user)
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+
+// ADMIN ROUTES
+// PATCH *MAKE OTHER USER ADMIN*
+// GET *VIEW USER DATA*
+
 module.exports = router;
