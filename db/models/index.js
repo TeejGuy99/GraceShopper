@@ -9,7 +9,8 @@ module.exports = {
   Guest: require('./guest'),
   Order: require('./order'),
   Photo: require('./photo'),
-  Cart: require('./cart')
+  Cart: require('./cart'),
+  OrderProducts: require('./order_products'),
 
 };
 

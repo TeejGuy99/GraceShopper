@@ -31,6 +31,11 @@ module.exports = {
     return cart
   }
 
-  async function getCartByUserId({ userId }) {
-    
+  async function getCartByUserId({ cartUserId=null, cartGuestId=null }) {
+    const { rows } = await client.query(`
+      SELECT * FROM carts
+      WHERE "cartUserId"=$1
+      OR "cartGuestId"=$2
+    `, [ cartUserId, cartGuestId ])
+    return rows
   }

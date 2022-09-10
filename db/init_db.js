@@ -6,7 +6,9 @@ const {
   Guest,
   Photo,
   Order,
-  Cart
+  Cart,
+  OrderProducts,
+
   // declare your model imports here
   // for example, User
 } = require('./');
@@ -83,6 +85,15 @@ async function buildTables() {
         "cartUserId" INTEGER REFERENCES users(id),
         "cartGuestId" INTEGER REFERENCES guests(id),
         "isActive" BOOLEAN DEFAULT true 
+      );
+
+      CREATE TABLE order_products (
+        id SERIAL PRIMARY KEY,
+        "orderId" INTEGER REFERENCES orders(id),
+        "productPrice" NUMERIC(19,2),
+        "productId" INTEGER REFERENCES products(id),
+        "productQtyAvailable" INTEGER,
+        "productQty" INTEGER CHECK ("productQty" <= "productQtyAvailable") 
       );
 
     `)
@@ -207,6 +218,22 @@ async function populateInitialData() {
     const userWithCart = await User.getUserById({ id: 5})
     console.log(userWithCart);
     console.log("Finished checking cart!");
+
+    //INITIAL ORDER_PRODUCTS DATA**********************************************************************
+    // console.log("Starting to create order_products...");
+    // const productOrdersToCreate = [
+    //   { orderId: 1, productPrice: 10.99, productId: 1, productQty: },
+    // ]
+    // const productOrders = await Promise.all(productOrdersToCreate.map())
+
+    // console.log("productOrders created:");
+    // console.log(productOrders);
+    // console.log("Finished creating order_products!");
+
+    // console.log("Checking the userOrders belonging to user with id=5:");
+    // const userOrders = await 
+    // console.log(userOrders);
+    // console.log("Finished checking userOrders!");
 
     
   } catch (error) {
