@@ -158,7 +158,7 @@ export async function deleteProduct({ token, productID }) {
 }
 
 export async function getAllProductPhotos() {
-	try{
+	try {
 		return await fetch(`${BASE_URL}/photo`, {
 			headers: {
 				"Content-Type": "application/json",
@@ -168,24 +168,105 @@ export async function getAllProductPhotos() {
 			.then((result) => {
 				return result;
 			});
-	}catch(error){
+	} catch (error) {
 		console.error(error);
 	}
 }
 
 export async function getReviews() {
-	try{
-		return await fetch(`${BASE_URL}/review`,
-		{
+	try {
+		return await fetch(`${BASE_URL}/review`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
 		})
-		.then((response) => response.json())
-		.then((result) => {
-			return result;
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getAllOrders() {
+	try {
+		return await fetch(`${BASE_URL}/order`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
 		})
-	}catch(error){
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getOrderInfo({ token, orderID }) {
+	try {
+		return await fetch(`${BASE_URL}/order/${orderID}`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getAllCarts() {
+	try {
+		return await fetch(`${BASE_URL}/cart`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getAllGuests() {
+	try {
+		return await fetch(`${BASE_URL}/guest`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getGuest({ token, guestID }) {
+	try {
+		return await fetch(`${BASE_URL}/guest/${guestID}`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
 		console.error(error);
 	}
 }
