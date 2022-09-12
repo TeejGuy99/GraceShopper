@@ -156,3 +156,36 @@ export async function deleteProduct({ token, productID }) {
 		console.error(error);
 	}
 }
+
+export async function getAllProductPhotos() {
+	try{
+		return await fetch(`${BASE_URL}/photo`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	}catch(error){
+		console.error(error);
+	}
+}
+
+export async function getReviews() {
+	try{
+		return await fetch(`${BASE_URL}/review`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+		.then((response) => response.json())
+		.then((result) => {
+			return result;
+		})
+	}catch(error){
+		console.error(error);
+	}
+}
