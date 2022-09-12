@@ -1,35 +1,35 @@
 export const BASE_URL = "http://localhost:4000/api";
 
 export async function getAllUsers() {
-  try {
-    return await fetch(`${BASE_URL}/user`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        return result;
-      });
-  } catch (error) {
-    console.error(error);
-  }
+	try {
+		return await fetch(`${BASE_URL}/user`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 export async function getUserInfo(userID) {
 	try {
 		return await fetch(`${BASE_URL}/user/${userID}`, {
-		  headers: {
-			"Content-Type": "application/json",
-		  },
+			headers: {
+				"Content-Type": "application/json",
+			},
 		})
-		  .then((response) => response.json())
-		  .then((result) => {
-			return result;
-		  });
-	  } catch (error) {
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
 		console.error(error);
-	  }
+	}
 }
 
 export async function logInUser({ username, password }) {
@@ -65,6 +65,88 @@ export async function registerUser({ username, password }) {
 				username: username,
 				password: password,
 			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getAllProducts() {
+	try {
+		return fetch(`${BASE_URL}/product`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function getSingleProduct({ productID }) {
+	try {
+		return await fetch(`${BASE_URL}/product/${productID}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function createNewProduct({
+	token,
+	name,
+	description,
+	price,
+	quantity,
+	category,
+}) {
+	try {
+		return fetch(`${BASE_URL}/product`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				name: name,
+				description: description,
+				price: price,
+				quantity: quantity,
+				category: category,
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function deleteProduct({ token, productID }) {
+	try {
+		return fetch(`${BASE_URL}/product/${productID}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 		})
 			.then((response) => response.json())
 			.then((result) => {
