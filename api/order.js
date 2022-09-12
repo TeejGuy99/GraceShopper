@@ -6,8 +6,22 @@ const { Order } = require('../db');
 router.get('/', async(req, res, next) => {
     try {
         const users = await Order.getAllOrders();
-        console.log(req.body);
+
         res.send(users)
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+// GET /api/order/:orderId
+router.get('/:orderid', async(req, res, next) => {
+    try {
+        const { orderid } = req.params;
+
+        let order = await Order.getOrderById({ id:orderid })
+
+        res.send(order)
+
     } catch (error) {
         console.error(error)
     }

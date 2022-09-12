@@ -10,7 +10,6 @@ module.exports = {
   Order: require('./order'),
   Photo: require('./photo'),
   Cart: require('./cart'),
-  OrderProducts: require('./order_products'),
 
 };
 
