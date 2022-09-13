@@ -270,3 +270,24 @@ export async function getGuest({ token, guestID }) {
 		console.error(error);
 	}
 }
+
+export async function makeUserAdmin({ token, userID }) {
+	try {
+		return fetch(`${BASE_URL}/makeAdmin/${userID}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				userID: userID
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
