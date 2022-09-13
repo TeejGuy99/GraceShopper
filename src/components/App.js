@@ -29,24 +29,53 @@ const App = () => {
   }, []);
 
   return (
-    <div className="app-container">
-      <AdBanner />
-      <AdminPage
-        isUserAdmin={isUserAdmin}
-        getUserCartItems={getUserCartItems}
-        isLoggedIn={isLoggedIn}
-        setItemAvailable={setItemAvailable}
-      />
-      <HomePage getUserToken={getUserToken} isItemAvailable={isItemAvailable} />
-      <ItemCard isItemAvailable={isItemAvailable} />
-      <LoginForm
-        isLoggedIn={isLoggedIn}
-        setLoggedIn={setLoggedIn}
-        setUserToken={setUserToken}
-        getUserToken={getUserToken}
-        setUserAdmin={setUserAdmin}
-      />
-    </div>
+    <Router>
+      <div className="app-container">
+        <Header isUserAdmin={isUserAdmin}/>
+        {/* <AdBanner/> */}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <HomePage
+                getUserToken={getUserToken}
+                isItemAvailable={isItemAvailable}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/login"
+            element={
+              <LoginForm
+                isLoggedIn={isLoggedIn}
+                setLoggedIn={setLoggedIn}
+                setUserToken={setUserToken}
+                getUserToken={getUserToken}
+                setUserAdmin={setUserAdmin}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/admin"
+            element={
+              isUserAdmin ? (
+                <AdminPage
+                  isUserAdmin={isUserAdmin}
+                  getUserCartItems={getUserCartItems}
+                  isLoggedIn={isLoggedIn}
+                  setItemAvailable={setItemAvailable}
+                />
+              ) : null
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
