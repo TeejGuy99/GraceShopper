@@ -10,6 +10,7 @@ router.get('/', async(req, res, next) => {
         res.send(products)
     } catch (error) {
         console.error(error)
+        next(error)
     }
 })
 
@@ -24,6 +25,7 @@ router.get('/:productId', async(req, res, next) => {
 
     } catch (error) {
         console.error(error)
+        next(error)
     }
 })
 
@@ -48,7 +50,23 @@ router.post('/', async(req, res, next) => {
 })
 
 // PATCH *UPDATE PRICE OF PRODUCT*
+router.patch('/:routineId', async(req, res, next) => {
+    try {
+            // if (!req.user) {
+            //     throw new Error(`You must be logged in to perform this action`)
+            // }
 
+            const { name, description, price, qtyAvailable, category } = req.body;
+            const { productId } = req.params;
+            
+            const updatedProduct = await Product.updateProduct({ id: productId, name, description, price, qtyAvailable, category})
+
+            res.send(updatedProduct)
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
 
 // DELETE /api/product/:productId
 router.delete('/:productId', async(req, res, next) => {
@@ -58,7 +76,7 @@ router.delete('/:productId', async(req, res, next) => {
         // }
 
         const { productId } = req.params
-        const deletedProduct = await Product.deleteProduct({ id: productId})
+        const deletedProduct = await Product.deleteProduct({ id: productId })
 
         res.send(deletedProduct)
     } catch (error) {

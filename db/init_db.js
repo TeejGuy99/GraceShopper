@@ -7,7 +7,6 @@ const {
   Photo,
   Order,
   Cart,
-  OrderProducts,
 
   // declare your model imports here
   // for example, User

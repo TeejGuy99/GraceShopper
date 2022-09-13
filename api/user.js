@@ -96,7 +96,11 @@ router.get('/:userId', async(req, res, next) => {
         // }
 
         const { userId } = req.params;
-        
+
+        // if (req.user.userId != userId) {
+        //     throw new Error(`You cannot view another user's information`)
+        // }
+
         let user = await User.getUserById({ id: userId })
 
         res.send(user)
@@ -107,9 +111,56 @@ router.get('/:userId', async(req, res, next) => {
     }
 })
 
+// PATCH /api/user/:userId
+router.patch('/:userId', async(req, res, next) => {
+    try {
+        // if (!req.user) {
+        //     throw new Error(`You must be logged in to perform this action`)
+        // }
+
+        const { userId } = req.params;
+
+        // if (req.user.userId != userId) {
+        //     throw new Error(`You cannot edit another user's information`)
+        // }
+
+        const { email, password } = req.body;    
+
+        const updatedUser = await User.updateUser({ id: userId, email, password });
+
+        res.send(updatedUser);
+
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
 
 // ADMIN ROUTES
-// PATCH *MAKE OTHER USER ADMIN*
+// PATCH /api/user/makeAdmin/:userId *MAKE OTHER USER ADMIN*
+router.patch('/makeAdmin/:userId', async(req, res, next) => {
+    try {
+        const { userId } = req.params;
+
+        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
+        // if (!adminCheck) {
+        //     throw new Error(`You must be an admin to perform this action`)
+        // }
+
+        let selectedUser = await User.getUserById({ id: userId });
+        let selectedUserEmail = selectedUser.email;
+
+        let newAdmin = await User.makeAdmin({ email: selectedUserEmail })
+
+        res.send(newAdmin)
+
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
 // GET *VIEW USER DATA*
 
 module.exports = router;

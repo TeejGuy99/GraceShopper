@@ -6,7 +6,8 @@ module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
-    createOrderFromCart
+    createOrderFromCart,
+    deleteOrder
   };
 
   async function getAllOrders() {
@@ -43,6 +44,7 @@ module.exports = {
     return order
   }
 
+  // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
     const { rows: cart } = await client.query(`
     SELECT * FROM carts
@@ -70,6 +72,29 @@ module.exports = {
       SET "isActive"=false
       WHERE ("cartUserId"=$1 OR "cartGuestId"=$2);
     `, [ isUserId, isGuestId ])
+
+    // This should adjust the total inventory when an order is placed 
+    // (Remove the order qty from total inventory by looping through each item in the cart)
+    for (i=0; i<cart.length; i++) {
+      let qtyToRemove = cart[i].productQty
+      let productToEdit = cart[i].productId
+      let productQty = cart[i].productQtyAvailable
+
+      await client.query(`
+        UPDATE products
+        SET "qtyAvailable"=($1-$2)
+        WHERE "productId"=$3;
+      `, [ productQty, qtyToRemove, productToEdit ])
+    }
   
+    return order
+  }
+
+  async function deleteOrder({ id }) {
+    const { rows: [order] } = await client.query(`
+      DELETE FROM orders
+      WHERE id=$1
+      RETURNING *;
+    `, [ id ])
     return order
   }
