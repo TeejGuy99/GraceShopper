@@ -5,7 +5,8 @@ module.exports = {
     // add your database adapter fns here
     getAllReviews,
     createReview,
-    getReviewsByProductId
+    getReviewsByProductId,
+    deleteReview
   };
 
   async function getAllReviews() {
@@ -34,4 +35,13 @@ module.exports = {
     `, [ productId ])
 
     return reviews
+  }
+
+  async function deleteReview({ reviewId }) {
+    const { rows: [review] } = await client.query(`
+      DELETE FROM reviews
+      WHERE id=$1
+      RETURNING *;
+    `, [ reviewId ])
+    return review
   }
