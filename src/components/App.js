@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
 import {
   AdBanner,
@@ -11,6 +12,7 @@ import {
   LoginForm,
   Header,
 } from "./index";
+
 import { getAllUsers, getAllProducts } from "../api";
 
 const App = () => {
@@ -31,33 +33,59 @@ const App = () => {
   // }
 
   useEffect(() => {
-    console.log("Users: ");
-    console.log(getAllUsers());
 
-    console.log("Products: ");
-    console.log(getAllProducts());
+    console.log(getAllUsers());
   }, []);
 
+
   return (
-    <div className="app-container">
-      {/* <Header /> */}
-      <AdBanner />
-      <AdminPage
-        isUserAdmin={isUserAdmin}
-        getUserCartItems={getUserCartItems}
-        isLoggedIn={isLoggedIn}
-        setItemAvailable={setItemAvailable}
-      />
-      <HomePage getUserToken={getUserToken} isItemAvailable={isItemAvailable} />
-      <ItemCard isItemAvailable={isItemAvailable} />
-      <LoginForm
-        isLoggedIn={isLoggedIn}
-        setLoggedIn={setLoggedIn}
-        setUserToken={setUserToken}
-        getUserToken={getUserToken}
-        setUserAdmin={setUserAdmin}
-      />
-    </div>
+    <Router>
+      <div className="app-container">
+        <Header isUserAdmin={isUserAdmin} />
+        {/* <AdBanner/> */}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <HomePage
+                getUserToken={getUserToken}
+                isItemAvailable={isItemAvailable}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/login"
+            element={
+              <LoginForm
+                isLoggedIn={isLoggedIn}
+                setLoggedIn={setLoggedIn}
+                setUserToken={setUserToken}
+                getUserToken={getUserToken}
+                setUserAdmin={setUserAdmin}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/admin"
+            element={
+              isUserAdmin ? (
+                <AdminPage
+                  isUserAdmin={isUserAdmin}
+                  getUserCartItems={getUserCartItems}
+                  isLoggedIn={isLoggedIn}
+                  setItemAvailable={setItemAvailable}
+                />
+              ) : null
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
