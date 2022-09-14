@@ -12,7 +12,8 @@ import {
   LoginForm,
   Header,
 } from "./index";
-import { getAllUsers } from "../api";
+
+import { getAllUsers, getAllProducts } from "../api";
 
 const App = () => {
   //UseState for various properties
@@ -32,8 +33,10 @@ const App = () => {
   // }
 
   useEffect(() => {
+
     console.log(getAllUsers());
   }, []);
+
 
   return (
     <Router>
