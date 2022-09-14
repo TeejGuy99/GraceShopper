@@ -79,6 +79,25 @@ apiRouter.use('/product', productRouter);
 const orderRouter = require('./order');
 apiRouter.use('/order', orderRouter);
 
+//ROUTER: /api/photo
+const photoRouter = require('./photo');
+apiRouter.use('/photo', photoRouter);
+
+//ROUTER: /api/review
+const reviewRouter = require('./review');
+apiRouter.use('/review', reviewRouter);
+
+//ROUTER: /api/guest
+const guestRouter = require('./guest');
+apiRouter.use('/guest', guestRouter);
+
+//ROUTER: /api/cart
+const cartRouter = require('./cart');
+apiRouter.use('/cart', cartRouter);
+
+apiRouter.use('*', function(req, res, next) {
+  res.status(404).send({ message: 'Route could not be found'})
+});
 
 apiRouter.use((error, req, res, next) => {
   res.send({

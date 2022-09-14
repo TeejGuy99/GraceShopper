@@ -4,7 +4,8 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllGuests,
-    createGuest
+    createGuest,
+    getGuestById
   };
 
   async function getAllGuests() {
@@ -21,6 +22,31 @@ module.exports = {
       VALUES ($1)
       RETURNING *;
     `, [ isActive ]);
+  
+    return guest
+  }
+
+  async function getGuestById({ id }) {
+    const { rows: cart } = await client.query(`
+      SELECT * FROM carts
+      WHERE "cartGuestId"=$1
+      AND "isActive"=true;
+    `, [ id ])
+  
+    const { rows: orders } = await client.query(`
+      SELECT orders.id, carts."productId", carts."productPrice", carts."productQty"
+      FROM orders
+      JOIN carts ON orders.id=carts."orderId"
+      WHERE "isGuestId"=$1;
+    `, [ id ])
+  
+    const { rows: [ guest ] } = await client.query(`
+      SELECT id AS "guestId" FROM guests
+      WHERE id = $1;
+    `, [ id ])
+  
+    guest.cart = cart
+    guest.orders = orders
   
     return guest
   }

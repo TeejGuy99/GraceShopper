@@ -1,11 +1,15 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
+const { getPhotosByProductId } = require('./photo')
+const { getReviewsByProductId } = require('./review')
 
 module.exports = {
     // add your database adapter fns here
     getAllProducts,
     createProduct,
-    getProductById
+    getProductById,
+    deleteProduct,
+    updateProduct
   };
 
   async function getAllProducts() {
@@ -13,6 +17,11 @@ module.exports = {
     const { rows } = await client.query(`
       SELECT * FROM products;
     `)
+
+    // for (i=0; i < rows.length; i++) {
+    //   rows[i].photos = 
+    // }
+
     return rows
   }
 
@@ -28,10 +37,65 @@ module.exports = {
   }
 
   async function getProductById({ id }) {
+    const photos = await getPhotosByProductId({ productId: id })
+
+    const reviews = await getReviewsByProductId({ productId: id })
+
     const { rows: [ product ] } = await client.query(`
       SELECT * FROM products
       WHERE id=$1;
     `, [ id ])
+
+    product.photos = photos
+    product.reviews = reviews
+
+    return product
+  }
+
+  async function deleteProduct({ id }) {
+    //carts, photos, reviews
+    await client.query(`
+      DELETE FROM reviews
+      WHERE "productId"=$1
+      RETURNING *;
+    `, [ id ])
+    
+    await client.query(`
+    DELETE FROM photos
+    WHERE "productId"=$1
+    RETURNING *;
+  `, [ id ])
+    
+    await client.query(`
+      DELETE FROM carts
+      WHERE "productId"=$1
+      RETURNING *;
+    `, [ id ])
+
+    const { rows: [deletedProduct] } = await client.query(`
+      DELETE FROM products
+      WHERE id=$1
+      RETURNING *;
+    `, [ id ])
+
+    return deletedProduct
+  }
+
+  async function updateProduct({ id, ...fields }) {
+    const setString = Object.keys(fields).map(
+      (key, index) => `"${key}"=$${ index + 1 }`
+    ).join(', ');
+  
+    if (setString.length === 0) {
+      return;
+    }
+
+    const { rows: [ product ] } = await client.query(`
+      UPDATE products
+      SET ${ setString }
+      WHERE id=${id}
+      RETURNING *;
+    `, Object.values(fields))
 
     return product
   }
