@@ -4,15 +4,8 @@ import React, { useState, useEffect } from "react";
 // where each adapter fetches specific info from our express server's /api route
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
-import {
-  AdBanner,
-  AdminPage,
-  HomePage,
-  ItemCard,
-  LoginForm,
-  Header,
-} from "./index";
-
+import { AdBanner, ItemCard, Header } from "./index";
+import { Register, AdminPage, HomePage, Login } from "../pages";
 import { getAllUsers, getAllProducts } from "../api";
 
 const App = () => {
@@ -33,10 +26,8 @@ const App = () => {
   // }
 
   useEffect(() => {
-
     console.log(getAllUsers());
   }, []);
-
 
   return (
     <Router>
@@ -59,7 +50,7 @@ const App = () => {
             exact
             path="/login"
             element={
-              <LoginForm
+              <Login
                 isLoggedIn={isLoggedIn}
                 setLoggedIn={setLoggedIn}
                 setUserToken={setUserToken}
@@ -68,6 +59,7 @@ const App = () => {
               />
             }
           />
+          <Route exact path="/register" element={<Register />} />
 
           <Route
             exact
