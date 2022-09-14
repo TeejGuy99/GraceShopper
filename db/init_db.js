@@ -193,38 +193,38 @@ async function populateInitialData() {
     console.log("Finished creating products!");
 
     //INITIAL REVIEWS DATA**********************************************************************
-    console.log("Starting to add reviews...");
-    const reviewsToCreate = [
-      {
-        creatorId: 1,
-        productId: 1,
-        name: "Review 1",
-        description: "This is the first review",
-      },
-      {
-        creatorId: 3,
-        productId: 2,
-        name: "Review 2",
-        description: "This is the second review",
-      },
-      {
-        creatorId: 4,
-        productId: 3,
-        name: "Review 3",
-        description: "This is the third review",
-      },
-      {
-        creatorId: 2,
-        productId: 1,
-        name: "Review 4",
-        description: "This is the fourth review",
-      },
-    ];
-    const reviews = await Promise.all(reviewsToCreate.map(Review.createReview));
+    // console.log("Starting to add reviews...");
+    // const reviewsToCreate = [
+    //   {
+    //     creatorId: 1,
+    //     productId: 1,
+    //     name: "Review 1",
+    //     description: "This is the first review",
+    //   },
+    //   {
+    //     creatorId: 3,
+    //     productId: 2,
+    //     name: "Review 2",
+    //     description: "This is the second review",
+    //   },
+    //   {
+    //     creatorId: 4,
+    //     productId: 3,
+    //     name: "Review 3",
+    //     description: "This is the third review",
+    //   },
+    //   {
+    //     creatorId: 2,
+    //     productId: 1,
+    //     name: "Review 4",
+    //     description: "This is the fourth review",
+    //   },
+    // ];
+    // const reviews = await Promise.all(reviewsToCreate.map(Review.createReview));
 
-    console.log("Reviews created:");
-    console.log(reviews);
-    console.log("Finished creating reviews!");
+    // console.log("Reviews created:");
+    // console.log(reviews);
+    // console.log("Finished creating reviews!");
 
     //INITIAL GUESTS DATA**********************************************************************
     console.log("Starting to create guests...");
@@ -252,19 +252,44 @@ async function populateInitialData() {
     console.log("Starting to create photos...");
     const photosToCreate = [
       {
-        description: "Candle 1",
-        link: "https://image.shutterstock.com/image-photo/luxury-lighting-aromatic-scent-candle-260nw-1908721786.jpg",
+        description: "Magic Hour",
+        link: "https://i.imgur.com/bbrvf8c.jpg",
         productId: 1,
       },
       {
-        description: "Candle 2",
-        link: "https://image.shutterstock.com/image-photo/burning-candles-on-table-indoors-600w-1124996348.jpg",
+        description: "Witching Hour",
+        link: "https://i.imgur.com/lMP3k69.jpg",
         productId: 2,
       },
       {
-        description: "Candle 1 Multiple",
-        link: "https://image.shutterstock.com/image-photo/cozy-home-interior-decor-burning-600w-1037164117.jpg",
-        productId: 1,
+        description: "Night Cap",
+        link: "https://i.imgur.com/ZT294Xd.jpg",
+        productId: 3,
+      },
+      {
+        description: "Dusk",
+        link: "https://i.imgur.com/yyAWGS4.jpg",
+        productId: 4,
+      },
+      {
+        description: "Summer Citrus",
+        link: "https://i.imgur.com/IgI1HyB.jpg",
+        productId: 5,
+      },
+      {
+        description: "Jasmine Cedarwood",
+        link: "https://i.imgur.com/BIj4hkj.jpg",
+        productId: 6,
+      },
+      {
+        description: "Ginger Tea Honey",
+        link: "https://i.imgur.com/MDMrUpi.jpg",
+        productId: 7,
+      },
+      {
+        description: "Apple Cinnamon",
+        link: "https://i.imgur.com/yj0kRZ3.jpg",
+        productId: 8,
       },
     ];
     const photos = await Promise.all(photosToCreate.map(Photo.createPhoto));
