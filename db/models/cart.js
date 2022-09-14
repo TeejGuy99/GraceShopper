@@ -29,7 +29,16 @@ async function getAllCarts() {
       INSERT INTO carts("productPrice", "productId", "productQtyAvailable", "productQty", "cartUserId", "cartGuestId")
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
-    `, [ product.price, productId, product.qtyAvailable, productQty, cartUserId, cartGuestId ]);
+    `,
+    [
+      product.price,
+      productId,
+      product.qtyAvailable,
+      productQty,
+      cartUserId,
+      cartGuestId,
+    ]
+  );
 
   return cart;
 }
