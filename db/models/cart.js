@@ -1,7 +1,7 @@
 // grab our db client connection to use with our adapters
-const client = require('../client');
+const client = require("../client");
 
-const { getProductById } = require('./product');
+const { getProductById } = require("./product");
 
 module.exports = {
     // add your database adapter fns here
@@ -12,29 +12,31 @@ module.exports = {
     updateCartItem
   };
 
-  async function getAllCarts() {
-    /* this adapter should fetch a list of users from your db */
-    const { rows } = await client.query(`
+
+async function getAllCarts() {
+  /* this adapter should fetch a list of users from your db */
+  const { rows } = await client.query(`
       SELECT * FROM carts;
-    `)
-    return rows
-  }
+    `);
+  return rows;
+}
 
   async function addToCart({ productId, productQty, cartUserId=null, cartGuestId=null }) {
     const product = await getProductById({ id: productId })
 
-    const { rows: [ cart ] } = await client.query(`
+
+  const { rows: [cart] } = await client.query(`
       INSERT INTO carts("productPrice", "productId", "productQtyAvailable", "productQty", "cartUserId", "cartGuestId")
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `, [ product.price, productId, product.qtyAvailable, productQty, cartUserId, cartGuestId ]);
 
-  
-    return cart
-  }
+  return cart;
+}
 
-  async function getCartByUserId({ cartUserId=null, cartGuestId=null }) {
-    const { rows } = await client.query(`
+async function getCartByUserId({ cartUserId = null, cartGuestId = null }) {
+  const { rows } = await client.query(
+    `
       SELECT * FROM carts
       WHERE "cartUserId"=$1
       OR "cartGuestId"=$2
@@ -77,3 +79,4 @@ module.exports = {
   
     return cartItem
   }
+
