@@ -5,7 +5,8 @@ module.exports = {
     // add your database adapter fns here
     getAllPhotos,
     createPhoto,
-    getPhotosByProductId
+    getPhotosByProductId,
+    updatePhoto
   };
 
   async function getAllPhotos() {
@@ -33,4 +34,32 @@ module.exports = {
     `, [ productId ])
 
     return photos
+  }
+
+  async function updatePhoto({ id, ...fields }) {
+    const setString = Object.keys(fields).map(
+      (key, index) => `"${key}"=$${ index + 1 }`
+    ).join(', ');
+  
+    if (setString.length === 0) {
+      return;
+    }
+  
+    const { rows: [ photo ] } = await client.query(`
+      UPDATE photos
+      SET ${ setString }
+      WHERE id=${id}
+      RETURNING *;
+    `, Object.values(fields))
+  
+    return photo
+  }
+
+  async function deletePhoto({ id }) {
+    const { rows: [photo] } = await client.query(`
+      DELETE FROM photos
+      WHERE id=$1
+      RETURNING *;
+    `, [ id ])
+    return photo
   }

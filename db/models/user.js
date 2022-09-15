@@ -8,7 +8,9 @@ module.exports = {
   createUser,
   makeAdmin,
   getUserById,
-  getUserByEmail
+  getUserByEmail,
+  updateUser,
+  checkAdmin
 };
 
 async function getAllUsers() {
@@ -81,4 +83,31 @@ async function getUserByEmail(email) {
   }
 
   return user;
+}
+
+async function updateUser({ id, ...fields }) {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${key}"=$${ index + 1 }`
+  ).join(', ');
+
+  if (setString.length === 0) {
+    return;
+  }
+
+  const { rows: [ user ] } = await client.query(`
+    UPDATE users
+    SET ${ setString }
+    WHERE id=${id}
+    RETURNING *;
+  `, Object.values(fields))
+
+  return user
+}
+
+async function checkAdmin({ id }) {
+  const { rows: [ admin ] } = await client.query(`
+    SELECT "isAdmin"
+    FROM users
+    WHERE id=$1;
+  `, [id])
 }

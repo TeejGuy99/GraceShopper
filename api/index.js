@@ -95,6 +95,9 @@ apiRouter.use('/guest', guestRouter);
 const cartRouter = require('./cart');
 apiRouter.use('/cart', cartRouter);
 
+apiRouter.use('*', function(req, res, next) {
+  res.status(404).send({ message: 'Route could not be found'})
+});
 
 apiRouter.use((error, req, res, next) => {
   res.send({

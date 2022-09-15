@@ -8,7 +8,8 @@ module.exports = {
     getAllProducts,
     createProduct,
     getProductById,
-    deleteProduct
+    deleteProduct,
+    updateProduct
   };
 
   async function getAllProducts() {
@@ -78,4 +79,23 @@ module.exports = {
     `, [ id ])
 
     return deletedProduct
+  }
+
+  async function updateProduct({ id, ...fields }) {
+    const setString = Object.keys(fields).map(
+      (key, index) => `"${key}"=$${ index + 1 }`
+    ).join(', ');
+  
+    if (setString.length === 0) {
+      return;
+    }
+
+    const { rows: [ product ] } = await client.query(`
+      UPDATE products
+      SET ${ setString }
+      WHERE id=${id}
+      RETURNING *;
+    `, Object.values(fields))
+
+    return product
   }

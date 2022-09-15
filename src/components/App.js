@@ -4,8 +4,16 @@ import React, { useState, useEffect } from "react";
 // where each adapter fetches specific info from our express server's /api route
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
-import { AdBanner, AdminPage, HomePage, ItemCard, LoginForm, Header} from "./index";
-import { getAllUsers } from "../api";
+import {
+  AdBanner,
+  AdminPage,
+  HomePage,
+  ItemCard,
+  LoginForm,
+  Header,
+} from "./index";
+
+import { getAllUsers, getAllProducts } from "../api";
 
 const App = () => {
   //UseState for various properties
@@ -25,13 +33,15 @@ const App = () => {
   // }
 
   useEffect(() => {
+
     console.log(getAllUsers());
   }, []);
+
 
   return (
     <Router>
       <div className="app-container">
-        <Header isUserAdmin={isUserAdmin}/>
+        <Header isUserAdmin={isUserAdmin} />
         {/* <AdBanner/> */}
         <Routes>
           <Route

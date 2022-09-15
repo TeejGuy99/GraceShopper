@@ -7,28 +7,28 @@ const {
   Photo,
   Order,
   Cart,
-  OrderProducts,
 
   // declare your model imports here
   // for example, User
-} = require('./');
+} = require("./");
 
 async function buildTables() {
   try {
     console.log("Connecting to client");
     client.connect();
 
-    console.log('Dropping All Tables...');
+    console.log("Dropping All Tables...");
     // drop tables in correct order
     await client.query(`
       DROP TABLE IF EXISTS carts;
       DROP TABLE IF EXISTS photos;
+      DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS guests;
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
-    `)
+    `);
     console.log("Finished building tables!");
     // build tables in correct order
     console.log("Starting to build tables...");
@@ -87,7 +87,7 @@ async function buildTables() {
         "orderId" INTEGER
       );
 
-    `)
+    `);
     console.log("Finished building tables");
   } catch (error) {
     throw error;
@@ -108,32 +108,85 @@ async function populateInitialData() {
       { email: "kasie@seed.com", password: "kasie01" },
       { email: "tim@seed.com", password: "tim01" },
       { email: "chris@seed.com", password: "chris01" },
-    ]
-    const users = await Promise.all(usersToCreate.map(User.createUser))
+    ];
+    const users = await Promise.all(usersToCreate.map(User.createUser));
 
     console.log("Users created:");
     console.log(users);
     console.log("Finished creating users!");
 
     console.log("Making chris an admin...");
-    const userToMakeAdmin = { email: "chris@seed.com" }
-    const admin = await User.makeAdmin(userToMakeAdmin)
+    const userToMakeAdmin = { email: "chris@seed.com" };
+    const admin = await User.makeAdmin(userToMakeAdmin);
     console.log("Users made admin:");
     console.log(admin);
     console.log("chris@seed.com made an admin!");
-    
+
     //INITIAL PRODUCTS DATA**********************************************************************
     console.log("Starting to add products...");
     const productsToCreate = [
-      { name: "Candle1", description: "This is the first candle for sale", price: 10.99, qtyAvailable: 10, category: "Candle" },
-      { name: "Candle2", description: "This is the second candle for sale", price: 15.99, qtyAvailable: 20, category: "Candle" },
-      { name: "Candle3", description: "This is the third candle for sale", price: 8.99, qtyAvailable: 15, category: "Candle" },
-      { name: "Candle4", description: "This is the fourth candle for sale", price: 49.99, qtyAvailable: 50, category: "Candle" },
-      { name: "Wax Melt1", description: "This is the first wax melt for sale", price: 5.99, qtyAvailable: 30, category: "Wax Melt" },
-      { name: "Wax Melt2", description: "This is the second wax melt for sale", price: 5.99, qtyAvailable: 40, category: "Wax Melt" },
-      { name: "Wax Melt3", description: "This is the third wax melt for sale", price: 9.99, qtyAvailable: 100, category: "Wax Melt" },
-    ]
-    const products = await Promise.all(productsToCreate.map(Product.createProduct))
+      {
+        name: "Magic Hour",
+        description: "Feels like your in the hour of magic whenever.",
+        price: 18.99,
+        qtyAvailable: 20,
+        category: "Candle",
+      },
+      {
+        name: "Witching Hour",
+        description: "Bewitch yourself in the hour of magical scent.",
+        price: 18.99,
+        qtyAvailable: 20,
+        category: "Candle",
+      },
+      {
+        name: "Night Cap",
+        description:
+          "Tip the cap and you will be gifted the nightly scents in your dreams.",
+        price: 18.99,
+        qtyAvailable: 20,
+        category: "Candle",
+      },
+      {
+        name: "Dusk",
+        description:
+          "The scent of almost Night time, but not quite yet but not Day time either, you know?",
+        price: 18.99,
+        qtyAvailable: 20,
+        category: "Candle",
+      },
+      {
+        name: "Summer Citrus",
+        description: "Orange you glad this smells good!",
+        price: 5.99,
+        qtyAvailable: 25,
+        category: "Wax Melt",
+      },
+      {
+        name: "Jasmine Cedarwood",
+        description: "Thats what she said. ;)",
+        price: 5.99,
+        qtyAvailable: 25,
+        category: "Wax Melt",
+      },
+      {
+        name: "Ginger Tea Honey",
+        description: "Get that Ginger Tea my Honey.",
+        price: 5.99,
+        qtyAvailable: 25,
+        category: "Wax Melt",
+      },
+      {
+        name: "Apple Cinnamon",
+        description: "Closest thing to my grandmas Apple pie.",
+        price: 5.99,
+        qtyAvailable: 25,
+        category: "Wax Melt",
+      },
+    ];
+    const products = await Promise.all(
+      productsToCreate.map(Product.createProduct)
+    );
 
     console.log("Products created:");
     console.log(products);
@@ -142,12 +195,32 @@ async function populateInitialData() {
     //INITIAL REVIEWS DATA**********************************************************************
     console.log("Starting to add reviews...");
     const reviewsToCreate = [
-      { creatorId: 1, productId: 1, name: "Review 1", description: "This is the first review" },
-      { creatorId: 3, productId: 2, name: "Review 2", description: "This is the second review" },
-      { creatorId: 4, productId: 3, name: "Review 3", description: "This is the third review" },
-      { creatorId: 2, productId: 1, name: "Review 4", description: "This is the fourth review" },
-    ]
-    const reviews = await Promise.all(reviewsToCreate.map(Review.createReview))
+      {
+        creatorId: 1,
+        productId: 1,
+        name: "Review 1",
+        description: "This is the first review",
+      },
+      {
+        creatorId: 3,
+        productId: 2,
+        name: "Review 2",
+        description: "This is the second review",
+      },
+      {
+        creatorId: 4,
+        productId: 3,
+        name: "Review 3",
+        description: "This is the third review",
+      },
+      {
+        creatorId: 2,
+        productId: 1,
+        name: "Review 4",
+        description: "This is the fourth review",
+      },
+    ];
+    const reviews = await Promise.all(reviewsToCreate.map(Review.createReview));
 
     console.log("Reviews created:");
     console.log(reviews);
@@ -159,8 +232,8 @@ async function populateInitialData() {
       { isActive: false },
       { isActive: true },
       { isActive: false },
-    ]
-    const guests = await Promise.all(guestsToCreate.map(Guest.createGuest))
+    ];
+    const guests = await Promise.all(guestsToCreate.map(Guest.createGuest));
 
     console.log("Guests created:");
     console.log(guests);
@@ -168,12 +241,8 @@ async function populateInitialData() {
 
     //INITIAL ORDERS DATA**********************************************************************
     console.log("Starting to create orders...");
-    const ordersToCreate = [
-      { isUserId: 2 },
-      { isGuestId: 2 },
-      { isUserId: 5 },
-    ]
-    const orders = await Promise.all(ordersToCreate.map(Order.createOrder))
+    const ordersToCreate = [{ isUserId: 2 }, { isGuestId: 2 }, { isUserId: 5 }];
+    const orders = await Promise.all(ordersToCreate.map(Order.createOrder));
 
     console.log("Orders created:");
     console.log(orders);
@@ -182,11 +251,23 @@ async function populateInitialData() {
     //INITIAL PHOTOS DATA**********************************************************************
     console.log("Starting to create photos...");
     const photosToCreate = [
-      { description: "Candle 1", link: "https://image.shutterstock.com/image-photo/luxury-lighting-aromatic-scent-candle-260nw-1908721786.jpg", productId: 1 },
-      { description: "Candle 2", link: "https://image.shutterstock.com/image-photo/burning-candles-on-table-indoors-600w-1124996348.jpg", productId: 2 },
-      { description: "Candle 1 Multiple", link: "https://image.shutterstock.com/image-photo/cozy-home-interior-decor-burning-600w-1037164117.jpg", productId: 1 },
-    ]
-    const photos = await Promise.all(photosToCreate.map(Photo.createPhoto))
+      {
+        description: "Candle 1",
+        link: "https://image.shutterstock.com/image-photo/luxury-lighting-aromatic-scent-candle-260nw-1908721786.jpg",
+        productId: 1,
+      },
+      {
+        description: "Candle 2",
+        link: "https://image.shutterstock.com/image-photo/burning-candles-on-table-indoors-600w-1124996348.jpg",
+        productId: 2,
+      },
+      {
+        description: "Candle 1 Multiple",
+        link: "https://image.shutterstock.com/image-photo/cozy-home-interior-decor-burning-600w-1037164117.jpg",
+        productId: 1,
+      },
+    ];
+    const photos = await Promise.all(photosToCreate.map(Photo.createPhoto));
 
     console.log("Photos created:");
     console.log(photos);
@@ -199,27 +280,29 @@ async function populateInitialData() {
       { productId: 3, productQty: 3, cartGuestId: 2 },
       { productId: 6, productQty: 3, cartUserId: 3 },
       { productId: 2, productQty: 5, cartUserId: 5 },
-    ]
-    const carts = await Promise.all(cartsToCreate.map(Cart.addToCart))
+    ];
+    const carts = await Promise.all(cartsToCreate.map(Cart.addToCart));
 
     console.log("Carts created:");
     console.log(carts);
     console.log("Finished creating carts!");
 
     console.log("Checking the cart belonging to user with id=5:");
-    const userWithCart = await User.getUserById({ id: 5})
+    const userWithCart = await User.getUserById({ id: 5 });
     console.log(userWithCart);
     console.log("Finished checking cart!");
 
     //TRY ADDING CART TO ORDER*********************************************************************
     console.log("Creating order from cart belonging to user with id=5:");
-    const userId5Order = await Order.createOrderFromCart({ isUserId: 5 })
+    const userId5Order = await Order.createOrderFromCart({ isUserId: 5 });
     console.log("Order created:");
     console.log(userId5Order);
     console.log("Finished creating order!");
 
-    console.log("Checking the cart belonging to user with id=5 after order creation:");
-    const userId5Cart = await User.getUserById({ id: 5})
+    console.log(
+      "Checking the cart belonging to user with id=5 after order creation:"
+    );
+    const userId5Cart = await User.getUserById({ id: 5 });
     console.log(userId5Cart);
     console.log("Finished checking cart!");
 
@@ -235,13 +318,11 @@ async function populateInitialData() {
     // console.log("Finished creating order_products!");
 
     // console.log("Checking the userOrders belonging to user with id=5:");
-    // const userOrders = await 
+    // const userOrders = await
     // console.log(userOrders);
     // console.log("Finished checking userOrders!");
-
-    
   } catch (error) {
-    console.error("Error creating initial seed")
+    console.error("Error creating initial seed");
     throw error;
   }
 }
