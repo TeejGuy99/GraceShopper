@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+// Font Variables
+$josefin-font: "Josefin Slab", serif;
+$jost-font: "Jost", sans-serif;
+
+// Header Variables
+$navBg: #929982;
+
+// Hero-Page aka Home-Page img
+$heroImg: "src/img/hero.jpg";
+$grayBtn: #d9d9d9;
+$brownBox: rgba(146, 103, 74, 0.7);
+
+// Order Status text Color
+$litBrwn: #b06e41;
+
+// Universal Button Color
+$univBlkBtn: #272727;
+
+// Spacing Variables
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 32px;
+
+$header-height: 72px;
+
+// Breakpoints
+$sm: 37.5em;
+$md: 48em;
+$lg: 64em;
+$xl: 75em;
+
+@mixin breakpoint($point) {
+  @if $point == md {
+    @media (min-width: $md) {
+      @content;
+    }
+  }
+}

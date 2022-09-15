@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { BsPersonFill, BsFillCartFill } from "react-icons/bs";
+import "../style/Header.scss";
 
 function Header(props) {
   const { isUserAdmin } = props;
@@ -11,18 +13,17 @@ function Header(props) {
   return (
     <>
       <div id="header-container">
-        <h1>Kashyyyk Candles</h1>
-        <ul>
-          <li>
-            {" "}
+        <div className="logo-brand">
+          <p>Kashyyyk Candles</p>
+        </div>
+        <nav>
+          <div className="nav-links">
             <NavLink
-              to="/home"
+              to="/"
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               HOME
             </NavLink>
-          </li>
-          <li>
             <NavLink
               to="/candles"
               className={({ isActive }) =>
@@ -31,8 +32,6 @@ function Header(props) {
             >
               CANDLES
             </NavLink>
-          </li>
-          <li>
             <NavLink to="/wax-melts">
               {({ isActive }) => (
                 <span className={isActive ? activeClassName : undefined}>
@@ -40,8 +39,6 @@ function Header(props) {
                 </span>
               )}
             </NavLink>
-          </li>
-          <li>
             <NavLink
               to="/all-products"
               className={({ isActive }) =>
@@ -50,11 +47,8 @@ function Header(props) {
             >
               ALL PRODUCTS
             </NavLink>
-          </li>
-          {isUserAdmin ? (
-            <>
-              {" "}
-              <li>
+            {isUserAdmin ? (
+              <>
                 <NavLink
                   to="/admin"
                   className={({ isActive }) =>
@@ -63,32 +57,28 @@ function Header(props) {
                 >
                   Admin
                 </NavLink>
-              </li>
-            </>
-          ) : null}
-        </ul>
-        <ul id="header-right">
-          <li>
+              </>
+            ) : null}
+          </div>
+          <div className="icon-links">
             <NavLink
               to="/login"
               className={({ isActive }) =>
                 isActive ? activeClassName : undefined
               }
             >
-              profile image
+              <BsPersonFill />
             </NavLink>
-          </li>
-          <li>
             <NavLink
               to="/cart"
               className={({ isActive }) =>
                 isActive ? activeClassName : undefined
               }
             >
-              cart image
+              <BsFillCartFill />
             </NavLink>
-          </li>
-        </ul>
+          </div>
+        </nav>
       </div>
     </>
   );
