@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
 import { AdBanner, ItemCard, Header } from "./index";
 import { Register, AdminPage, HomePage, Login } from "../pages";
-import { getAllUsers, getAllProducts } from "../api";
+import { getAllUsers, getReviews, getAllOrders, getAllProducts, getAllProductPhotos, logInUser, registerUser, makeUserAdmin, getAllGuests, getAllCarts } from "../api";
 
 const App = () => {
   //UseState for various properties
@@ -25,8 +25,30 @@ const App = () => {
   //   setUserCartItems([]);
   // }
 
-  useEffect(() => {
+  const runTests = () => {
+    console.log("users: ");
     console.log(getAllUsers());
+    console.log("guests: ");
+    console.log(getAllGuests());
+    console.log("carts: ");
+    console.log(getAllCarts());
+    console.log("products: ");
+    console.log(getAllProducts());
+    // console.log("reviews: ");
+    // console.log(getReviews());
+    console.log("photos: ");
+    console.log(getAllProductPhotos());
+    console.log("orders");
+    console.log(getAllOrders());
+    console.log("attempting to sign in as tim@seed.com: ");
+    console.log(logInUser("tim@seed.com", "tim01"));
+    console.log("attempting to create a new user TeejGuy with password of password: ");
+    console.log(registerUser("TeejGuy", "password"));
+    console.log("attempting to make TeejGuy an admin: ");
+    console.log(makeUserAdmin(6));
+  }
+  useEffect(() => {
+    // runTests();
   }, []);
 
   return (

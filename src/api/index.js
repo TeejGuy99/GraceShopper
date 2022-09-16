@@ -32,7 +32,7 @@ export async function getUserInfo(userID) {
 	}
 }
 
-export async function logInUser({ username, password }) {
+export async function logInUser( username, password ) {
 	try {
 		return fetch(`${BASE_URL}/user/login`, {
 			method: "POST",
@@ -40,8 +40,8 @@ export async function logInUser({ username, password }) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username: username,
-				password: password,
+				email: username,
+				password: password
 			}),
 		})
 			.then((response) => response.json())
@@ -54,7 +54,7 @@ export async function logInUser({ username, password }) {
 	}
 }
 
-export async function registerUser({ username, password }) {
+export async function registerUser( username, password ) {
 	try {
 		return fetch(`${BASE_URL}/user/register`, {
 			method: "POST",
@@ -62,7 +62,7 @@ export async function registerUser({ username, password }) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username: username,
+				email: username,
 				password: password,
 			}),
 		})
@@ -271,13 +271,12 @@ export async function getGuest({ token, guestID }) {
 	}
 }
 
-export async function makeUserAdmin({ token, userID }) {
+export async function makeUserAdmin( userID ) {
 	try {
-		return fetch(`${BASE_URL}/makeAdmin/${userID}`, {
+		return fetch(`${BASE_URL}/user/makeAdmin/${userID}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				userID: userID
