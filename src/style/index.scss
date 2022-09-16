@@ -1,0 +1,13 @@
+@import "src/style/variables.scss";
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $jost-font;
+  height: 200vh;
+}
