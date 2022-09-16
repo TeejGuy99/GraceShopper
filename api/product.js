@@ -5,16 +5,24 @@ const { Product } = require('../db');
 // GET /api/product
 router.get('/', async(req, res, next) => {
     try {
-        const products = await Product.getAllProducts();
+        // Checks if there is a category query (e.g., http://localhost:4000/api/product/?category=Candle)
+        let category = req.query.category;
+        if (category) {
+            let products = await Product.getProductsByCategory({ category: category })
 
-        res.send(products)
+            res.send(products)
+        } else {
+            const products = await Product.getAllProducts();
+
+            res.send(products)
+        }
     } catch (error) {
         console.error(error)
         next(error)
     }
 })
 
-// GET /api/product/:productid
+// GET /api/product/:productId
 router.get('/:productId', async(req, res, next) => {
     try {
         const { productId } = req.params;
@@ -28,7 +36,6 @@ router.get('/:productId', async(req, res, next) => {
         next(error)
     }
 })
-
 
 // ADMIN ROUTES*************************************************
 
