@@ -87,6 +87,7 @@ nav {
 
   &.close {
     transition: 0.3s ease-out;
+    background-color: initial;
     right: -100%;
   }
 
