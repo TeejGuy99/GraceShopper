@@ -70,7 +70,6 @@ const App = () => {
 	const getCart = () => {
 		getUserInfo(3)
 		.then((result) => {
-			console.log(result);
 			setUserCartItems(result.cart);
 		})
 		.catch(console.error)

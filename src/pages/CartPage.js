@@ -11,6 +11,7 @@ const CartPage = (props) => {
         margin: "1em",
         padding: "1em"
     }
+
     useEffect(() => {
         // console.log("attempting to sign in as tim@seed.com: ");
 		// console.log(logInUser("tim@seed.com", "tim01"));
@@ -18,16 +19,15 @@ const CartPage = (props) => {
         // console.log(getUserInfo(3));
 		// const items = getUserCartItems;
         // console.log(items);
-        console.log(getSingleProduct(1));
 	}, []);
     return(
         <div id="cart" style={cartStyle}>
             <h1>Your Cart</h1>
             {getUserCartItems?.length && getUserCartItems.map((items) => (
                 <div>
-                    <p>{items.productPrice}</p>
-                    <p></p>
-                    <p>{items.productQty}</p>
+                    <p>Price: {items.productPrice}</p>
+                    <p>Quantity: {items.productQty}</p>
+                    <p>Item ID: {items.productId}</p>
                 </div>
                 
             ))}
