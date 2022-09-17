@@ -18,7 +18,7 @@ export async function getAllUsers() {
 
 export async function getUserInfo(userID) {
 	try {
-		return await fetch(`${BASE_URL}/user/${userID}`, {
+		return fetch(`${BASE_URL}/user/${userID}`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -91,7 +91,7 @@ export async function getAllProducts() {
 	}
 }
 
-export async function getSingleProduct({ productID }) {
+export async function getSingleProduct( productID ) {
 	try {
 		return await fetch(`${BASE_URL}/product/${productID}`, {
 			headers: {

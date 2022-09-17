@@ -8,6 +8,9 @@ import {
 	HomePage,
 	Login,
 	AllProductsPage,
+	CartPage,
+	WaxMeltsPage,
+	CandlesPage
 } from "../pages";
 import {
 	getAllUsers,
@@ -19,6 +22,7 @@ import {
 	makeUserAdmin,
 	getAllGuests,
 	getAllCarts,
+	getUserInfo
 } from "../api";
 
 const App = () => {
@@ -63,10 +67,21 @@ const App = () => {
 		console.log(makeUserAdmin(6));
 	};
 
+	const getCart = () => {
+		getUserInfo(3)
+		.then((result) => {
+			console.log(result);
+			setUserCartItems(result.cart);
+		})
+		.catch(console.error)
+	}
+
 	useEffect(() => {
 		// runTests();
+		getCart();
 	}, []);
 
+	
 	return (
 		<Router>
 			<div className="app-container">
@@ -83,7 +98,10 @@ const App = () => {
 							/>
 						}
 					/>
-					<Route exact path="/all-products" element={<AllProductsPage />} />
+					<Route exact path="/all-products" element={<AllProductsPage isLoggedIn={isLoggedIn} setUserCartItems={setUserCartItems} />} />
+					<Route exact path="/cart" element={<CartPage isLoggedIn={isLoggedIn} getUserCartItems={getUserCartItems} logInUser={logInUser} getUserInfo={getUserInfo}/>} />
+					<Route exact path="/candles" element={<CandlesPage isLoggedIn={isLoggedIn} setUserCartItems={setUserCartItems} />} />
+					<Route exact path="/wax-melts" element={<WaxMeltsPage isLoggedIn={isLoggedIn} setUserCartItems={setUserCartItems} />} />
 					<Route
 						exact
 						path="/login"
