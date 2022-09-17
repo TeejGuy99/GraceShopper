@@ -24,15 +24,41 @@
       flex: 1;
       white-space: nowrap;
 
-      // &:nth-child(2) {
-      //   display: flex;
-      //   justify-content: center;
-      //   height: 100%;
-      // }
-      // &:last-of-type {
-      //   display: flex;
-      //   justify-content: flex-end;
-      // }
+      &:nth-child(2) {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+      }
+
+      &:last-of-type {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 2rem;
+      }
+    }
+  }
+  .button-container {
+    display: none;
+    @include breakpoint(md) {
+      display: initial;
+    }
+  }
+
+  .header-toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: initial;
+    border: none;
+    color: #fff;
+
+    @include breakpoint(md) {
+      display: none;
+    }
+    & > svg {
+      display: block;
+      font-size: 23px;
     }
   }
 }
@@ -45,13 +71,24 @@
 }
 
 nav {
+  // display: none;
   width: 100%;
   position: fixed;
   top: $header-height;
-  right: 0;
+  right: -100%;
   background-color: rgba($univBlkBtn, 0.8);
   text-align: center;
   padding: $spacing-md 0;
+
+  &.activated {
+    transition: 0.4s ease right;
+    right: 0;
+  }
+
+  &.close {
+    transition: 0.3s ease-out;
+    right: -100%;
+  }
 
   & a {
     display: block;
@@ -61,6 +98,7 @@ nav {
     font-size: 1.2em;
     height: 100%;
     transition: 0.3s ease color;
+
     &:hover {
       color: $litBrwn;
     }
@@ -68,14 +106,11 @@ nav {
 
   @include breakpoint(md) {
     position: static;
-    // display: grid;
-    // grid-template-columns: repeat(7, 1fr);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
     width: auto;
     padding: 0;
-    background-color: inherit;
+    background-color: initial;
 
     & a {
       padding: 0 $spacing-lg;
@@ -86,4 +121,43 @@ nav {
       font-size: 18px;
     }
   }
+
+  .nav-button-container {
+    @include breakpoint(md) {
+      display: none;
+    }
+    padding: $spacing-md;
+  }
+}
+
+.user-icons {
+  a {
+    color: $univBlkBtn;
+    margin-right: 1.5rem;
+  }
+  a:hover {
+    transition: 0.2s ease color;
+    color: #fff;
+  }
+}
+
+.button {
+  // font-weight: 500;
+  // color: #ffff;
+  // border: 2px solid #ffff;
+  // padding: $spacing-sm $spacing-lg;
+  // border-radius: $spacing-sm / 2;
+  // background-color: initial;
+  // cursor: pointer;
+
+  //   box-shadow: 0 0 0.5em #fff;
+
+  //   &:active {
+  //     transform: scale(0.98);
+  //     border-radius: 0;
+  //   }
+
+  //   &:hover {
+  //     box-shadow: 0 0 0.75em 0 blue;
+  //   }
 }
