@@ -20,7 +20,7 @@ module.exports = {
     const { rows: [ guest ] } = await client.query(`
       INSERT INTO guests("isActive")
       VALUES ($1)
-      RETURNING *;
+      RETURNING id AS "guestId";
     `, [ isActive ]);
   
     return guest

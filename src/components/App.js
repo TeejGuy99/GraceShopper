@@ -28,6 +28,8 @@ const App = () => {
 	const [getUserCartItems, setUserCartItems] = useState([]);
 	const [isItemAvailable, setItemAvailable] = useState(true);
 	const [isUserAdmin, setUserAdmin] = useState(false);
+	const [products, setProducts] = useState([]);
+	const [guestId, setGuestId] = useState(0);
 
 	//Helper Functions
 
@@ -83,7 +85,14 @@ const App = () => {
 							/>
 						}
 					/>
-					<Route exact path="/all-products" element={<AllProductsPage />} />
+					<Route 
+						exact path="/all-products" 
+						element={
+							<AllProductsPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}/>} />
 					<Route
 						exact
 						path="/login"

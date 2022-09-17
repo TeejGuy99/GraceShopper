@@ -47,7 +47,9 @@ async function makeAdmin({ email }) {
 
 async function getUserById({ id }) {
   const { rows: cart } = await client.query(`
-    SELECT id AS cartId, "productId", "productPrice", "productQty" FROM carts
+    SELECT carts.id AS cartId, carts."productId", carts."productPrice", carts."productQty", products.name AS "productName"
+    FROM carts
+    JOIN products ON carts."productId"=products.id
     WHERE "cartUserId"=$1
     AND "isActive"=true;
   `, [ id ])

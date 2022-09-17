@@ -290,3 +290,26 @@ export async function makeUserAdmin( userID ) {
 		console.error(error);
 	}
 }
+
+export async function addToCart(productId, productQty, cartGuestId ) {
+	try { 
+		return fetch(`${BASE_URL}/cart`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productId: productId,
+				productQty: productQty,
+				cartGuestId: cartGuestId
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			})
+
+	} catch (error) {
+		console.error(error)
+	}
+}

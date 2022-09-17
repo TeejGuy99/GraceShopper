@@ -18,17 +18,22 @@ router.get('/', async(req, res, next) => {
 // POST /api/cart *ADD TO USER CART FOR GUESTS OR REGISTERED USERS*
 router.post('/', async(req, res, next) => {
     try {
-        const { productId, productQty } = req.body
+        const { productId, productQty, cartGuestId } = req.body
 
         if (req.user) {
             const { cartUserId } = req.user.userId
             const createdCart = await Cart.addToCart({ productId, productQty, cartUserId })
             res.send(createdCart)
         } else {
-            const { cartGuestId } = await Guest.createGuest({ isActive: true })
-            localStorage.setItem('guestId', cartGuestId)
-            const createdCart = await Cart.addToCart({ productId, productQty, cartGuestId })
-            res.send(createdCart)
+            if (cartGuestId === 0) {
+                const newGuest = await Guest.createGuest({ isActive: true })
+                const createdCart = await Cart.addToCart({ productId, productQty, cartGuestId: newGuest.guestId })
+                res.send(createdCart)
+            } 
+            else {
+                const createdCart = await Cart.addToCart({ productId, productQty, cartGuestId })
+                res.send(createdCart)
+            }
         }
 
     } catch (error) {
