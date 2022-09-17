@@ -8,6 +8,7 @@ module.exports = {
     getAllProducts,
     createProduct,
     getProductById,
+    getProductsByCategory,
     deleteProduct,
     updateProduct
   };
@@ -50,6 +51,17 @@ module.exports = {
     product.reviews = reviews
 
     return product
+  }
+
+  async function getProductsByCategory({ category }) {
+    // const photos = await getPhotosByProductId({ productId: id })
+
+    const { rows } = await client.query(`
+      SELECT * FROM products
+      WHERE category=$1;
+    `, [ category ])
+
+    return rows
   }
 
   async function deleteProduct({ id }) {

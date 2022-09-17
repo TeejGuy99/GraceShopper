@@ -108,7 +108,7 @@ async function populateInitialData() {
       { email: "kasie@seed.com", password: "kasie01" },
       { email: "tim@seed.com", password: "tim01" },
       { email: "chris@seed.com", password: "chris01" },
-      { email: "admin@seed.com", password: "admin01" },
+      { email: "admin@seed.com", password: "admin01" }
     ];
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
@@ -116,7 +116,7 @@ async function populateInitialData() {
     console.log(users);
     console.log("Finished creating users!");
 
-    console.log("Making chris an admin...");
+    console.log("Making the admin account...");
     const userToMakeAdmin = { email: "admin@seed.com" };
     const admin = await User.makeAdmin(userToMakeAdmin);
     console.log("Users made admin:");
@@ -347,6 +347,11 @@ async function populateInitialData() {
     // const userOrders = await
     // console.log(userOrders);
     // console.log("Finished checking userOrders!");
+
+    console.log("Try only getting candles")
+    const onlyCandles = await Product.getProductsByCategory({ category: "Candle"})
+    console.log(onlyCandles);
+    console.log("Finished getting Candles!");
   } catch (error) {
     console.error("Error creating initial seed");
     throw error;
