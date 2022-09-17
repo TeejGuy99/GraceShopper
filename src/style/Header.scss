@@ -87,6 +87,7 @@ nav {
 
   &.close {
     transition: 0.3s ease-out;
+    background-color: initial;
     right: -100%;
   }
 
@@ -139,25 +140,4 @@ nav {
     transition: 0.2s ease color;
     color: #fff;
   }
-}
-
-.button {
-  // font-weight: 500;
-  // color: #ffff;
-  // border: 2px solid #ffff;
-  // padding: $spacing-sm $spacing-lg;
-  // border-radius: $spacing-sm / 2;
-  // background-color: initial;
-  // cursor: pointer;
-
-  //   box-shadow: 0 0 0.5em #fff;
-
-  //   &:active {
-  //     transform: scale(0.98);
-  //     border-radius: 0;
-  //   }
-
-  //   &:hover {
-  //     box-shadow: 0 0 0.75em 0 blue;
-  //   }
 }
