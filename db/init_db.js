@@ -108,6 +108,7 @@ async function populateInitialData() {
       { email: "kasie@seed.com", password: "kasie01" },
       { email: "tim@seed.com", password: "tim01" },
       { email: "chris@seed.com", password: "chris01" },
+      { email: "admin@seed.com", password: "admin01" },
     ];
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
@@ -116,11 +117,11 @@ async function populateInitialData() {
     console.log("Finished creating users!");
 
     console.log("Making chris an admin...");
-    const userToMakeAdmin = { email: "chris@seed.com" };
+    const userToMakeAdmin = { email: "admin@seed.com" };
     const admin = await User.makeAdmin(userToMakeAdmin);
     console.log("Users made admin:");
     console.log(admin);
-    console.log("chris@seed.com made an admin!");
+    console.log("admin@seed.com made an admin!");
 
     //INITIAL PRODUCTS DATA**********************************************************************
     console.log("Starting to add products...");

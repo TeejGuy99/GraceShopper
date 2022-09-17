@@ -20,7 +20,7 @@ router.post('/login', async (req, res, next) => {
         const passwordsMatch = await bcrypt.compare(password, hashedPassword);
         if (user&&passwordsMatch) {
             const jwt = require('jsonwebtoken');
-            const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET)
+            const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET);
             delete user.password;
             delete user.isAdmin;
             res.send({ user: user, message: "you're logged in!", token: token });
