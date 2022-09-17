@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BsPersonFill, BsFillCartFill } from "react-icons/bs";
-import "../style/Header.scss";
+import { FaBars, FaWindowClose } from "react-icons/fa";
+import styles from "../style/Header.scss";
 
 function Header(props) {
   const { isUserAdmin } = props;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggler = () => setMenuOpen((p) => !p);
+
   let activeStyle = {
     textDecoration: "underline",
   };
@@ -16,69 +20,104 @@ function Header(props) {
         <div className="logo-brand">
           <p>KASHYYYK CANDLES</p>
         </div>
-        <nav>
-          <NavLink
-            to="/home"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            HOME
-          </NavLink>
-          <NavLink
-            to="/candles"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
-          >
-            CANDLES
-          </NavLink>
-          <NavLink to="/wax-melts">
-            {({ isActive }) => (
-              <span className={isActive ? activeClassName : undefined}>
-                WAX MELTS
-              </span>
-            )}
-          </NavLink>
-          <NavLink
-            to="/all-products"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
-          >
-            ALL PRODUCTS
-          </NavLink>
-          {isUserAdmin ? (
-            <>
+        <div>
+          <nav className={`${menuOpen ? `activated` : `close `}`}>
+            <NavLink
+              to="/home"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              HOME
+            </NavLink>
+            <NavLink
+              to="/candles"
+              className={({ isActive }) =>
+                isActive ? activeClassName : undefined
+              }
+            >
+              CANDLES
+            </NavLink>
+            <NavLink to="/wax-melts">
+              {({ isActive }) => (
+                <span className={isActive ? activeClassName : undefined}>
+                  WAX MELTS
+                </span>
+              )}
+            </NavLink>
+            <NavLink
+              to="/all-products"
+              className={({ isActive }) =>
+                isActive ? activeClassName : undefined
+              }
+            >
+              ALL PRODUCTS
+            </NavLink>
+            {isUserAdmin ? (
+              <>
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    isActive ? activeClassName : undefined
+                  }
+                >
+                  Admin
+                </NavLink>
+              </>
+            ) : null}
+
+            <div className="nav-button-container">
+              <div className="user-icon">
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? activeClassName : undefined
+                  }
+                >
+                  <BsPersonFill size={25} />
+                </NavLink>
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    isActive ? activeClassName : undefined
+                  }
+                >
+                  <BsFillCartFill size={25} />
+                </NavLink>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div>
+          <div className="button-container">
+            <div className="user-icons">
               <NavLink
-                to="/admin"
+                to="/login"
                 className={({ isActive }) =>
                   isActive ? activeClassName : undefined
                 }
               >
-                Admin
+                <BsPersonFill size={25} />
               </NavLink>
-            </>
-          ) : null}
-
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
-          >
-            <BsPersonFill size={25} />
-          </NavLink>
-          <NavLink
-            to="/cart"
-            className={({ isActive }) =>
-              isActive ? activeClassName : undefined
-            }
-          >
-            <BsFillCartFill size={25} />
-          </NavLink>
-        </nav>
+              <NavLink
+                to="/cart"
+                className={({ isActive }) =>
+                  isActive ? activeClassName : undefined
+                }
+              >
+                <BsFillCartFill size={25} />
+              </NavLink>
+            </div>
+          </div>
+          <button className="header-toggler" onClick={menuToggler}>
+            {!menuOpen ? <FaBars /> : <FaWindowClose />}
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
+// const Button = () => {
+//   return <button className="button">click me</button>;
+// };
 
 export default Header;
