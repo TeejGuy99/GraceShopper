@@ -4,7 +4,6 @@ import { LoginForm } from "../components";
 function Login() {
   return (
     <>
-      <div>Login</div>
       <LoginForm />
     </>
   );
