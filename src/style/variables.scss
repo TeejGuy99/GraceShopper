@@ -37,4 +37,10 @@ $xl: 75em;
       @content;
     }
   }
+
+  @if $point == sm {
+    @media (max-width: $sm) {
+      @content;
+    }
+  }
 }
