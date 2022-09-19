@@ -3,22 +3,22 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
 import { AdBanner, ItemCard, Header } from "./index";
 import {
-	Register,
-	AdminPage,
-	HomePage,
-	Login,
-	AllProductsPage,
+  Register,
+  AdminPage,
+  HomePage,
+  Login,
+  AllProductsPage,
 } from "../pages";
 import {
-	getAllUsers,
-	getAllOrders,
-	getAllProducts,
-	getAllProductPhotos,
-	logInUser,
-	registerUser,
-	makeUserAdmin,
-	getAllGuests,
-	getAllCarts,
+  getAllUsers,
+  getAllOrders,
+  getAllProducts,
+  getAllProductPhotos,
+  logInUser,
+  registerUser,
+  makeUserAdmin,
+  getAllGuests,
+  getAllCarts,
 } from "../api";
 
 const App = () => {
@@ -31,43 +31,43 @@ const App = () => {
 	const [products, setProducts] = useState([]);
 	const [guestId, setGuestId] = useState(0);
 
-	//Helper Functions
+  //Helper Functions
 
-	//Reset all user state on logout
-	// const resetUserStates = () => {
-	//   setUserToken(localStorage.clear());
-	//   setLoggedIn(false);
-	//   setUserCartItems([]);
-	// }
+  //Reset all user state on logout
+  // const resetUserStates = () => {
+  //   setUserToken(localStorage.clear());
+  //   setLoggedIn(false);
+  //   setUserCartItems([]);
+  // }
 
-	const runTests = () => {
-		console.log("users: ");
-		console.log(getAllUsers());
-		console.log("guests: ");
-		console.log(getAllGuests());
-		console.log("carts: ");
-		console.log(getAllCarts());
-		console.log("products: ");
-		console.log(getAllProducts());
-		// console.log("reviews: ");
-		// console.log(getReviews());
-		console.log("photos: ");
-		console.log(getAllProductPhotos());
-		console.log("orders");
-		console.log(getAllOrders());
-		console.log("attempting to sign in as tim@seed.com: ");
-		console.log(logInUser("tim@seed.com", "tim01"));
-		console.log(
-			"attempting to create a new user TeejGuy with password of password: "
-		);
-		console.log(registerUser("TeejGuy", "password"));
-		console.log("attempting to make TeejGuy an admin: ");
-		console.log(makeUserAdmin(6));
-	};
+  const runTests = () => {
+    console.log("users: ");
+    console.log(getAllUsers());
+    console.log("guests: ");
+    console.log(getAllGuests());
+    console.log("carts: ");
+    console.log(getAllCarts());
+    console.log("products: ");
+    console.log(getAllProducts());
+    // console.log("reviews: ");
+    // console.log(getReviews());
+    console.log("photos: ");
+    console.log(getAllProductPhotos());
+    console.log("orders");
+    console.log(getAllOrders());
+    console.log("attempting to sign in as tim@seed.com: ");
+    console.log(logInUser("tim@seed.com", "tim01"));
+    console.log(
+      "attempting to create a new user TeejGuy with password of password: "
+    );
+    console.log(registerUser("TeejGuy", "password"));
+    console.log("attempting to make TeejGuy an admin: ");
+    console.log(makeUserAdmin(6));
+  };
 
-	useEffect(() => {
-		// runTests();
-	}, []);
+  useEffect(() => {
+    // runTests();
+  }, []);
 
 	return (
 		<Router>
@@ -108,24 +108,24 @@ const App = () => {
 					/>
 					<Route exact path="/register" element={<Register />} />
 
-					<Route
-						exact
-						path="/admin"
-						element={
-							isUserAdmin ? (
-								<AdminPage
-									isUserAdmin={isUserAdmin}
-									getUserCartItems={getUserCartItems}
-									isLoggedIn={isLoggedIn}
-									setItemAvailable={setItemAvailable}
-								/>
-							) : null
-						}
-					/>
-				</Routes>
-			</div>
-		</Router>
-	);
+          <Route
+            exact
+            path="/admin"
+            element={
+              isUserAdmin ? (
+                <AdminPage
+                  isUserAdmin={isUserAdmin}
+                  getUserCartItems={getUserCartItems}
+                  isLoggedIn={isLoggedIn}
+                  setItemAvailable={setItemAvailable}
+                />
+              ) : null
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
