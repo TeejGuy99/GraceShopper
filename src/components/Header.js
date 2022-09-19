@@ -23,7 +23,7 @@ function Header(props) {
         <div>
           <nav className={`${menuOpen ? `activated` : `close `}`}>
             <NavLink
-              to="/home"
+              to="/"
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               HOME
