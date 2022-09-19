@@ -8,6 +8,8 @@ import {
   HomePage,
   Login,
   AllProductsPage,
+  CandlesPage,
+  WaxMeltsPage
 } from "../pages";
 import {
   getAllUsers,
@@ -92,7 +94,32 @@ const App = () => {
 								products={products} 
 								setProducts={setProducts}
 								guestId={guestId}
-								setGuestId={setGuestId}/>} />
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
+					<Route 
+						exact path="/candles" 
+						element={
+							<CandlesPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
+					<Route 
+						exact path="/wax-melts" 
+						element={
+							<WaxMeltsPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
 					<Route
 						exact
 						path="/login"
