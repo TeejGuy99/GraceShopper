@@ -8,6 +8,8 @@ import {
   HomePage,
   Login,
   AllProductsPage,
+  CandlesPage,
+  WaxMeltsPage
 } from "../pages";
 import {
   getAllUsers,
@@ -22,12 +24,14 @@ import {
 } from "../api";
 
 const App = () => {
-  //UseState for various properties
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [getUserToken, setUserToken] = useState("");
-  const [getUserCartItems, setUserCartItems] = useState([]);
-  const [isItemAvailable, setItemAvailable] = useState(true);
-  const [isUserAdmin, setUserAdmin] = useState(false);
+	//UseState for various properties
+	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [getUserToken, setUserToken] = useState("");
+	const [getUserCartItems, setUserCartItems] = useState([]);
+	const [isItemAvailable, setItemAvailable] = useState(true);
+	const [isUserAdmin, setUserAdmin] = useState(false);
+	const [products, setProducts] = useState([]);
+	const [guestId, setGuestId] = useState(0);
 
   //Helper Functions
 
@@ -67,37 +71,69 @@ const App = () => {
     // runTests();
   }, []);
 
-  return (
-    <Router>
-      <div className="app-container">
-        <Header isUserAdmin={isUserAdmin} />
-        {/* <AdBanner/> */}
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <HomePage
-                getUserToken={getUserToken}
-                isItemAvailable={isItemAvailable}
-              />
-            }
-          />
-          <Route exact path="/all-products" element={<AllProductsPage />} />
-          <Route
-            exact
-            path="/login"
-            element={
-              <Login
-                isLoggedIn={isLoggedIn}
-                setLoggedIn={setLoggedIn}
-                setUserToken={setUserToken}
-                getUserToken={getUserToken}
-                setUserAdmin={setUserAdmin}
-              />
-            }
-          />
-          <Route exact path="/register" element={<Register />} />
+	return (
+		<Router>
+			<div className="app-container">
+				<Header isUserAdmin={isUserAdmin} />
+				{/* <AdBanner/> */}
+				<Routes>
+					<Route
+						exact
+						path="/"
+						element={
+							<HomePage
+								getUserToken={getUserToken}
+								isItemAvailable={isItemAvailable}
+							/>
+						}
+					/>
+					<Route 
+						exact path="/all-products" 
+						element={
+							<AllProductsPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
+					<Route 
+						exact path="/candles" 
+						element={
+							<CandlesPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
+					<Route 
+						exact path="/wax-melts" 
+						element={
+							<WaxMeltsPage 
+								products={products} 
+								setProducts={setProducts}
+								guestId={guestId}
+								setGuestId={setGuestId}
+							/>
+						}
+					/>
+					<Route
+						exact
+						path="/login"
+						element={
+							<Login
+								isLoggedIn={isLoggedIn}
+								setLoggedIn={setLoggedIn}
+								setUserToken={setUserToken}
+								getUserToken={getUserToken}
+								setUserAdmin={setUserAdmin}
+							/>
+						}
+					/>
+					<Route exact path="/register" element={<Register />} />
 
           <Route
             exact

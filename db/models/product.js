@@ -19,9 +19,9 @@ module.exports = {
       SELECT * FROM products;
     `)
 
-    // for (i=0; i < rows.length; i++) {
-    //   rows[i].photos = 
-    // }
+    for (i=0; i < rows.length; i++) {
+      rows[i].photos = await getPhotosByProductId({productId: rows[i].id})
+    }
 
     return rows
   }
@@ -60,6 +60,10 @@ module.exports = {
       SELECT * FROM products
       WHERE category=$1;
     `, [ category ])
+
+    for (i=0; i < rows.length; i++) {
+      rows[i].photos = await getPhotosByProductId({productId: rows[i].id})
+    }
 
     return rows
   }

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../db');
+const { User, Guest } = require('../db');
 const { JWT_SECRET } = process.env;
 
 const express = require('express')
@@ -14,6 +14,11 @@ apiRouter.use(async (req, res, next) => {
     const auth = req.header('Authorization');
 
     if (!auth) {
+      // try {
+      //   req.user = await Guest.createGuest({ isActive: true })
+      // } catch ({ name, message }) {
+      //     next({ name, message });
+      // }
         next();
     } else if (auth.startsWith(prefix)) {
         const token = auth.slice(prefix.length);
@@ -22,9 +27,9 @@ apiRouter.use(async (req, res, next) => {
             const { id } = jwt.verify(token, JWT_SECRET);
 
             if (id) {
-                req.user = await User.getUserById(id);
+                req.user = await User.getUserById({ id: id });
                 next();
-            }
+            } 
         } catch ({ name, message }) {
             next({ name, message });
         }
@@ -48,7 +53,6 @@ apiRouter.use((req, res, next) => {
   console.log("<__Body Logger START__>");
   console.log(req.body);
   console.log("<__Body Logger END__>");
-
   next();
 });
 
