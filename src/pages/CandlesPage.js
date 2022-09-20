@@ -20,7 +20,6 @@ const CandlesPage = (props) => {
         useEffect(() =>{
             handleRoutines();
         }, []);
-        console.log('Products:', products);
     return(
         <div className="Products">
             {products.map((product) => { return (
