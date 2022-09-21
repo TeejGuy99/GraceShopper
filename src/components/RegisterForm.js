@@ -3,15 +3,11 @@ import { Link } from "react-router-dom";
 import { registerUser, logIn } from "../api";
 
 function RegisterForm(props) {
-<<<<<<< Updated upstream
   const {
     setLoggedIn,
     setUserToken,
   } = props;
 
-=======
-  const { setLoggedIn, setUserToken } = props;
->>>>>>> Stashed changes
   const [userNameString, setUserNameString] = useState('')
   const [passwordString, setPasswordString] = useState('')
 
@@ -21,18 +17,6 @@ function RegisterForm(props) {
       <form className="form-wrapper" onSubmit={async (event) => {
         try {
           event.preventDefault()
-<<<<<<< Updated upstream
-          const response = await registerUser(userNameString, passwordString)
-          const token = response.token
-          console.log(response, "response")
-          if (token) {
-            window.location='./'
-          } else {
-            alert('IDK something is wrong')
-          }
-        } catch (error) {
-          console.error(error)
-=======
            const response = await registerUser(userNameString, passwordString)
           if (response.error) {
               alert('Username already exists')
@@ -47,7 +31,6 @@ function RegisterForm(props) {
         }
         catch (error) {
             console.error(error)
->>>>>>> Stashed changes
         }
       }}>
         <label className="input-label">

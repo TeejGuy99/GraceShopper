@@ -134,21 +134,11 @@ const App = () => {
 					/>
 					<Route 
 						exact path="/register" 
-<<<<<<< Updated upstream
 						element={<Register 
 								setLoggedIn={setLoggedIn}
 								setUserToken={setUserToken}
-						/>
-						} 
-
-						/>
-=======
-						element={
-							<Register 
-								setLoggedIn={setLoggedIn}
-								setUserToken={setUserToken}
-							/>} />
->>>>>>> Stashed changes
+						/>} 
+					/>
 
           <Route
             exact
