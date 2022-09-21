@@ -1,10 +1,15 @@
 import React from "react";
 import { LoginForm } from "../components";
 
-function Login() {
+function Login(props) {
+  const { setLoggedIn, setUserToken, setUserAdmin} = props; 
   return (
     <>
-      <LoginForm />
+      <LoginForm 
+        setLoggedIn={setLoggedIn}
+        setUserToken={setUserToken}
+        setUserAdmin={setUserAdmin}
+      />
     </>
   );
 }

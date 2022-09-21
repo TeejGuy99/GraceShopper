@@ -1,11 +1,22 @@
 import React from "react";
 import { RegisterForm } from "../components";
 
-function Register() {
+function Register(props) {
+<<<<<<< Updated upstream
+  const {
+    setLoggedIn,
+    setUserToken
+  } = props;
+=======
+  const { setLoggedIn, setUserToken } = props; 
+>>>>>>> Stashed changes
   return (
     <>
       <div>Register</div>
-      <RegisterForm />
+      <RegisterForm 
+        setLoggedIn={setLoggedIn}
+        setUserToken={setUserToken}
+      />
     </>
   );
 }

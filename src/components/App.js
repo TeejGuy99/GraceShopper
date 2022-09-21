@@ -84,6 +84,7 @@ const App = () => {
 							<HomePage
 								getUserToken={getUserToken}
 								isItemAvailable={isItemAvailable}
+								isUserAdmin={isUserAdmin}
 							/>
 						}
 					/>
@@ -125,15 +126,29 @@ const App = () => {
 						path="/login"
 						element={
 							<Login
-								isLoggedIn={isLoggedIn}
 								setLoggedIn={setLoggedIn}
 								setUserToken={setUserToken}
-								getUserToken={getUserToken}
 								setUserAdmin={setUserAdmin}
 							/>
 						}
 					/>
-					<Route exact path="/register" element={<Register />} />
+					<Route 
+						exact path="/register" 
+<<<<<<< Updated upstream
+						element={<Register 
+								setLoggedIn={setLoggedIn}
+								setUserToken={setUserToken}
+						/>
+						} 
+
+						/>
+=======
+						element={
+							<Register 
+								setLoggedIn={setLoggedIn}
+								setUserToken={setUserToken}
+							/>} />
+>>>>>>> Stashed changes
 
           <Route
             exact

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import "../style/Login-Register.scss";
 import { logInUser, logIn } from "../api";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+    const { setLoggedIn, setUserToken, setUserAdmin} = props;
     const [userNameString, setUserNameString] = useState('')
     const [passwordString, setPasswordString] = useState('')
 
@@ -15,9 +16,13 @@ const LoginForm = () => {
           event.preventDefault()
           const response = await logInUser(userNameString, passwordString)
           const token = response.token
+          console.log(response);
           if (token) {
             logIn(JSON.stringify(token), userNameString)
-            window.location='./'
+            setUserToken(token)
+            setLoggedIn(true)
+            setUserAdmin(response.user.isAdmin)
+            // window.location='./'
           } else {
             alert('Username or Password is incorrect')
           }
