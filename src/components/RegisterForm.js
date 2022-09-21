@@ -17,16 +17,20 @@ function RegisterForm(props) {
       <form className="form-wrapper" onSubmit={async (event) => {
         try {
           event.preventDefault()
-          const response = await registerUser(userNameString, passwordString)
-          const token = response.token
-          console.log(response, "response")
-          if (token) {
-            window.location='./'
+           const response = await registerUser(userNameString, passwordString)
+          if (response.error) {
+              alert('Username already exists')
           } else {
-            alert('IDK something is wrong')
+              const token = response.token
+              logIn(JSON.stringify(token), userNameString)
+              setLoggedIn(true)
+              setUserToken(token)
+              window.location='./'
+              console.log(response)
           }
-        } catch (error) {
-          console.error(error)
+        }
+        catch (error) {
+            console.error(error)
         }
       }}>
         <label className="input-label">

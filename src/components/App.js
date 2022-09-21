@@ -84,6 +84,7 @@ const App = () => {
 							<HomePage
 								getUserToken={getUserToken}
 								isItemAvailable={isItemAvailable}
+								isUserAdmin={isUserAdmin}
 							/>
 						}
 					/>
@@ -125,10 +126,8 @@ const App = () => {
 						path="/login"
 						element={
 							<Login
-								isLoggedIn={isLoggedIn}
 								setLoggedIn={setLoggedIn}
 								setUserToken={setUserToken}
-								getUserToken={getUserToken}
 								setUserAdmin={setUserAdmin}
 							/>
 						}
@@ -138,10 +137,8 @@ const App = () => {
 						element={<Register 
 								setLoggedIn={setLoggedIn}
 								setUserToken={setUserToken}
-						/>
-						} 
-
-						/>
+						/>} 
+					/>
 
           <Route
             exact

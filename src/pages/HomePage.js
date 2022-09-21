@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../style/HomePage.scss";
 
-const HomePage = () => {
+const HomePage = (props) => {
+  const { getUserToken, isItemAvailable, isUserAdmin } = props;
   return (
     <div className="hero-container">
       <div className="slogan-wrapper">
