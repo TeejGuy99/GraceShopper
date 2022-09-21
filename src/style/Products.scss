@@ -1,0 +1,72 @@
+@import "src/style/variables.scss";
+
+// CANDLES
+
+// WAX MELTS
+
+//-----------------  ALL PRODUCTS  ----------------
+.Products {
+  position: absolute;
+  background-color: #ffff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  height: 100%;
+
+  .product-items {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 7rem;
+    padding: 1em;
+    margin: 1em;
+    font-family: $josefin-font;
+
+    .item-img {
+      width: 347px;
+      height: 358px;
+    }
+
+    .item-description {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 25px;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    .addCart-btn {
+      margin: 0 auto;
+      text-align: center;
+      width: 207px;
+      height: 56px;
+      border-radius: 3px;
+      border: none;
+      font-family: inherit;
+      font-size: 22px;
+      display: block;
+      background-color: $univBlkBtn;
+      color: white;
+      cursor: pointer;
+    }
+
+    .item-slogan {
+      border-top: 1px solid black;
+      flex: 0 2;
+      font-size: 0.4rem;
+      margin-bottom: 2rem;
+      width: 22rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      .slogan {
+        padding-top: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
