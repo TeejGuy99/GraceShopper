@@ -1,11 +1,18 @@
 import React from "react";
 import { RegisterForm } from "../components";
 
-function Register() {
+function Register(props) {
+  const {
+    setLoggedIn,
+    setUserToken
+  } = props;
   return (
     <>
       <div>Register</div>
-      <RegisterForm />
+      <RegisterForm 
+        setLoggedIn={setLoggedIn}
+        setUserToken={setUserToken}
+      />
     </>
   );
 }

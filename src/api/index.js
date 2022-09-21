@@ -1,5 +1,12 @@
 export const BASE_URL = "http://localhost:4000/api";
 
+// Login helper function
+export const logIn = (token, username) => {
+	// setToken(true)
+	localStorage.setItem('token', token)
+	localStorage.setItem('username', username)
+  }
+
 export async function getAllUsers() {
 	try {
 		return await fetch(`${BASE_URL}/user`, {
