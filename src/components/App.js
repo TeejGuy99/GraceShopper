@@ -9,7 +9,8 @@ import {
   Login,
   AllProductsPage,
   CandlesPage,
-  WaxMeltsPage
+  WaxMeltsPage,
+  UserProfile,
 } from "../pages";
 import {
   getAllUsers,
@@ -24,14 +25,14 @@ import {
 } from "../api";
 
 const App = () => {
-	//UseState for various properties
-	const [isLoggedIn, setLoggedIn] = useState(false);
-	const [getUserToken, setUserToken] = useState("");
-	const [getUserCartItems, setUserCartItems] = useState([]);
-	const [isItemAvailable, setItemAvailable] = useState(true);
-	const [isUserAdmin, setUserAdmin] = useState(false);
-	const [products, setProducts] = useState([]);
-	const [guestId, setGuestId] = useState(0);
+  //UseState for various properties
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [getUserToken, setUserToken] = useState("");
+  const [getUserCartItems, setUserCartItems] = useState([]);
+  const [isItemAvailable, setItemAvailable] = useState(true);
+  const [isUserAdmin, setUserAdmin] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [guestId, setGuestId] = useState(0);
 
   //Helper Functions
 
@@ -71,74 +72,85 @@ const App = () => {
     // runTests();
   }, []);
 
-	return (
-		<Router>
-			<div className="app-container">
-				<Header isUserAdmin={isUserAdmin} />
-				{/* <AdBanner/> */}
-				<Routes>
-					<Route
-						exact
-						path="/"
-						element={
-							<HomePage
-								getUserToken={getUserToken}
-								isItemAvailable={isItemAvailable}
-								isUserAdmin={isUserAdmin}
-							/>
-						}
-					/>
-					<Route 
-						exact path="/all-products" 
-						element={
-							<AllProductsPage 
-								products={products} 
-								setProducts={setProducts}
-								guestId={guestId}
-								setGuestId={setGuestId}
-							/>
-						}
-					/>
-					<Route 
-						exact path="/candles" 
-						element={
-							<CandlesPage 
-								products={products} 
-								setProducts={setProducts}
-								guestId={guestId}
-								setGuestId={setGuestId}
-							/>
-						}
-					/>
-					<Route 
-						exact path="/wax-melts" 
-						element={
-							<WaxMeltsPage 
-								products={products} 
-								setProducts={setProducts}
-								guestId={guestId}
-								setGuestId={setGuestId}
-							/>
-						}
-					/>
-					<Route
-						exact
-						path="/login"
-						element={
-							<Login
-								setLoggedIn={setLoggedIn}
-								setUserToken={setUserToken}
-								setUserAdmin={setUserAdmin}
-							/>
-						}
-					/>
-					<Route 
-						exact path="/register" 
-						element={<Register 
-								setLoggedIn={setLoggedIn}
-								setUserToken={setUserToken}
-						/>} 
-					/>
+  return (
+    <Router>
+      <div className="app-container">
+        <Header isUserAdmin={isUserAdmin} isLoggedIn={isLoggedIn} />
+        {/* <AdBanner/> */}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <HomePage
+                getUserToken={getUserToken}
+                isItemAvailable={isItemAvailable}
+                isUserAdmin={isUserAdmin}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/all-products"
+            element={
+              <AllProductsPage
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/candles"
+            element={
+              <CandlesPage
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/wax-melts"
+            element={
+              <WaxMeltsPage
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/login"
+            element={
+              <Login
+                setLoggedIn={setLoggedIn}
+                setUserToken={setUserToken}
+                setUserAdmin={setUserAdmin}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/register"
+            element={
+              <Register setLoggedIn={setLoggedIn} setUserToken={setUserToken} />
+            }
+          />
+
+          <Route
+            exact
+            path="/profile"
+            element={
+              isLoggedIn ? <UserProfile isLoggedIn={isLoggedIn} /> : null
+            }
+          ></Route>
 
           <Route
             exact
