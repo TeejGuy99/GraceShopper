@@ -5,7 +5,7 @@ import { FaBars, FaWindowClose } from "react-icons/fa";
 import styles from "../style/Header.scss";
 
 function Header(props) {
-  const { isUserAdmin } = props;
+  const { isUserAdmin, isLoggedIn } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggler = () => setMenuOpen((p) => !p);
 
@@ -59,21 +59,29 @@ function Header(props) {
                     isActive ? activeClassName : undefined
                   }
                 >
-                  Admin
+                  ADMIN
                 </NavLink>
               </>
             ) : null}
 
             <div className="nav-button-container">
               <div className="user-icon">
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) =>
-                    isActive ? activeClassName : undefined
-                  }
-                >
-                  <BsPersonFill size={25} />
-                </NavLink>
+                {isLoggedIn ? (
+                  <>
+                    <NavLink to="/profile">
+                      <BsPersonFill size={25} />
+                    </NavLink>
+                  </>
+                ) : (
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive ? activeClassName : undefined
+                    }
+                  >
+                    <BsPersonFill size={25} />
+                  </NavLink>
+                )}
                 <NavLink
                   to="/cart"
                   className={({ isActive }) =>
