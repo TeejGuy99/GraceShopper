@@ -133,7 +133,15 @@ const App = () => {
 							/>
 						}
 					/>
-					<Route exact path="/register" element={<Register />} />
+					<Route 
+						exact path="/register" 
+						element={<Register 
+								setLoggedIn={setLoggedIn}
+								setUserToken={setUserToken}
+						/>
+						} 
+
+						/>
 
           <Route
             exact
