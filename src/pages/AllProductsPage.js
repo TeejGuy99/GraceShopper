@@ -20,6 +20,7 @@ const AllProductsPage = (props) => {
         useEffect(() =>{
             handleRoutines();
         }, []);
+        console.log(products)
     return(
         <div className="Products">
             {products.map( (product) => { 
