@@ -97,14 +97,22 @@ function Header(props) {
         <div>
           <div className="button-container">
             <div className="user-icons">
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive ? activeClassName : undefined
-                }
-              >
-                <BsPersonFill size={25} />
-              </NavLink>
+              {isLoggedIn ? (
+                <>
+                  <NavLink to="/profile">
+                    <BsPersonFill size={25} />
+                  </NavLink>
+                </>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? activeClassName : undefined
+                  }
+                >
+                  <BsPersonFill size={25} />
+                </NavLink>
+              )}
               <NavLink
                 to="/cart"
                 className={({ isActive }) =>
