@@ -10,7 +10,7 @@ const ProductStyling = {
 };
 
 const AllProductsPage = (props) => {
-  const { products, setProducts, guestId, setGuestId } = props;
+  const { products, setProducts, guestId, setGuestId, userId } = props;
   const handleRoutines = () => {
     getAllProducts().then((results) => {
       setProducts(results);
@@ -42,11 +42,13 @@ const AllProductsPage = (props) => {
               className="addCart-btn"
               onClick={async (event) => {
                 event.preventDefault();
-                if (guestId === 0) {
-                  const newCartItem = await addToCart(product.id, 1, guestId);
+                if (userId) {
+                  const newCartItem = await addToCart(product.id, 1, userId, guestId);
+                } else if (guestId === 0) {
+                  const newCartItem = await addToCart(product.id, 1, userId, guestId);
                   setGuestId(newCartItem.cartGuestId);
                 } else {
-                  const newCartItem = await addToCart(product.id, 1, guestId);
+                  const newCartItem = await addToCart(product.id, 1, userId, guestId);
                 }
                 handleRoutines();
               }}

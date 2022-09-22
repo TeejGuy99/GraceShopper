@@ -1,5 +1,6 @@
 // grab our db client connection to use with our adapters
 const client = require('../client');
+const { Product } = require('./')
 
 module.exports = {
     // add your database adapter fns here
@@ -28,7 +29,9 @@ module.exports = {
 
   async function getGuestById({ id }) {
     const { rows: cart } = await client.query(`
-      SELECT * FROM carts
+      SELECT carts.id AS cartId, carts."productId", carts."productPrice", carts."productQty", products.name AS "productName"
+      FROM carts
+      JOIN products ON carts."productId"=products.id
       WHERE "cartGuestId"=$1
       AND "isActive"=true;
     `, [ id ])

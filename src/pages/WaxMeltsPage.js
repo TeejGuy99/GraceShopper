@@ -10,7 +10,7 @@ const ProductStyling = {
 }
 
 const WaxMeltsPage = (props) => {
-        const {products, setProducts, guestId, setGuestId} = props;
+  const { products, setProducts, guestId, setGuestId, userId } = props;
         const handleRoutines = () =>{
             getWaxMelts()
             .then(results => {
@@ -23,28 +23,43 @@ const WaxMeltsPage = (props) => {
     return(
         <div className="Products">
             {products.map((product) => { return (
-                <div style={ProductStyling}>
-                <h1>{product.name}</h1>
-                <p>{product.description}</p>
-                <img src={product.photos[0].link} alt={product.photos[0].description}/>
-                <p>Price: {product.price}</p>
-                <p>Quantity Available: {product.qtyAvailable}</p>
-                <button style={{margin: '5px'}} id='addToCartButton' onClick={async (event) => {
-                    event.preventDefault()
-                    if (guestId === 0) {
-                        const newCartItem = await addToCart(product.id, 1, guestId)
-                        setGuestId(newCartItem.cartGuestId)
+                <div className="product-items">
+                <img
+                  className="item-img"
+                  src={product.photos[0].link}
+                  alt={product.photos[0].description}
+                />
+                <div className="item-description">
+                  <p className="item-name">{product.name}</p>
+                  <p className="item-price">${product.price}</p>
+                </div>
+                <div className="item-slogan">
+                  <p className="slogan">{product.description}</p>
+                </div>
+    
+                {/* <p>Quantity Available: {product.qtyAvailable}</p> */}
+                <button
+                  className="addCart-btn"
+                  onClick={async (event) => {
+                    event.preventDefault();
+                    if (userId) {
+                      const newCartItem = await addToCart(product.id, 1, userId, guestId);
+                    } else if (guestId === 0) {
+                      const newCartItem = await addToCart(product.id, 1, userId, guestId);
+                      setGuestId(newCartItem.cartGuestId);
                     } else {
-                        const newCartItem = await addToCart(product.id, 1, guestId)
+                      const newCartItem = await addToCart(product.id, 1, userId, guestId);
                     }
-                    handleRoutines()
-                    }}>
-                    Add To Cart
+                    handleRoutines();
+                  }}
+                >
+                  ADD TO CART
                 </button>
-            </div>)
-            })}
+              </div>
+            );
+          })}
         </div>
     );
-}
+};
 
 export default WaxMeltsPage;

@@ -6,3 +6,4 @@ export { default as AllProductsPage } from "./AllProductsPage";
 export { default as CandlesPage } from "./CandlesPage";
 export { default as WaxMeltsPage } from "./WaxMeltsPage";
 export { default as UserProfile } from "./UserProfile";
+export { default as Cart } from "./CartPage";

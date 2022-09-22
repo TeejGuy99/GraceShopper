@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser, logIn } from "../api";
 
 function RegisterForm(props) {
   const {
     setLoggedIn,
     setUserToken,
+    setGuestId,
+    setUserId
   } = props;
 
   const [userNameString, setUserNameString] = useState('')
   const [passwordString, setPasswordString] = useState('')
+
+  let navigate = useNavigate();
 
   return (
     <div className="form-container">
@@ -18,6 +22,7 @@ function RegisterForm(props) {
         try {
           event.preventDefault()
            const response = await registerUser(userNameString, passwordString)
+           console.log(response)
           if (response.error) {
               alert('Username already exists')
           } else {
@@ -25,8 +30,11 @@ function RegisterForm(props) {
               logIn(JSON.stringify(token), userNameString)
               setLoggedIn(true)
               setUserToken(token)
-              window.location='./'
-              console.log(response)
+              setUserId(response.user.id)
+              setGuestId(0)
+
+              navigate("/profile");
+              
           }
         }
         catch (error) {
