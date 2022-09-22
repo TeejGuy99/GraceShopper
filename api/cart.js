@@ -14,29 +14,55 @@ router.get('/', async(req, res, next) => {
     }
 })
 
+// GET /api/cart/userId or guestId
+router.get('/userId/:userId', async(req, res, next) => {
+    try {
+        const { userId } = req.params
+
+        const carts = await Cart.getCartByUserId({ cartUserId: userId, cartGuestId: null })
+
+        res.send(carts)
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
+// GET /api/cart/userId or guestId
+router.get('/guestId/:guestId', async(req, res, next) => {
+    try {
+        const { guestId } = req.params
+
+        const carts = await Cart.getCartByUserId({ cartUserId: null, cartGuestId: guestId })
+
+        res.send(carts)
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
+
 
 // POST /api/cart *ADD TO USER CART FOR GUESTS OR REGISTERED USERS*
 router.post('/', async(req, res, next) => {
     try {
-        const { productId, productQty, cartGuestId } = req.body
+        const { productId, productQty, cartUserId, cartGuestId } = req.body
 
-        if (req.user) {
-            const { cartUserId } = req.user.userId
-            const createdCart = await Cart.addToCart({ productId, productQty, cartUserId })
+        if (cartUserId) {
+            console.log('There is a user here also')
+            const createdCart = await Cart.addToCart({ productId, productQty, cartUserId, cartGuestId: null })
+            res.send(createdCart)
+        } else if (cartGuestId === 0) {
+            console.log("had to make a new guest")
+            const newGuest = await Guest.createGuest({ isActive: true })
+            const createdCart = await Cart.addToCart({ productId, productQty, cartUserId: null, cartGuestId: newGuest.guestId })
             res.send(createdCart)
         } else {
-            if (cartGuestId === 0) {
-                const newGuest = await Guest.createGuest({ isActive: true })
-                const createdCart = await Cart.addToCart({ productId, productQty, cartGuestId: newGuest.guestId })
-                res.send(createdCart)
-            } 
-            else {
-                const createdCart = await Cart.addToCart({ productId, productQty, cartGuestId })
-                res.send(createdCart)
+            console.log("Reused a guest")
+            const createdCart = await Cart.addToCart({ productId, productQty, cartUserId: null, cartGuestId })
+            res.send(createdCart)
             }
-        }
-
-    } catch (error) {
+        } catch (error) {
         console.error(error)
         next(error)
     }
@@ -71,17 +97,16 @@ router.patch('/:cartId', async(req, res, next) => {
 
 // DELETE /api/cart/:cartId *REMOVE FROM USER CART FOR GUESTS OR REGISTERED USERS 
 // (NEED A WAY TO PROTECT GUEST CARTS - Maybe assign a localStorage item with the guest id?)*
-router.delete('/:cartId', async(res, req, next) => {
+router.delete('/:cartId', async(req, res, next) => {
     try {
         const { cartId } = req.params
-        const cartCheck = Cart.getCartItemById({ id: cartId });
+        // const cartCheck = Cart.getCartItemById({ id: cartId });
 
-        const { userId } = req.user.userId
-        const { guestId } = localStorage.getItem('guestId')
+        // const { userId } = req.user.userId
 
-        if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
-            throw new Error(`You are not allowed to edit this cart`)            
-        }
+        // if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
+        //     throw new Error(`You are not allowed to edit this cart`)            
+        // }
         
         const deletedCartItem = await Cart.deleteCartItem({ id: cartId })
 

@@ -253,6 +253,58 @@ export async function getAllCarts() {
 	}
 }
 
+export async function getUserCart({token, userID, guestID}) {
+	try {
+		let headers = {}
+		if (token) {
+			headers = {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			}
+
+			return await fetch(`${BASE_URL}/cart/userId/${userID}`, {
+				headers: headers
+			})
+				.then((response) => response.json())
+				.then((result) => {
+					return result;
+				});
+		} else {
+			headers = {
+				"Content-Type": "application/json",
+			}
+
+			return await fetch(`${BASE_URL}/cart/guestId/${guestID}`, {
+				headers: headers
+			})
+				.then((response) => response.json())
+				.then((result) => {
+					return result;
+				});
+		}
+		
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function deleteCartItem(cartID) {
+	try {
+		return fetch(`${BASE_URL}/cart/${cartID}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 export async function getAllGuests() {
 	try {
 		return await fetch(`${BASE_URL}/guest`, {
@@ -306,7 +358,7 @@ export async function makeUserAdmin( userID ) {
 	}
 }
 
-export async function addToCart(productId, productQty, cartGuestId ) {
+export async function addToCart(productId, productQty, cartUserId, cartGuestId ) {
 	try { 
 		return fetch(`${BASE_URL}/cart`, {
 			method: "POST",
@@ -316,6 +368,7 @@ export async function addToCart(productId, productQty, cartGuestId ) {
 			body: JSON.stringify({
 				productId: productId,
 				productQty: productQty,
+				cartUserId: cartUserId,
 				cartGuestId: cartGuestId
 			}),
 		})

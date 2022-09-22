@@ -11,6 +11,7 @@ import {
   CandlesPage,
   WaxMeltsPage,
   UserProfile,
+  Cart,
 } from "../pages";
 import {
   getAllUsers,
@@ -33,6 +34,7 @@ const App = () => {
   const [isUserAdmin, setUserAdmin] = useState(false);
   const [products, setProducts] = useState([]);
   const [guestId, setGuestId] = useState(0);
+  const [userId, setUserId] = useState(null);
 
   //Helper Functions
 
@@ -98,6 +100,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
+				userId={userId}
               />
             }
           />
@@ -110,6 +113,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
+				userId={userId}
               />
             }
           />
@@ -122,6 +126,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
+				userId={userId}
               />
             }
           />
@@ -133,6 +138,8 @@ const App = () => {
                 setLoggedIn={setLoggedIn}
                 setUserToken={setUserToken}
                 setUserAdmin={setUserAdmin}
+				setUserId={setUserId}
+				setGuestId={setGuestId}
               />
             }
           />
@@ -140,7 +147,7 @@ const App = () => {
             exact
             path="/register"
             element={
-              <Register setLoggedIn={setLoggedIn} setUserToken={setUserToken} />
+              <Register setLoggedIn={setLoggedIn} setUserToken={setUserToken} setGuestId={setGuestId} setUserId={setUserId} />
             }
           />
 
@@ -166,6 +173,21 @@ const App = () => {
               ) : null
             }
           />
+		  
+		  <Route
+		    exact path="/cart"
+			element={
+			  <Cart 
+		        isLoggedIn={isLoggedIn}
+			    getUserCartItems={getUserCartItems}
+			    setUserCartItems={setUserCartItems}
+				getUserToken={getUserToken}
+				userId={userId}
+				guestId={guestId}
+				setGuestId={setGuestId} 
+			  />
+			}
+		  ></Route>
         </Routes>
       </div>
     </Router>

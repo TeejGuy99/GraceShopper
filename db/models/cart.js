@@ -2,6 +2,7 @@
 const client = require("../client");
 
 const { getProductById } = require("./product");
+const { getPhotosByProductId } = require("./photo");
 
 module.exports = {
     // add your database adapter fns here
@@ -9,7 +10,8 @@ module.exports = {
     addToCart,
     getCartItemById,
     deleteCartItem,
-    updateCartItem
+    updateCartItem,
+    getCartByUserId
   };
 
 
@@ -23,6 +25,14 @@ async function getAllCarts() {
 
   async function addToCart({ productId, productQty, cartUserId=null, cartGuestId=null }) {
     const product = await getProductById({ id: productId })
+    const existingCart = await getCartByUserId({ cartUserId: cartUserId, cartGuestId: cartGuestId})
+
+    for (let i=0; i<existingCart.length; i++) {
+      if (existingCart[i].productId === productId) {
+        const updatedCart = await updateCartItem({id: existingCart[i].cartId, productQty: (existingCart[i].productQty + 1)})
+        return updatedCart
+      }
+    }
 
 
   const { rows: [cart] } = await client.query(`
@@ -46,10 +56,16 @@ async function getAllCarts() {
 async function getCartByUserId({ cartUserId = null, cartGuestId = null }) {
   const { rows } = await client.query(
     `
-      SELECT * FROM carts
+      SELECT carts.id AS "cartId", carts."productId", carts."productPrice", carts."productQty", products.name AS "productName"
+      FROM carts
+      JOIN products ON carts."productId"=products.id
       WHERE "cartUserId"=$1
       OR "cartGuestId"=$2
     `, [ cartUserId, cartGuestId ])
+
+    for (i=0; i < rows.length; i++) {
+      rows[i].photos = await getPhotosByProductId({productId: rows[i].productId})
+    }
     return rows
   }
 

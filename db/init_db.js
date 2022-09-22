@@ -102,17 +102,19 @@ async function populateInitialData() {
 
     // INITIAL USERS DATA*******************************************************************************
     console.log("Starting to create users...");
+    const adminIsFirst = { email: "admin@seed.com", password: "admin01" }
     const usersToCreate = [
       { email: "ashley@seed.com", password: "ashley01" },
       { email: "dakota@seed.com", password: "dakota01" },
       { email: "kasie@seed.com", password: "kasie01" },
       { email: "tim@seed.com", password: "tim01" },
       { email: "chris@seed.com", password: "chris01" },
-      { email: "admin@seed.com", password: "admin01" },
     ];
+    const adminWasFirst = await User.createUser(adminIsFirst)
     const users = await Promise.all(usersToCreate.map(User.createUser));
 
     console.log("Users created:");
+    console.log(adminWasFirst);
     console.log(users);
     console.log("Finished creating users!");
 
