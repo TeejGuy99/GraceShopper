@@ -423,3 +423,23 @@ export async function getCandles() {
 		console.error(error);
 	}
 }
+
+export async function updateCart(cartId, productQty) {
+	try {
+		return fetch(`${BASE_URL}/cart/${cartId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productQty: productQty
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
