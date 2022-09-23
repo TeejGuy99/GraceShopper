@@ -23,6 +23,7 @@ const CartPage = (props) => {
   for (let i=0; i<getUserCartItems.length; i++) {
     total += (getUserCartItems[i].productPrice*getUserCartItems[i].productQty)
   }
+  total = total.toFixed(2);
   return (
     <div className="Products">
       {getUserCartItems.map((product) => {

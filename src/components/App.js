@@ -77,7 +77,15 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Header isUserAdmin={isUserAdmin} isLoggedIn={isLoggedIn} />
+        <Header 
+		  isUserAdmin={isUserAdmin}
+		  isLoggedIn={isLoggedIn}
+		  getUserCartItems={getUserCartItems}
+		  userId={userId}
+		  guestId={guestId}
+		  getUserToken={getUserToken}
+		  setUserCartItems={setUserCartItems}
+		/>
         {/* <AdBanner/> */}
         <Routes>
           <Route
@@ -101,6 +109,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
 				userId={userId}
+				getUserToken={getUserToken}
+				setUserCartItems={setUserCartItems}
+				getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -109,11 +120,14 @@ const App = () => {
             path="/candles"
             element={
               <CandlesPage
-                products={products}
-                setProducts={setProducts}
-                guestId={guestId}
-                setGuestId={setGuestId}
+				products={products}
+				setProducts={setProducts}
+				guestId={guestId}
+				setGuestId={setGuestId}
 				userId={userId}
+				getUserToken={getUserToken}
+				setUserCartItems={setUserCartItems}
+				getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -122,11 +136,14 @@ const App = () => {
             path="/wax-melts"
             element={
               <WaxMeltsPage
-                products={products}
-                setProducts={setProducts}
-                guestId={guestId}
-                setGuestId={setGuestId}
+				products={products}
+				setProducts={setProducts}
+				guestId={guestId}
+				setGuestId={setGuestId}
 				userId={userId}
+				getUserToken={getUserToken}
+				setUserCartItems={setUserCartItems}
+				getUserCartItems={getUserCartItems}
               />
             }
           />

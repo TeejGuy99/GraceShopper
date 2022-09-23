@@ -267,6 +267,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		} else {
@@ -279,6 +284,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		}

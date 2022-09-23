@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addToCart, getWaxMelts } from "../api";
+import { addToCart, getWaxMelts, getUserCart } from "../api";
 import { useEffect } from "react";
 
 
@@ -10,16 +10,21 @@ const ProductStyling = {
 }
 
 const WaxMeltsPage = (props) => {
-  const { products, setProducts, guestId, setGuestId, userId } = props;
-        const handleRoutines = () =>{
-            getWaxMelts()
-            .then(results => {
-                setProducts(results)                
-            });
-        }
-        useEffect(() =>{
-            handleRoutines();
-        }, []);
+    const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
+    const handleRoutines = () =>{
+        getWaxMelts()
+        .then(results => {
+            setProducts(results)                
+        });
+    }
+    const refreshCart = () => {
+        getUserCart({token: getUserToken, userID: userId, guestID: guestId }).then((results) => {
+            setUserCartItems(results);
+        });
+        };
+    useEffect(() =>{
+        handleRoutines();
+    }, [getUserCartItems.length]);
     return(
         <div className="Products">
             {products.map((product) => { return (
@@ -50,7 +55,7 @@ const WaxMeltsPage = (props) => {
                     } else {
                       const newCartItem = await addToCart(product.id, 1, userId, guestId);
                     }
-                    handleRoutines();
+                    refreshCart();
                   }}
                 >
                   ADD TO CART

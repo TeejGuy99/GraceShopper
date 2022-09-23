@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addToCart, getAllProducts } from "../api";
+import { addToCart, getAllProducts, getUserCart } from "../api";
 import { useEffect } from "react";
 import "../style/Products.scss";
 
@@ -10,15 +10,25 @@ const ProductStyling = {
 };
 
 const AllProductsPage = (props) => {
-  const { products, setProducts, guestId, setGuestId, userId } = props;
+  const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
   const handleRoutines = () => {
-    getAllProducts().then((results) => {
-      setProducts(results);
+    getAllProducts().then((theProducts) => {
+      setProducts(theProducts);
     });
+  };
+  const refreshCart = () => {
+    getUserCart({token: getUserToken, userID: userId, guestID: guestId }).then((results) => {
+      setUserCartItems(results);
+  });
   };
   useEffect(() => {
     handleRoutines();
-  }, []);
+  }, [getUserCartItems.length]);
+
+  console.log('Products:', products)
+  console.log("Cart:", getUserCartItems)
+  console.log('User ID:', userId);
+  console.log('Guest ID:', guestId);
   return (
     <div className="Products">
       {products.map((product) => {
@@ -50,7 +60,8 @@ const AllProductsPage = (props) => {
                 } else {
                   const newCartItem = await addToCart(product.id, 1, userId, guestId);
                 }
-                handleRoutines();
+                // handleRoutines();
+                refreshCart();
               }}
             >
               ADD TO CART
