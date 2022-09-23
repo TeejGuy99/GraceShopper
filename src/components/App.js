@@ -100,7 +100,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
-				userId={userId}
+                userId={userId}
               />
             }
           />
@@ -113,7 +113,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
-				userId={userId}
+                userId={userId}
               />
             }
           />
@@ -126,7 +126,7 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
-				userId={userId}
+                userId={userId}
               />
             }
           />
@@ -138,8 +138,8 @@ const App = () => {
                 setLoggedIn={setLoggedIn}
                 setUserToken={setUserToken}
                 setUserAdmin={setUserAdmin}
-				setUserId={setUserId}
-				setGuestId={setGuestId}
+                setUserId={setUserId}
+                setGuestId={setGuestId}
               />
             }
           />
@@ -147,7 +147,12 @@ const App = () => {
             exact
             path="/register"
             element={
-              <Register setLoggedIn={setLoggedIn} setUserToken={setUserToken} setGuestId={setGuestId} setUserId={setUserId} />
+              <Register
+                setLoggedIn={setLoggedIn}
+                setUserToken={setUserToken}
+                setGuestId={setGuestId}
+                setUserId={setUserId}
+              />
             }
           />
 
@@ -173,21 +178,22 @@ const App = () => {
               ) : null
             }
           />
-		  
-		  <Route
-		    exact path="/cart"
-			element={
-			  <Cart 
-		        isLoggedIn={isLoggedIn}
-			    getUserCartItems={getUserCartItems}
-			    setUserCartItems={setUserCartItems}
-				getUserToken={getUserToken}
-				userId={userId}
-				guestId={guestId}
-				setGuestId={setGuestId} 
-			  />
-			}
-		  ></Route>
+
+          <Route
+            exact
+            path="/cart"
+            element={
+              <Cart
+                isLoggedIn={isLoggedIn}
+                getUserCartItems={getUserCartItems}
+                setUserCartItems={setUserCartItems}
+                getUserToken={getUserToken}
+                userId={userId}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          ></Route>
         </Routes>
       </div>
     </Router>
