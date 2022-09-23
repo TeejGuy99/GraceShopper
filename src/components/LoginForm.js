@@ -4,7 +4,8 @@ import "../style/Login-Register.scss";
 import { logInUser, logIn } from "../api";
 
 const LoginForm = (props) => {
-  const { setLoggedIn, setUserToken, setUserAdmin, setUserId, setGuestId } = props;
+  const { setLoggedIn, setUserToken, setUserAdmin, setUserId, setGuestId } =
+    props;
   const [userNameString, setUserNameString] = useState("");
   const [passwordString, setPasswordString] = useState("");
 
@@ -25,8 +26,8 @@ const LoginForm = (props) => {
               setUserToken(token);
               setLoggedIn(true);
               setUserAdmin(response.user.isAdmin);
-              setUserId(response.user.id)
-              setGuestId(0)
+              setUserId(response.user.id);
+              setGuestId(0);
               navigate("/profile");
             } else {
               alert("Username or Password is incorrect");
