@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addToCart, getAllProducts, getUserCart, deleteCartItem, updateCart } from "../api";
+import { addToCart, getAllProducts, getUserCart, deleteCartItem, updateCart, createOrder } from "../api";
 import { BsPersonFill, BsFillCartFill } from "react-icons/bs";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../style/Products.scss";
@@ -24,6 +24,7 @@ const CartPage = (props) => {
   useEffect(() => {
     handleRoutines();
   }, []);
+  console.log(getUserCartItems);
   let total = 0;
   for (let i=0; i<getUserCartItems.length; i++) {
     total += (getUserCartItems[i].productPrice*getUserCartItems[i].productQty)
@@ -86,14 +87,16 @@ const CartPage = (props) => {
           className="addCart-btn"
           onClick={async (event) => {
             event.preventDefault();
-            navigate('/')
+            // if (isLoggedIn) {
+              await createOrder(userId, guestId);
+              handleRoutines();
+            // } else {
+              // await createOrder(userId, guestId=null)
+            // }
+            // navigate('/')
           }}
         >
-          <NavLink
-            to="/cart"
-          >
             <BsFillCartFill size={25} color="white" />
-          </NavLink>
           <p style={{display: "inline", margin: "15px", fontSize: "25px"}}>CHECKOUT</p>
         </button>
       </div> : null}

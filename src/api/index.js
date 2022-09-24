@@ -443,3 +443,24 @@ export async function updateCart(cartId, productQty) {
 		console.error(error);
 	}
 }
+
+export async function createOrder(userId, guestId) {
+	try {
+		return fetch(`${BASE_URL}/order`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				isUserId: userId,
+				isGuestId: guestId
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
