@@ -21,9 +21,16 @@ const CandlesPage = (props) => {
     }, [getUserCartItems.length]);
   return (
     <div className="Products-Wax-Candles">
-      {products.map((product) => {
+      {products.sort(function(a, b) {
+        var keyA = (a.id),
+          keyB = (b.id);
+        // Compare the 2 dates
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+        }).map((product) => {
         return (
-          <div className="product-items">
+          <div className="product-items" key={product.id}>
             <img
               className="item-img"
               src={product.photos[0].link}

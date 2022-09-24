@@ -24,7 +24,7 @@ const CartPage = (props) => {
   useEffect(() => {
     handleRoutines();
   }, []);
-  console.log(getUserCartItems);
+  console.log('getUserCartItems:', getUserCartItems);
   let total = 0;
   for (let i=0; i<getUserCartItems.length; i++) {
     total += (getUserCartItems[i].productPrice*getUserCartItems[i].productQty)
@@ -32,9 +32,16 @@ const CartPage = (props) => {
   total = total.toFixed(2);
   return (
     <div className="Products">
-      {getUserCartItems.map((product) => {
+      {getUserCartItems.sort(function(a, b) {
+        var keyA = (a.cartId),
+          keyB = (b.cartId);
+        // Compare the 2 dates
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+        }).map((product) => {
         return (
-          <div className="product-items">
+          <div className="product-items" key={product.cartId}>
           <img
             className="item-img"
             src={product.photos[0].link}
@@ -55,7 +62,8 @@ const CartPage = (props) => {
 
             <input
             className="productQtyInput"
-            value={product.productQty}></input>
+            value={product.productQty}
+            readOnly></input>
 
             <button onClick={async (event) => {
               event.preventDefault();
@@ -87,12 +95,13 @@ const CartPage = (props) => {
           className="addCart-btn"
           onClick={async (event) => {
             event.preventDefault();
-            // if (isLoggedIn) {
-              await createOrder(userId, guestId);
+            if (isLoggedIn) {
+              await createOrder(userId, setGuestId(null));
               handleRoutines();
-            // } else {
-              // await createOrder(userId, guestId=null)
-            // }
+            } else {
+              await createOrder(userId, guestId)
+              handleRoutines();
+            }
             // navigate('/')
           }}
         >
