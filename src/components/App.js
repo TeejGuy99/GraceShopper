@@ -12,6 +12,7 @@ import {
   WaxMeltsPage,
   UserProfile,
   Cart,
+  OrderConfirmation
 } from "../pages";
 import {
   getAllUsers,
