@@ -154,7 +154,7 @@ export async function createNewProduct({
 	}
 }
 
-export async function deleteProduct({ token, productID }) {
+export async function deleteProduct( token, productID ) {
 	try {
 		return fetch(`${BASE_URL}/product/${productID}`, {
 			method: "DELETE",
@@ -454,6 +454,30 @@ export async function createOrder(userId, guestId) {
 			body: JSON.stringify({
 				isUserId: userId,
 				isGuestId: guestId
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export async function adminEditProduct(productId, productName, productDescription, productPrice, productQtyAvailable, productCategory) {
+	try {
+		return fetch(`${BASE_URL}/product/${productId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: productName,
+				description: productDescription,
+				price: productPrice,
+				qtyAvailable: productQtyAvailable,
+				category: productCategory
 			}),
 		})
 			.then((response) => response.json())

@@ -35,7 +35,7 @@ const CartPage = (props) => {
   return (
     <div className="Products">
       {!checkedOut ?  
-      <div className="Products">
+      (<div className="Products">
         {getUserCartItems.sort(function(a, b) {
           var keyA = (a.cartId),
             keyB = (b.cartId);
@@ -118,11 +118,12 @@ const CartPage = (props) => {
             <p style={{display: "inline", margin: "15px", fontSize: "25px"}}>CHECKOUT</p>
           </button>
         </div> : null}
-      </div> :
-      <div className="product-items">
+      </div>) 
+      :
+      (<div className="product-items">
         <h1>Thank you for your purchase!</h1>
         <p>Your order# is {orderId}</p>
-      </div>
+      </div>)
     }</div>
   );
 };

@@ -12,7 +12,7 @@ import {
   WaxMeltsPage,
   UserProfile,
   Cart,
-  OrderConfirmation
+  AdminProducts,
 } from "../pages";
 import {
   getAllUsers,
@@ -109,10 +109,10 @@ const App = () => {
                 setProducts={setProducts}
                 guestId={guestId}
                 setGuestId={setGuestId}
-				userId={userId}
-				getUserToken={getUserToken}
-				setUserCartItems={setUserCartItems}
-				getUserCartItems={getUserCartItems}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -121,14 +121,14 @@ const App = () => {
             path="/candles"
             element={
               <CandlesPage
-				products={products}
-				setProducts={setProducts}
-				guestId={guestId}
-				setGuestId={setGuestId}
-				userId={userId}
-				getUserToken={getUserToken}
-				setUserCartItems={setUserCartItems}
-				getUserCartItems={getUserCartItems}
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -137,14 +137,14 @@ const App = () => {
             path="/wax-melts"
             element={
               <WaxMeltsPage
-				products={products}
-				setProducts={setProducts}
-				guestId={guestId}
-				setGuestId={setGuestId}
-				userId={userId}
-				getUserToken={getUserToken}
-				setUserCartItems={setUserCartItems}
-				getUserCartItems={getUserCartItems}
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -212,6 +212,23 @@ const App = () => {
               />
             }
           ></Route>
+
+          <Route
+            exact
+            path="/admin/products"
+            element={
+              <AdminProducts
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
+              />
+            }
+          />
         </Routes>
       </div>
     </Router>
