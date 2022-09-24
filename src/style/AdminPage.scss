@@ -1,0 +1,13 @@
+@import "src/style/variables.scss";
+
+.intro-dashboard {
+  margin-top: 7rem;
+  text-align: center;
+  background-color: $grayBtn;
+  width: 1250px;
+  height: 275px;
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
