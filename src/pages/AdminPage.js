@@ -1,5 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { BsFillCartFill } from "react-icons/bs";
+import { HiUsers } from "react-icons/hi";
+import { FaArchive } from "react-icons/fa";
+import "../style/AdminPage.scss";
+import { AdminNav } from "../components";
 
 const AdminPage = () => {
   // The `path` lets us build <Route> paths that are
@@ -7,22 +12,11 @@ const AdminPage = () => {
   // us build relative links.
 
   return (
-    <div>
-      <h2>Topics</h2>
-      <ul>
-        <li>
-          <Link to={`/admin/users`}>Users</Link>
-        </li>
-        <li>
-          <Link to={`/admin/orders`}>Orders</Link>
-        </li>
-        <li>
-          <Link to={`/admin/products`}>Products</Link>
-        </li>
-      </ul>
-      <span>
-        <h3>Welcome to Admin Page, Scrubs</h3>
-      </span>
+    <div className="dashboard-container">
+      <AdminNav />
+      <div className="welcome">
+        <p>WELCOME TO THE ADMIN DASHBOARD</p>
+      </div>
     </div>
   );
 };
