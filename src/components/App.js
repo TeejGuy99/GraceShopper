@@ -12,6 +12,7 @@ import {
   WaxMeltsPage,
   UserProfile,
   Cart,
+  AdminProducts,
 } from "../pages";
 import {
   getAllUsers,
@@ -77,7 +78,15 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Header isUserAdmin={isUserAdmin} isLoggedIn={isLoggedIn} />
+        <Header 
+		  isUserAdmin={isUserAdmin}
+		  isLoggedIn={isLoggedIn}
+		  getUserCartItems={getUserCartItems}
+		  userId={userId}
+		  guestId={guestId}
+		  getUserToken={getUserToken}
+		  setUserCartItems={setUserCartItems}
+		/>
         {/* <AdBanner/> */}
         <Routes>
           <Route
@@ -101,6 +110,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -114,6 +126,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -127,6 +142,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -194,6 +212,23 @@ const App = () => {
               />
             }
           ></Route>
+
+          <Route
+            exact
+            path="/admin/products"
+            element={
+              <AdminProducts
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
+              />
+            }
+          />
         </Routes>
       </div>
     </Router>

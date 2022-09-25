@@ -154,7 +154,7 @@ export async function createNewProduct({
 	}
 }
 
-export async function deleteProduct({ token, productID }) {
+export async function deleteProduct( token, productID ) {
 	try {
 		return fetch(`${BASE_URL}/product/${productID}`, {
 			method: "DELETE",
@@ -267,6 +267,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		} else {
@@ -279,6 +284,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		}
@@ -411,5 +421,70 @@ export async function getCandles() {
 			});
 	} catch (error) {
 		console.error(error);
+	}
+}
+
+export async function updateCart(cartId, productQty) {
+	try {
+		return fetch(`${BASE_URL}/cart/${cartId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productQty: productQty
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function createOrder(userId, guestId) {
+	try {
+		return fetch(`${BASE_URL}/order`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				isUserId: userId,
+				isGuestId: guestId
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export async function adminEditProduct(productId, productName, productDescription, productPrice, productQtyAvailable, productCategory) {
+	try {
+		return fetch(`${BASE_URL}/product/${productId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: productName,
+				description: productDescription,
+				price: productPrice,
+				qtyAvailable: productQtyAvailable,
+				category: productCategory
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
 	}
 }

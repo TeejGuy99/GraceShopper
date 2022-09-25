@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addToCart, getAllProducts } from "../api";
+import { addToCart, getAllProducts, getUserCart } from "../api";
 import { useEffect } from "react";
 import "../style/Products.scss";
 
@@ -10,20 +10,37 @@ const ProductStyling = {
 };
 
 const AllProductsPage = (props) => {
-  const { products, setProducts, guestId, setGuestId, userId } = props;
+  const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
   const handleRoutines = () => {
-    getAllProducts().then((results) => {
-      setProducts(results);
+    getAllProducts().then((theProducts) => {
+      setProducts(theProducts);
     });
+  };
+  const refreshCart = () => {
+    getUserCart({token: getUserToken, userID: userId, guestID: guestId }).then((results) => {
+      setUserCartItems(results);
+  });
   };
   useEffect(() => {
     handleRoutines();
-  }, []);
+  }, [getUserCartItems.length]);
+
+  console.log('Products:', products)
+  console.log("Cart:", getUserCartItems)
+  console.log('User ID:', userId);
+  console.log('Guest ID:', guestId);
   return (
     <div className="Products">
-      {products.map((product) => {
+      {products.sort(function(a, b) {
+        var keyA = (a.id),
+          keyB = (b.id);
+        // Compare the 2 dates
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+        }).map((product) => {
         return (
-          <div className="product-items">
+          <div className="product-items" key={product.id}>
             <img
               className="item-img"
               src={product.photos[0].link}
@@ -50,7 +67,8 @@ const AllProductsPage = (props) => {
                 } else {
                   const newCartItem = await addToCart(product.id, 1, userId, guestId);
                 }
-                handleRoutines();
+                // handleRoutines();
+                refreshCart();
               }}
             >
               ADD TO CART

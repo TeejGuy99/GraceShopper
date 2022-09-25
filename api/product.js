@@ -57,7 +57,7 @@ router.post('/', async(req, res, next) => {
 })
 
 // PATCH *UPDATE PRICE OF PRODUCT*
-router.patch('/:routineId', async(req, res, next) => {
+router.patch('/:productId', async(req, res, next) => {
     try {
             // if (!req.user) {
             //     throw new Error(`You must be logged in to perform this action`)
@@ -66,7 +66,7 @@ router.patch('/:routineId', async(req, res, next) => {
             const { name, description, price, qtyAvailable, category } = req.body;
             const { productId } = req.params;
             
-            const updatedProduct = await Product.updateProduct({ id: productId, name, description, price, qtyAvailable, category})
+            const updatedProduct = await Product.updateProduct({ id: productId, name: name, description: description, price: price, qtyAvailable: qtyAvailable, category: category})
 
             res.send(updatedProduct)
     } catch (error) {

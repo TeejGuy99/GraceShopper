@@ -46,6 +46,8 @@ module.exports = {
 
   // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
+    console.log('createOrderFromCart:', isUserId);
+    console.log('createOrderFromCart:', isGuestId);
     const { rows: cart } = await client.query(`
     SELECT * FROM carts
     WHERE ("cartUserId"=$1 OR "cartGuestId"=$2)
