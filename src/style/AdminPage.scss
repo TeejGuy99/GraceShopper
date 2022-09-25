@@ -1,13 +1,27 @@
 @import "src/style/variables.scss";
 
-.intro-dashboard {
-  margin-top: 7rem;
-  text-align: center;
-  background-color: $grayBtn;
-  width: 1250px;
-  height: 275px;
-  font-size: 60px;
+.dashboard-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  .welcome {
+    margin-top: 7rem;
+    text-align: center;
+    background-color: $grayBtn;
+    width: 1250px;
+    height: 275px;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint(sm) {
+      font-size: 3em;
+      inline-size: 10em;
+      overflow-wrap: break-word;
+    }
+  }
 }
