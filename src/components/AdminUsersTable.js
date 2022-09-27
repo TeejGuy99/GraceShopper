@@ -15,7 +15,6 @@ const AdminUsersTable = () => {
     handleRoutines();
   }, []);
 
-  console.log(users);
   return (
     <>
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
@@ -29,7 +28,8 @@ const AdminUsersTable = () => {
           })
           .map((user) => {
             return (
-                <div className="users" key={user.id} style={{display: 'flex', width: '80vw', justifyContent: 'space-between'}}>
+              <div>
+                <div className="users" key={user.id} style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '10px'}}>
                   <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? 'USER ID' : user.id}</p>
                   <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? "EMAIL" : user.email}</p>
                   <p style={{width: '20vw', textAlign: 'center'}}>
@@ -50,6 +50,8 @@ const AdminUsersTable = () => {
                     }
                   </p>
                 </div>
+                <hr style={{borderTop: '1px solid black'}}></hr>
+              </div>
             );
           })
         }

@@ -13,7 +13,8 @@ import {
   UserProfile,
   Cart,
   AdminProducts,
-  AdminUsers
+  AdminUsers,
+  AdminOrders
 } from "../pages";
 import {
   getAllUsers,
@@ -238,16 +239,17 @@ const App = () => {
             path="/admin/users"
             element={
               // isUserAdmin ?
-              <AdminUsers
-                products={products}
-                setProducts={setProducts}
-                guestId={guestId}
-                setGuestId={setGuestId}
-                userId={userId}
-                getUserToken={getUserToken}
-                setUserCartItems={setUserCartItems}
-                getUserCartItems={getUserCartItems}
-              />
+              <AdminUsers/>
+              // : null
+            }
+          />
+
+          <Route
+            exact
+            path="/admin/orders"
+            element={
+              // isUserAdmin ?
+              <AdminOrders/>
               // : null
             }
           />

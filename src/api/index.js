@@ -331,12 +331,11 @@ export async function getAllGuests() {
 	}
 }
 
-export async function getGuest({ token, guestID }) {
+export async function getGuest( guestID ) {
 	try {
 		return await fetch(`${BASE_URL}/guest/${guestID}`, {
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json"
 			},
 		})
 			.then((response) => response.json())

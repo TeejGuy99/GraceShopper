@@ -242,15 +242,6 @@ async function populateInitialData() {
     console.log(guests);
     console.log("Finished creating guests!");
 
-    //INITIAL ORDERS DATA**********************************************************************
-    console.log("Starting to create orders...");
-    const ordersToCreate = [{ isUserId: 2 }, { isGuestId: 2 }, { isUserId: 5 }];
-    const orders = await Promise.all(ordersToCreate.map(Order.createOrder));
-
-    console.log("Orders created:");
-    console.log(orders);
-    console.log("Finished creating orders!!");
-
     //INITIAL PHOTOS DATA**********************************************************************
     console.log("Starting to create photos...");
     const photosToCreate = [
@@ -326,16 +317,32 @@ async function populateInitialData() {
     console.log(userWithCart);
     console.log("Finished checking cart!");
 
-    //TRY ADDING CART TO ORDER*********************************************************************
-    console.log("Creating order from cart belonging to user with id=5:");
-    const userId5Order = await Order.createOrderFromCart({ isUserId: 5 });
-    console.log("Order created:");
-    console.log(userId5Order);
-    console.log("Finished creating order!");
+    //INITIAL ORDERS DATA**********************************************************************
+    console.log("Starting to create orders...");
+    let orders = [];
+    const firstOrderToCreate = { isUserId: 5 };
+    const firstOrder = await Order.createOrderFromCart(firstOrderToCreate);
+    orders.push(firstOrder)
+    const secondOrderToCreate = { isGuestId: 2 };
+    const secondOrder = await Order.createOrderFromCart(secondOrderToCreate);
+    orders.push(secondOrder)
+    const thirdOrderToCreate = { isUserId: 3 };
+    const thirdOrder = await Order.createOrderFromCart(thirdOrderToCreate);
+    orders.push(thirdOrder)
 
-    console.log(
-      "Checking the cart belonging to user with id=5 after order creation:"
-    );
+    console.log("Orders created:");
+    console.log(orders);
+    console.log("Finished creating orders!!");
+    
+
+    //TRY ADDING CART TO ORDER*********************************************************************
+    // console.log("Creating order from cart belonging to user with id=5:");
+    // const userId5Order = await Order.createOrderFromCart({ isUserId: 5 });
+    // console.log("Order created:");
+    // console.log(userId5Order);
+    // console.log("Finished creating order!");
+
+    console.log("Checking the cart belonging to user with id=5 after order creation:");
     const userId5Cart = await User.getUserById({ id: 5 });
     console.log(userId5Cart);
     console.log("Finished checking cart!");
