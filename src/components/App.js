@@ -78,15 +78,15 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Header 
-		  isUserAdmin={isUserAdmin}
-		  isLoggedIn={isLoggedIn}
-		  getUserCartItems={getUserCartItems}
-		  userId={userId}
-		  guestId={guestId}
-		  getUserToken={getUserToken}
-		  setUserCartItems={setUserCartItems}
-		/>
+        <Header
+          isUserAdmin={isUserAdmin}
+          isLoggedIn={isLoggedIn}
+          getUserCartItems={getUserCartItems}
+          userId={userId}
+          guestId={guestId}
+          getUserToken={getUserToken}
+          setUserCartItems={setUserCartItems}
+        />
         {/* <AdBanner/> */}
         <Routes>
           <Route

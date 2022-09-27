@@ -1,0 +1,114 @@
+@import "src/style/variables.scss";
+
+.admin-products-container {
+  overflow-y: AUTO;
+
+  .products-wrapper {
+    height: 100%;
+    position: absolute;
+    padding-top: 1rem;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    @include breakpoint(mdd) {
+      overflow-y: scroll;
+    }
+
+    .item-container {
+      display: flex;
+      flex-direction: columns;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      @include breakpoint(sm) {
+        margin-bottom: 2rem;
+      }
+
+      .items {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border: 1px solid black;
+        margin-right: 2rem;
+        margin-bottom: 2rem;
+
+        .item-imgs {
+          width: 250px;
+          height: 250px;
+        }
+
+        .admin-btns {
+          padding-bottom: 1rem;
+          padding-top: 1rem;
+
+          .edit-btn,
+          .delete-btn {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1rem;
+            margin-left: 1rem;
+            border: none;
+            background-color: $univBlkBtn;
+            border-radius: 0.5rem;
+            font-size: 1.4rem;
+            color: #f4f4f4;
+            cursor: pointer;
+          }
+
+          .edit-btn:hover,
+          .delete-btn:hover {
+            transition: 0.2s ease-in color;
+            color: $litBrwn;
+            background-color: #f4f4f4;
+          }
+        }
+      }
+    }
+  }
+
+  .products-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// EDIT PRODUCT FORM STYLES HERE
+
+.edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5rem;
+  margin-left: 40rem;
+  margin-top: 7rem;
+
+  img {
+    border: 1px solid black;
+  }
+}
+
+#editProductButton {
+  border: none;
+  width: 7rem;
+  height: 4rem;
+  font-size: 1.5rem;
+  background-color: $univBlkBtn;
+  color: #f4f4f4;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.back-btn {
+  button {
+    border: none;
+    width: 7rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    background-color: $univBlkBtn;
+    color: #f4f4f4;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+}

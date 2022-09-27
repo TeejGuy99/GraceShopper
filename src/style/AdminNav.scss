@@ -7,6 +7,14 @@
   padding-top: 10rem;
   flex-direction: row;
 
+  @include breakpoint(sm) {
+    padding-top: 4rem;
+  }
+
+  @include breakpoint(mddd) {
+    padding-top: 4rem;
+  }
+
   .admin-wrapper {
     display: flex;
     align-items: center;
@@ -18,6 +26,20 @@
       align-items: center;
       justify-content: center;
       gap: 7rem;
+
+      @include breakpoint(sm) {
+        gap: 0;
+      }
+
+      @include breakpoint(mddd) {
+        gap: 0;
+      }
+
+      a:hover {
+        transition: 0.3s ease-in background-color;
+        background-color: #774626b6;
+        color: #f4f4f4;
+      }
 
       a {
         display: flex;
@@ -32,6 +54,24 @@
         font-size: 40px;
         background-color: #f9f9f9;
         font-weight: bold;
+
+        // @include breakpoint(sm) {
+        //   font-size: 2rem;
+        //   height: 7rem;
+        //   border: none;
+        //   width: 100%;
+        //   border-bottom: 2px solid $univBlkBtn;
+        //   border-radius: 0;
+        // }
+
+        @include breakpoint(mddd) {
+          font-size: 2rem;
+          height: 7rem;
+          border: none;
+          width: 100vw;
+          border-bottom: 2px solid $univBlkBtn;
+          border-radius: 0;
+        }
 
         svg {
           margin-right: 1rem;
