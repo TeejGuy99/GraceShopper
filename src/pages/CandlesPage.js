@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { addToCart, getCandles, getUserCart } from "../api";
+import { addToCart, getCandles, getUserCart, getCategory } from "../api";
 import { useEffect } from "react";
 import "../style/Products.scss";
 
 const CandlesPage = (props) => {
     const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
     const handleRoutines = () =>{
-        getCandles()
+        // getCandles()
+        getCategory('Candle')
         .then(results => {
             setProducts(results)                
         });

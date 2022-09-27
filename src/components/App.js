@@ -217,6 +217,7 @@ const App = () => {
             exact
             path="/admin/products"
             element={
+              // isUserAdmin ?
               <AdminProducts
                 products={products}
                 setProducts={setProducts}
@@ -227,6 +228,7 @@ const App = () => {
                 setUserCartItems={setUserCartItems}
                 getUserCartItems={getUserCartItems}
               />
+              // : null
             }
           />
         </Routes>

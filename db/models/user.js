@@ -62,7 +62,7 @@ async function getUserById({ id }) {
   `, [ id ])
 
   const { rows: [ user ] } = await client.query(`
-    SELECT id AS "userId", email FROM users
+    SELECT id AS "userId", email, "isAdmin" FROM users
     WHERE id = $1;
   `, [ id ])
 

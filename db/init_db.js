@@ -301,6 +301,12 @@ async function populateInitialData() {
     console.log(photos);
     console.log("Finished creating photos!");
 
+    // console.log("Test editing photo:")
+    // const photoChange = {id: 3, description: 'Test Photo Change', link: 'Test Photo Change', productId: 3}
+    // const changedPhoto = await Photo.updatePhoto(photoChange);
+    // console.log(changedPhoto);
+    // console.log("Finished Editing Photo!");
+
     //INITIAL CARTS DATA**********************************************************************
     console.log("Starting to create carts...");
     const cartsToCreate = [
@@ -333,6 +339,11 @@ async function populateInitialData() {
     const userId5Cart = await User.getUserById({ id: 5 });
     console.log(userId5Cart);
     console.log("Finished checking cart!");
+
+    console.log("Add new item to cart for user with id=5:");
+    const userId5NewCart = await Cart.addToCart({ productId: 2, productQty: 3, cartUserId: 5 })
+    console.log(userId5NewCart);
+    console.log("Finished add new item to cart for user with id=5!");
 
     //INITIAL ORDER_PRODUCTS DATA**********************************************************************
     // console.log("Starting to create order_products...");

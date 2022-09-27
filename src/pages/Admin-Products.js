@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addToCart, getAllProducts, getUserCart, deleteProduct, adminEditProduct } from "../api";
+import { addToCart, getAllProducts, getUserCart, deleteProduct, adminEditProduct, adminEditProductPhoto, createNewProduct, adminCreatePhoto, getUserInfo } from "../api";
 import { useEffect } from "react";
 import "../style/Products.scss";
 import { AdminNav } from "../components";
@@ -20,24 +20,68 @@ const AdminProducts = (props) => {
   const [productCategory, setProductCategory] = useState('')
   const [productPhotoLink, setProductPhotoLink] = useState('')
   const [productPhotoDescription, setProductPhotoDescription] = useState('')
+  const [addProduct, setAddProduct] = useState(null)
+  const [newProductName, setNewProductName] = useState('')
+  const [newProductDescription, setNewProductDescription] = useState('')
+  const [newProductPrice, setNewProductPrice] = useState('')
+  const [newProductInventory, setNewProductInventory] = useState('')
+  const [newProductCategory, setNewProductCategory] = useState('')
+  const [newProductPhotoLink, setNewProductPhotoLink] = useState('')
+  const [newProductPhotoDescription, setNewProductPhotoDescription] = useState('')
+  const [userInfo, setUserInfo] = useState('')
+
+  const resetEditState = () => {
+    setEditProduct(null)
+    setProductName('')
+    setProductDescription('')
+    setProductPrice('')
+    setProductInventory('')
+    setProductCategory('')
+    setProductPhotoLink('')
+    setProductPhotoDescription('')
+  }
+
+  const resetAddState = () => {
+    setAddProduct(null)
+    setNewProductName('')
+    setNewProductDescription('')
+    setNewProductPrice('')
+    setNewProductInventory('')
+    setNewProductCategory('')
+    setNewProductPhotoLink('')
+    setNewProductPhotoDescription('')
+  }
 
   const handleRoutines = () => {
     getAllProducts().then((theProducts) => {
       setProducts(theProducts);
     });
+    // getUserInfo(5).then((result) => {
+    //   setUserInfo(result);
+    // });
   };
   
   useEffect(() => {
     handleRoutines();
   }, []);
-
+  console.log(userInfo);
   return (
     <div>
       <div className="dashboard-container">
         <AdminNav />
       </div>
-      <div> {(!editProduct) ?
+      <div> {(!addProduct) ? ((!editProduct) ?
         (<div className="Products">
+          <button 
+            className="addItem-btn"
+            style={{width: "80vw"}}
+            onClick={async (event) => {
+              event.preventDefault();
+              setAddProduct(true)
+              handleRoutines();
+            }}>
+          Add New Product
+          </button>
           {products.sort(function(a, b) {
             var keyA = (a.id),
               keyB = (b.id);
@@ -58,7 +102,6 @@ const AdminProducts = (props) => {
                     onClick={async (event) => {
                       event.preventDefault();
                       setEditProduct(product)
-                      console.log(editProduct);
                       handleRoutines();
                     }}
                   >
@@ -81,16 +124,17 @@ const AdminProducts = (props) => {
           })}
         </div>)
         : 
-        (<div className="Products">
+        (<div><div className="Products">
           <img src={editProduct.photos[0].link} alt={editProduct.photos[0].description} style={{height: '300px'}}/>
           <form 
                 onSubmit={async (event) => {
                     try {
                         event.preventDefault()
                         await adminEditProduct(editProduct.id, productName, productDescription, productPrice, productInventory, productCategory)
+                        await adminEditProductPhoto(editProduct.photos[0].id, productPhotoDescription, productPhotoLink, editProduct.id)
                         handleRoutines()
-                        setEditProduct(null)
-                    } catch (error) {
+                        resetEditState()
+                      } catch (error) {
                         console.error(error)
                     }
                 }}
@@ -161,15 +205,101 @@ const AdminProducts = (props) => {
                     value={productPhotoDescription}
                     onChange={(event) => {setProductPhotoDescription(event.target.value)}}
                   /></div>
-                <button id='editProductButton' 
-                    // onClick={(event) => {
-                      // event.preventDefault();
-                      // setEditProduct(null);
-                    // }}
-                >Submit Change</button>
-                
+                <button id='editProductButton'>Submit Change</button>
             </form>
-        </div>)}
+        </div>
+        <button style={{position: "fixed", bottom: "0", right: "50%", width: "fit-content", height: "50px"}} onClick={(event) => {
+              event.preventDefault();
+              setEditProduct(null)
+            }}>Go Back</button>
+        </div>)) 
+        : <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <h1>Add New Product</h1>
+          <form 
+                onSubmit={async (event) => {
+                    try {
+                        event.preventDefault()
+                        const newProduct = await createNewProduct(getUserToken, newProductName, newProductDescription, newProductPrice, newProductInventory, newProductCategory)
+                        await adminCreatePhoto(newProductPhotoDescription, newProductPhotoLink, newProduct.id)
+                        handleRoutines()
+                        resetAddState()
+                    } catch (error) {
+                        console.error(error)
+                    }
+                }}
+                id='addProductForm'
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    height: '300px',
+                    position: 'fixed',
+                    bottom: '20%',
+                    right: '50%'
+                }}
+            >
+                <div><label>Name: </label><input 
+                    id='addProductName'
+                    type='text'
+                    required
+                    placeholder='New Product Name*'
+                    value={newProductName}
+                    onChange={(event) => {setNewProductName(event.target.value); console.log('newProductName:', newProductName)}}
+                  /></div>
+                <div><label>Description: </label><textarea 
+                    id='addProductDescription'
+                    type='text'
+                    style={{height: '50px'}}
+                    required
+                    placeholder='New Product Description*'
+                    value={newProductDescription}
+                    onChange={(event) => {setNewProductDescription(event.target.value)}}
+                  /></div>
+                  <div><label>Price: </label><input 
+                    id='addProductPrice'
+                    type='number'
+                    step="0.01"
+                    required
+                    placeholder='New Product Price*'
+                    value={newProductPrice}
+                    onChange={(event) => {setNewProductPrice(event.target.value)}}
+                  /></div>
+                  <div><label>Inventory: </label><input 
+                    id='addProductQuantity'
+                    type='text'
+                    required
+                    placeholder='New Product Inventory*'
+                    value={newProductInventory}
+                    onChange={(event) => {setNewProductInventory(event.target.value)}}
+                  /></div>
+                  <div><label>Category: </label><input 
+                    id='addProductCategory'
+                    type='text'
+                    required
+                    placeholder='New Product Category*'
+                    value={newProductCategory}
+                    onChange={(event) => {setNewProductCategory(event.target.value)}}
+                  /></div>
+                  <div><label>Photo Link: </label><input 
+                    id='addProductPhotoLink'
+                    type='text'
+                    required
+                    placeholder='New Product Photo Link*'
+                    value={newProductPhotoLink}
+                    onChange={(event) => {setNewProductPhotoLink(event.target.value)}}
+                  /></div>
+                  <div><label>Photo Alt Text: </label><input 
+                    id='addProductPhotoDescription'
+                    type='text'
+                    required
+                    placeholder='New Product Photo Alt Text*'
+                    value={newProductPhotoDescription}
+                    onChange={(event) => {setNewProductPhotoDescription(event.target.value)}}
+                  /></div>
+                <button id='addProductButton'>Submit Change</button>
+            </form>
+          </div>}
       </div>
     </div>
   );

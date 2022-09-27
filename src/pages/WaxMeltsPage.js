@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { addToCart, getWaxMelts, getUserCart } from "../api";
+import { addToCart, getWaxMelts, getUserCart, getCategory } from "../api";
 import { useEffect } from "react";
 import "../style/Products.scss";
 
 const WaxMeltsPage = (props) => {
     const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
     const handleRoutines = () =>{
-        getWaxMelts()
+        // getWaxMelts()
+        getCategory('Wax Melt')
         .then(results => {
             setProducts(results)                
         });
