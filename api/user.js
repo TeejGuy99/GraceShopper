@@ -160,6 +160,27 @@ router.patch('/makeAdmin/:userId', async(req, res, next) => {
     }
 })
 
-// GET *VIEW USER DATA*
+// PATCH /api/user/removeAdmin/:userId *REMOVE OTHER USER ADMIN*
+router.patch('/removeAdmin/:userId', async(req, res, next) => {
+    try {
+        const { userId } = req.params;
+
+        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
+        // if (!adminCheck) {
+        //     throw new Error(`You must be an admin to perform this action`)
+        // }
+
+        let selectedUser = await User.getUserById({ id: userId });
+        let selectedUserEmail = selectedUser.email;
+
+        let lostAdmin = await User.removeAdmin({ email: selectedUserEmail })
+
+        res.send(lostAdmin)
+
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
 
 module.exports = router;

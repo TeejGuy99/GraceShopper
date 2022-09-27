@@ -7,6 +7,7 @@ module.exports = {
   getAllUsers,
   createUser,
   makeAdmin,
+  removeAdmin,
   getUserById,
   getUserByEmail,
   updateUser,
@@ -16,7 +17,7 @@ module.exports = {
 async function getAllUsers() {
   /* this adapter should fetch a list of users from your db */
   const { rows } = await client.query(`
-    SELECT id, email FROM users;
+    SELECT id, email, "isAdmin" FROM users;
   `)
   return rows
 }
@@ -39,6 +40,16 @@ async function makeAdmin({ email }) {
   const { rows: [ admin ] } = await client.query(`
     UPDATE users
     SET "isAdmin" = true
+    WHERE email = $1
+    RETURNING email, "isAdmin";
+  `, [ email ])
+  return admin
+}
+
+async function removeAdmin({ email }) {
+  const { rows: [ admin ] } = await client.query(`
+    UPDATE users
+    SET "isAdmin" = false
     WHERE email = $1
     RETURNING email, "isAdmin";
   `, [ email ])

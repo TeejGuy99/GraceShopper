@@ -56,10 +56,6 @@ const AdminProducts = (props) => {
     // });
   };
 
-  const backHandler = () => {
-    window.location.reload();
-  };
-
   useEffect(() => {
     handleRoutines();
   }, []);

@@ -368,6 +368,26 @@ export async function makeUserAdmin( userID ) {
 	}
 }
 
+export async function removeUserAdmin( userID ) {
+	try {
+		return fetch(`${BASE_URL}/user/removeAdmin/${userID}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userID: userID
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 export async function addToCart(productId, productQty, cartUserId, cartGuestId ) {
 	try { 
 		return fetch(`${BASE_URL}/cart`, {
