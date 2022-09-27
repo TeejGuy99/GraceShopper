@@ -13,8 +13,22 @@ module.exports = {
   async function getAllOrders() {
     /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
-      SELECT * FROM orders;
+      SELECT orders.id, orders."isGuestId", orders."isUserId", users.email 
+      FROM orders
+      LEFT JOIN users
+      ON orders."isUserId"=users.id;
     `)
+
+    for (let i=0; i<rows.length; i++) {
+      const { rows: products } = await client.query(`
+        SELECT carts.id, carts."productQty", carts."productId", products.name FROM carts
+        LEFT JOIN products
+        ON carts."productId"=products.id
+        WHERE "orderId"=$1;
+      `, [ rows[i].id ])
+
+      rows[i].products = products
+    }
     return rows
   }
 

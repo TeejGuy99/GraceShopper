@@ -1,11 +1,19 @@
 import React from 'react'
 import { AdminUsersTable} from "../components"
+import { getAllUsers } from '../api'
+import { AdminNav } from "../components";
 
-export default function AdminUsers() {
+
+const AdminUsers = (props) => {
+
   return (
     <>
-    <div>admin Users</div>
+    <div className="dashboard-container">
+        <AdminNav />
+    </div>
     < AdminUsersTable/>
     </>
   )
 }
+
+export default AdminUsers;

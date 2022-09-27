@@ -33,7 +33,7 @@ router.post('/', async(req, res, next) => {
 })
 
 // PATCH /api/photo/:photoId
-router.patch('/photo/:photoId', async(req, res, next) => {
+router.patch('/:photoId', async(req, res, next) => {
     try {
         // let adminCheck = await User.checkAdmin({ id: req.user.userId })
         // if (!adminCheck) {
@@ -43,8 +43,7 @@ router.patch('/photo/:photoId', async(req, res, next) => {
         const { photoId } = req.params;
 
         const { description, link, productId } = req.body;
-        const updatedPhoto = await Photo.updatePhoto({ id: photoId, description, link, productId })
-
+        const updatedPhoto = await Photo.updatePhoto({ id: photoId, description: description, link: link, productId: productId })
         res.send(updatedPhoto)
     } catch (error) {
         console.error(error)
@@ -53,7 +52,7 @@ router.patch('/photo/:photoId', async(req, res, next) => {
 })
 
 // DELETE /api/photo/:photoId
-router.delete('/photo/:photoId', async(req, res, next) => {
+router.delete('/:photoId', async(req, res, next) => {
     try {
         // let adminCheck = await User.checkAdmin({ id: req.user.userId })
         // if (!adminCheck) {

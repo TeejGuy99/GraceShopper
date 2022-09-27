@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
-import { AdBanner, ItemCard, Header } from "./index";
+import { AdBanner, ItemCard, Header, AdminUsersTable } from "./index";
 import {
   Register,
   AdminPage,
@@ -13,6 +13,8 @@ import {
   UserProfile,
   Cart,
   AdminProducts,
+  AdminUsers,
+  AdminOrders
 } from "../pages";
 import {
   getAllUsers,
@@ -186,14 +188,14 @@ const App = () => {
             exact
             path="/admin"
             element={
-              isUserAdmin ? (
+              // isUserAdmin ? (
                 <AdminPage
                   isUserAdmin={isUserAdmin}
                   getUserCartItems={getUserCartItems}
                   isLoggedIn={isLoggedIn}
                   setItemAvailable={setItemAvailable}
                 />
-              ) : null
+              // ) : null
             }
           />
 
@@ -217,6 +219,7 @@ const App = () => {
             exact
             path="/admin/products"
             element={
+              // isUserAdmin ?
               <AdminProducts
                 products={products}
                 setProducts={setProducts}
@@ -227,6 +230,27 @@ const App = () => {
                 setUserCartItems={setUserCartItems}
                 getUserCartItems={getUserCartItems}
               />
+              // : null
+            }
+          />
+
+          <Route
+            exact
+            path="/admin/users"
+            element={
+              // isUserAdmin ?
+              <AdminUsers/>
+              // : null
+            }
+          />
+
+          <Route
+            exact
+            path="/admin/orders"
+            element={
+              // isUserAdmin ?
+              <AdminOrders/>
+              // : null
             }
           />
         </Routes>
