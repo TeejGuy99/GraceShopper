@@ -42,8 +42,8 @@ const AdminOrders = () => {
             // setUser(await getUserInfo(order.isUserId))
             // setGuest(await getGuest(isGuestId))
             return (
-              <div>
-                <div className="orders" key={order.id} style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '20px'}}>
+              <div key={order.id}>
+                <div className="orders" style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '20px'}}>
                   <p style={{width: '10vw', textAlign: 'center'}}>{order.id}</p>
                   <p style={{width: '20vw', textAlign: 'center'}}>{order.isUserId ? order.email : `Guest ${order.isGuestId}`}</p>
                   <div className='orderProductMap' style={{width: '30vw', textAlign: 'center'}}>{order.products.map((product => {

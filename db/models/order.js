@@ -4,6 +4,7 @@ const client = require('../client');
 module.exports = {
     // add your database adapter fns here
     getAllOrders,
+    getOrdersByUser,
     getOrderById,
     createOrder,
     createOrderFromCart,
@@ -24,6 +25,32 @@ module.exports = {
         SELECT carts.id, carts."productQty", carts."productId", products.name FROM carts
         LEFT JOIN products
         ON carts."productId"=products.id
+        WHERE "orderId"=$1;
+      `, [ rows[i].id ])
+
+      rows[i].products = products
+    }
+    return rows
+  }
+
+  async function getOrdersByUser(userId) {
+    /* this adapter should fetch a list of users from your db */
+    const { rows } = await client.query(`
+      SELECT orders.id, orders."isUserId", users.email 
+      FROM orders
+      LEFT JOIN users
+      ON orders."isUserId"=users.id
+      WHERE orders."isUserId"=$1;
+    `, [ userId ])
+
+    for (let i=0; i<rows.length; i++) {
+      const { rows: products } = await client.query(`
+        SELECT carts.id, carts."productQty", carts."productId", products.name, photos.link, photos.description
+        FROM carts
+        LEFT JOIN products
+        ON carts."productId"=products.id
+        FULL JOIN photos
+        ON products.id=photos."productId"
         WHERE "orderId"=$1;
       `, [ rows[i].id ])
 

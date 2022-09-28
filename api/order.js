@@ -27,6 +27,20 @@ router.get('/:orderid', async(req, res, next) => {
     }
 })
 
+// GET /api/order/user/userId
+router.get('/user/:userid', async(req, res, next) => {
+    try {
+        const { userid } = req.params;
+
+        const order = await Order.getOrdersByUser(userid)
+
+        res.send(order)
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
 // POST /api/order/
 router.post('/', async(req, res, next) => {
     try {

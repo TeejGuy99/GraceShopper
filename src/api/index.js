@@ -220,6 +220,22 @@ export async function getAllOrders() {
 	}
 }
 
+export async function getUserOrders(userid) {
+	try {
+		return await fetch(`${BASE_URL}/order/user/${userid}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 export async function getOrderInfo({ token, orderID }) {
 	try {
 		return await fetch(`${BASE_URL}/order/${orderID}`, {

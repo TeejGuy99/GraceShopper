@@ -28,8 +28,8 @@ const AdminUsersTable = () => {
           })
           .map((user) => {
             return (
-              <div>
-                <div className="users" key={user.id} style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '10px'}}>
+              <div key={user.id}>
+                <div className="users" style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '10px'}}>
                   <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? 'USER ID' : user.id}</p>
                   <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? "EMAIL" : user.email}</p>
                   <p style={{width: '20vw', textAlign: 'center'}}>

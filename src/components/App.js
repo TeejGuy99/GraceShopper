@@ -180,7 +180,7 @@ const App = () => {
             exact
             path="/profile"
             element={
-              isLoggedIn ? <UserProfile isLoggedIn={isLoggedIn} /> : null
+              isLoggedIn ? <UserProfile userId={userId} /> : null
             }
           ></Route>
 
