@@ -1,0 +1,41 @@
+@import "src/style/variables.scss";
+
+.user-table-container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .users {
+    display: flex;
+    width: 80vw;
+    justify-content: space-between;
+    margin: 10px;
+
+    p {
+      font-size: 1.2rem;
+      width: 10vw;
+      text-align: center;
+    }
+
+    button {
+      border: none;
+      color: white;
+      background-color: $univBlkBtn;
+      font-size: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
+
+    .remove-admin {
+      background-color: rgb(179, 52, 52);
+    }
+  }
+}
+
+hr {
+  border-top: 1px solid black;
+}

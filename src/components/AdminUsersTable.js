@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { getAllUsers, makeUserAdmin, removeUserAdmin } from '../api'
-
+import { getAllUsers, makeUserAdmin, removeUserAdmin } from "../api";
+import "../style/AdminUsers.scss";
+import { FaUserPlus, FaUserMinus } from "react-icons/fa";
 
 const AdminUsersTable = () => {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const handleRoutines = () => {
     getAllUsers().then((result) => {
       setUsers(result);
@@ -17,7 +18,7 @@ const AdminUsersTable = () => {
 
   return (
     <>
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+      <div className="user-table-container">
         {users
           .sort(function (a, b) {
             var keyA = a.id,
@@ -28,36 +29,46 @@ const AdminUsersTable = () => {
           })
           .map((user) => {
             return (
-              <div>
-                <div className="users" key={user.id} style={{display: 'flex', width: '80vw', justifyContent: 'space-between', margin: '10px'}}>
-                  <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? 'USER ID' : user.id}</p>
-                  <p style={{width: '10vw', textAlign: 'center'}}>{user.email==='admin@seed.com' ? "EMAIL" : user.email}</p>
-                  <p style={{width: '20vw', textAlign: 'center'}}>
-                    {user.email==='admin@seed.com' ? 
-                      "ADMIN STATUS" : 
-                        (user.isAdmin ? 
-                          <button onClick={async (event) => {
-                            event.preventDefault();
-                            await removeUserAdmin(user.id)
-                            handleRoutines();
-                          }}>REMOVE ADMIN</button> : 
-                            <button onClick={async (event) => {
-                              event.preventDefault();
-                              await makeUserAdmin(user.id)
-                              handleRoutines();
-                            }}>ADD ADMIN</button>
-                        )
-                    }
+              <div className="user-wrapper" key={user.id}>
+                <div className="users">
+                  <p>{user.email === "admin@seed.com" ? "USER ID" : user.id}</p>
+                  <p>
+                    {user.email === "admin@seed.com" ? "EMAIL" : user.email}
+                  </p>
+                  <p>
+                    {user.email === "admin@seed.com" ? (
+                      "ADMIN STATUS"
+                    ) : user.isAdmin ? (
+                      <button
+                        className="remove-admin"
+                        onClick={async (event) => {
+                          event.preventDefault();
+                          await removeUserAdmin(user.id);
+                          handleRoutines();
+                        }}
+                      >
+                        <FaUserMinus />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={async (event) => {
+                          event.preventDefault();
+                          await makeUserAdmin(user.id);
+                          handleRoutines();
+                        }}
+                      >
+                        <FaUserPlus />
+                      </button>
+                    )}
                   </p>
                 </div>
-                <hr style={{borderTop: '1px solid black'}}></hr>
+                <hr></hr>
               </div>
             );
-          })
-        }
-        </div>
+          })}
+      </div>
     </>
   );
-}
+};
 
 export default AdminUsersTable;
