@@ -10,8 +10,9 @@
     overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    width: 100%;
 
-    @include breakpoint(mdd) {
+    @include breakpoint(mddd) {
       overflow-y: scroll;
     }
 
@@ -75,15 +76,41 @@
 // EDIT PRODUCT FORM STYLES HERE
 
 .edit-container {
+  margin-top: 5rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 5rem;
-  margin-left: 40rem;
-  margin-top: 7rem;
+  justify-content: center;
+  gap: 4rem;
+
+  @include breakpoint(mddd) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+
+    img {
+      height: 200px;
+    }
+  }
+
+  @include breakpoint(md) {
+    img {
+      height: 400px;
+    }
+  }
 
   img {
     border: 1px solid black;
+  }
+}
+
+#editProductForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  @include breakpoint(mddd) {
+    margin-top: -4rem;
   }
 }
 
@@ -97,6 +124,10 @@
   border-radius: 0.5rem;
   cursor: pointer;
   font-family: inherit;
+
+  @include breakpoint(mddd) {
+    margin-top: 2rem;
+  }
 }
 
 .back-btn {
@@ -111,4 +142,66 @@
     cursor: pointer;
     font-family: inherit;
   }
+
+  @include breakpoint(mddd) {
+    margin-top: -2rem;
+  }
+}
+
+// ADD PRODUCT BUTTON
+.add-new-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .addItem-btn {
+    margin: 2rem 0;
+    font-family: $jost-font;
+    font-size: 2rem;
+    border: none;
+    background-color: $univBlkBtn;
+    color: white;
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  .addItem-btn:hover {
+    transition: 0.2s ease-in color;
+    color: $litBrwn;
+    background-color: #f4f4f4;
+  }
+}
+
+.add-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .new-product-title {
+    margin-top: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-decoration: underline;
+  }
+
+  #addProductButton {
+    font-size: 1.3rem;
+    font-family: $univBlkBtn;
+    border: none;
+    color: white;
+    background-color: $univBlkBtn;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+
+  @include breakpoint(mddd) {
+    width: 100%;
+  }
+}
+
+.back-add {
+  margin-top: 1rem;
 }
