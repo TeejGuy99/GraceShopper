@@ -11,15 +11,6 @@ module.exports = {
   getOrdersByUser
 };
 
-<<<<<<< HEAD
-async function getAllOrders() {
-  /* this adapter should fetch a list of users from your db */
-  const { rows } = await client.query(`
-      SELECT * FROM orders;
-    `);
-  return rows;
-}
-=======
   async function getAllOrders() {
     /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
@@ -41,7 +32,6 @@ async function getAllOrders() {
     }
     return rows
   }
->>>>>>> 1a67920c80c28401f9c4990deb1986e5b6decc9d
 
 async function getOrderById({ id }) {
   const {
@@ -77,23 +67,15 @@ async function createOrder({ isUserId = null, isGuestId = null }) {
       RETURNING *;
     `,
     [isUserId, isGuestId]
-  );
-
-<<<<<<< HEAD
-  return order;
+  ); 
+  return order
 }
 
-// FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
-async function createOrderFromCart({ isUserId = null, isGuestId = null }) {
-  const { rows: cart } = await client.query(
-    `
-=======
   // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
     console.log('createOrderFromCart:', isUserId);
     console.log('createOrderFromCart:', isGuestId);
     const { rows: cart } = await client.query(`
->>>>>>> 1a67920c80c28401f9c4990deb1986e5b6decc9d
     SELECT * FROM carts
     WHERE ("cartUserId"=$1 OR "cartGuestId"=$2)
     AND ("isActive"=true);
@@ -223,7 +205,7 @@ async function getOrdersByUser(userId) {
     WHERE orders."isUserId"=$1;
     `,
     [userId]
-  );
+  )
 
   for (let i = 0; i < rows.length; i++) {
     const { rows: products } = await client.query(
@@ -233,12 +215,12 @@ async function getOrdersByUser(userId) {
     LEFT JOIN products
     ON carts."productId"=products.id
     FULL JOIN photos
-    ON product.id=photos."productId"
+    ON products.id=photos."productId"
     WHERE "orderId"=$1;
     `,
       [rows[i].id]
-    );
-    rows[i].products = products;
+    )
+    rows[i].products = products
   }
-  return rows;
+  return rows
 }

@@ -56,6 +56,18 @@ router.delete('/:orderId', async(req, res, next) => {
 })
 
 // GET /api/order/user/:userId
-router.get('/user/:userId', async(req, res, next))
+router.get('/user/:userId', async(req, res, next) => {
+    try {
+        const { userId } = req.params
+
+        const order = await Order.getOrdersByUser(userId)
+
+        res.send(order)
+
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
+})
 
 module.exports = router;
