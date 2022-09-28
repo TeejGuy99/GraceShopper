@@ -236,7 +236,6 @@ export async function getUserOrders(userId) {
 	}
 }
 
-
 export async function getOrderInfo({ token, orderID }) {
 	try {
 		return await fetch(`${BASE_URL}/order/${orderID}`, {

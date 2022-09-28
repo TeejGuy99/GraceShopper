@@ -47,8 +47,6 @@ const AdminOrders = () => {
           return 0;
         })
         .map((order) => {
-          // setUser(await getUserInfo(order.isUserId))
-          // setGuest(await getGuest(isGuestId))
           return (
             <div key={order.id}>
               <div
