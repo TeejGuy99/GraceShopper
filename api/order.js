@@ -42,7 +42,7 @@ router.post('/', async(req, res, next) => {
 })
 
 // DELETE /api/order/:orderId
-router.delete('/:orderId', async(res, req, next) => {
+router.delete('/:orderId', async(req, res, next) => {
     try {
         const { orderId } = req.params
 
@@ -54,5 +54,8 @@ router.delete('/:orderId', async(res, req, next) => {
         next(error)
     }
 })
+
+// GET /api/order/user/:userId
+router.get('/user/:userId', async(req, res, next))
 
 module.exports = router;

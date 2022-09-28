@@ -55,9 +55,11 @@ async function getUserById({ id }) {
   `, [ id ])
 
   const { rows: orders } = await client.query(`
-    SELECT orders.id, carts."productId", carts."productPrice", carts."productQty"
+    SELECT orders.id, carts."productId", carts."productPrice", carts."productQty", products.name AS "productName", photos.description, photos.link
     FROM orders
-    JOIN carts ON orders.id=carts."orderId"
+    FULL JOIN carts ON orders.id=carts."orderId"
+    FULL JOIN products ON carts."productId"=products.id 
+    FULL JOIN photos ON carts."productId"=photos."productId"
     WHERE "isUserId"=$1;
   `, [ id ])
 
