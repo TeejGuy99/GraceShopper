@@ -180,7 +180,7 @@ const App = () => {
             exact
             path="/profile"
             element={
-              isLoggedIn ? <UserProfile isLoggedIn={isLoggedIn} /> : null
+              isLoggedIn ? <UserProfile userId={userId} /> : null
             }
           ></Route>
 
@@ -253,6 +253,22 @@ const App = () => {
               // : null
             }
           />
+
+          <Route
+            exact
+            path="/cart"
+            element={
+              <Cart
+                isLoggedIn={isLoggedIn}
+                getUserCartItems={getUserCartItems}
+                setUserCartItems={setUserCartItems}
+                getUserToken={getUserToken}
+                userId={userId}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          ></Route>
         </Routes>
       </div>
     </Router>
