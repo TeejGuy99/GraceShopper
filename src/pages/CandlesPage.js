@@ -32,6 +32,8 @@ const CandlesPage = (props) => {
         }).map((product) => {
         return (
           <div className="product-items" key={product.id}>
+            {product.qtyAvailable <=0 ? null :
+            <div>
             <img
               className="item-img"
               src={product.photos[0].link}
@@ -63,7 +65,8 @@ const CandlesPage = (props) => {
             >
               ADD TO CART
             </button>
-          </div>
+          </div>}
+        </div>
         );
       })}
     </div>

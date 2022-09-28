@@ -90,6 +90,10 @@ const App = () => {
           guestId={guestId}
           getUserToken={getUserToken}
           setUserCartItems={setUserCartItems}
+          setUserToken={setUserToken}
+          setLoggedIn={setLoggedIn}
+          setUserAdmin={setUserAdmin}
+          setUserId={setUserId}
         />
         {/* <AdBanner/> */}
         <Routes>

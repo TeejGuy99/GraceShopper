@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { BsPersonFill, BsFillCartFill } from "react-icons/bs";
+import { NavLink, useNavigate } from "react-router-dom";
+import { BsPersonFill, BsFillCartFill, BsBoxArrowLeft } from "react-icons/bs";
 import { FaBars, FaWindowClose } from "react-icons/fa";
 import styles from "../style/Header.scss";
-import { getUserCart } from "../api"
+import { getUserCart, logOut } from "../api"
 
 function Header(props) {
-  const { isUserAdmin, isLoggedIn, getUserCartItems, userId, guestId, getUserToken, setUserCartItems } = props;
+  const { isUserAdmin, isLoggedIn, getUserCartItems, userId, guestId, getUserToken, setUserCartItems, setUserToken, setLoggedIn, setUserAdmin, setUserId } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggler = () => setMenuOpen((p) => !p);
+  let navigate = useNavigate()
 
   const handleRoutines = () => {
     getUserCart({token: getUserToken, userID: userId, guestID: guestId }).then((results) => {
@@ -80,6 +81,17 @@ function Header(props) {
               <div className="user-icon">
                 {isLoggedIn ? (
                   <>
+                    <button onClick={async (event) => {
+                      event.preventDefault();
+                      logOut();
+                      setUserToken("");
+                      setLoggedIn(false);
+                      setUserAdmin(false);
+                      setUserId(null);
+                      navigate("/login")
+                    }}>
+                    <BsBoxArrowLeft size={25} />
+                    </button>
                     <NavLink to="/profile">
                       <BsPersonFill size={25} />
                     </NavLink>
@@ -124,6 +136,17 @@ function Header(props) {
             <div className="user-icons">
               {isLoggedIn ? (
                 <>
+                  <button onClick={async (event) => {
+                    event.preventDefault();
+                    logOut();
+                    setUserToken("");
+                    setLoggedIn(false);
+                    setUserAdmin(false);
+                    setUserId(null);
+                    navigate("/login")
+                  }}>
+                  <BsBoxArrowLeft size={25} />
+                  </button>
                   <NavLink to="/profile">
                     <BsPersonFill size={25} />
                   </NavLink>
