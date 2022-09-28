@@ -14,7 +14,7 @@ import {
   Cart,
   AdminProducts,
   AdminUsers,
-  AdminOrders
+  AdminOrders,
 } from "../pages";
 import {
   getAllUsers,
@@ -38,6 +38,8 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [guestId, setGuestId] = useState(0);
   const [userId, setUserId] = useState(null);
+
+  console.log('isUserAdmin :>> ', isUserAdmin);
 
   //Helper Functions
 
@@ -160,6 +162,7 @@ const App = () => {
                 setUserAdmin={setUserAdmin}
                 setUserId={setUserId}
                 setGuestId={setGuestId}
+                isUserAdmin={isUserAdmin}
               />
             }
           />
@@ -188,14 +191,14 @@ const App = () => {
             exact
             path="/admin"
             element={
-              // isUserAdmin ? (
+              isUserAdmin ? (
                 <AdminPage
                   isUserAdmin={isUserAdmin}
                   getUserCartItems={getUserCartItems}
                   isLoggedIn={isLoggedIn}
                   setItemAvailable={setItemAvailable}
                 />
-              // ) : null
+              ) : null
             }
           />
 
@@ -219,40 +222,48 @@ const App = () => {
             exact
             path="/admin/products"
             element={
-              // isUserAdmin ?
-              <AdminProducts
-                products={products}
-                setProducts={setProducts}
-                guestId={guestId}
-                setGuestId={setGuestId}
-                userId={userId}
-                getUserToken={getUserToken}
-                setUserCartItems={setUserCartItems}
-                getUserCartItems={getUserCartItems}
-              />
-              // : null
+              isUserAdmin ? (
+                <AdminProducts
+                  products={products}
+                  setProducts={setProducts}
+                  guestId={guestId}
+                  setGuestId={setGuestId}
+                  userId={userId}
+                  getUserToken={getUserToken}
+                  setUserCartItems={setUserCartItems}
+                  getUserCartItems={getUserCartItems}
+                />
+              ) : null
             }
           />
 
           <Route
             exact
             path="/admin/users"
-            element={
-              // isUserAdmin ?
-              <AdminUsers/>
-              // : null
-            }
+            element={isUserAdmin ? <AdminUsers /> : null}
           />
 
           <Route
             exact
             path="/admin/orders"
-            element={
-              // isUserAdmin ?
-              <AdminOrders/>
-              // : null
-            }
+            element={isUserAdmin ? <AdminOrders /> : null}
           />
+
+          <Route
+            exact
+            path="/cart"
+            element={
+              <Cart
+                isLoggedIn={isLoggedIn}
+                getUserCartItems={getUserCartItems}
+                setUserCartItems={setUserCartItems}
+                getUserToken={getUserToken}
+                userId={userId}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          ></Route>
         </Routes>
       </div>
     </Router>

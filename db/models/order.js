@@ -1,15 +1,15 @@
 // grab our db client connection to use with our adapters
-const client = require('../client');
+const client = require("../client");
 
 module.exports = {
-    // add your database adapter fns here
-    getAllOrders,
-    getOrdersByUser,
-    getOrderById,
-    createOrder,
-    createOrderFromCart,
-    deleteOrder
-  };
+  // add your database adapter fns here
+  getAllOrders,
+  getOrderById,
+  createOrder,
+  createOrderFromCart,
+  deleteOrder,
+  getOrdersByUser
+};
 
   async function getAllOrders() {
     /* this adapter should fetch a list of users from your db */
@@ -33,57 +33,43 @@ module.exports = {
     return rows
   }
 
-  async function getOrdersByUser(userId) {
-    /* this adapter should fetch a list of users from your db */
-    const { rows } = await client.query(`
-      SELECT orders.id, orders."isUserId", users.email 
-      FROM orders
-      LEFT JOIN users
-      ON orders."isUserId"=users.id
-      WHERE orders."isUserId"=$1;
-    `, [ userId ])
-
-    for (let i=0; i<rows.length; i++) {
-      const { rows: products } = await client.query(`
-        SELECT carts.id, carts."productQty", carts."productId", products.name, photos.link, photos.description
-        FROM carts
-        LEFT JOIN products
-        ON carts."productId"=products.id
-        FULL JOIN photos
-        ON products.id=photos."productId"
-        WHERE "orderId"=$1;
-      `, [ rows[i].id ])
-
-      rows[i].products = products
-    }
-    return rows
-  }
-
-  async function getOrderById({ id }) {
-    const { rows: [ order ] } = await client.query(`
+async function getOrderById({ id }) {
+  const {
+    rows: [order],
+  } = await client.query(
+    `
       SELECT id FROM orders
       WHERE id=$1;
-    `, [ id ])
+    `,
+    [id]
+  );
 
-    const { rows: products } = await client.query(`
+  const { rows: products } = await client.query(
+    `
       SELECT * FROM carts
       WHERE "orderId"=$1;
-    `, [ id ])
+    `,
+    [id]
+  );
 
-    order.products = products
+  order.products = products;
 
-    return order
-  }
+  return order;
+}
 
-  async function createOrder({ isUserId=null, isGuestId=null }) {
-    const { rows: [ order ] } = await client.query(`
+async function createOrder({ isUserId = null, isGuestId = null }) {
+  const {
+    rows: [order],
+  } = await client.query(
+    `
       INSERT INTO orders("isUserId", "isGuestId")
       VALUES ($1, $2)
       RETURNING *;
-    `, [ isUserId, isGuestId ]);
-  
-    return order
-  }
+    `,
+    [isUserId, isGuestId]
+  ); 
+  return order
+}
 
   // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
@@ -93,81 +79,148 @@ module.exports = {
     SELECT * FROM carts
     WHERE ("cartUserId"=$1 OR "cartGuestId"=$2)
     AND ("isActive"=true);
-  `, [ isUserId, isGuestId ])
+  `,
+    [isUserId, isGuestId]
+  );
 
-    const { rows: [ order ] } = await client.query(`
+  const {
+    rows: [order],
+  } = await client.query(
+    `
       INSERT INTO orders("isUserId", "isGuestId")
       VALUES ($1, $2)
       RETURNING *;
-    `, [ isUserId, isGuestId ])
+    `,
+    [isUserId, isGuestId]
+  );
 
-    order.cart = cart
+  order.cart = cart;
 
-    await client.query(`
+  await client.query(
+    `
       UPDATE carts
       SET "orderId"=$1
       WHERE ("cartUserId"=$2 OR "cartGuestId"=$3)
       AND ("isActive"=true);
-    `, [ order.id, isUserId, isGuestId ])
+    `,
+    [order.id, isUserId, isGuestId]
+  );
 
-    await client.query(`
+  await client.query(
+    `
       UPDATE carts 
       SET "isActive"=false
       WHERE ("cartUserId"=$1 OR "cartGuestId"=$2);
-    `, [ isUserId, isGuestId ])
+    `,
+    [isUserId, isGuestId]
+  );
 
-    // This should adjust the total inventory when an order is placed 
-    // (Remove the order qty from total inventory by looping through each item in the cart)
-    for (i=0; i<cart.length; i++) {
-      let productToEdit = cart[i].productId
+  // This should adjust the total inventory when an order is placed
+  // (Remove the order qty from total inventory by looping through each item in the cart)
+  for (i = 0; i < cart.length; i++) {
+    let productToEdit = cart[i].productId;
 
-      const { rows: [checkQtyAvailable] } = await client.query(`
+    const {
+      rows: [checkQtyAvailable],
+    } = await client.query(
+      `
         SELECT "qtyAvailable"
         FROM products
         WHERE id=$1;
-      `, [ productToEdit ])
+      `,
+      [productToEdit]
+    );
 
-      let qtyRemaining = (checkQtyAvailable.qtyAvailable - cart[i].productQty)
+    let qtyRemaining = checkQtyAvailable.qtyAvailable - cart[i].productQty;
 
-      await client.query(`
+    await client.query(
+      `
         UPDATE products
         SET "qtyAvailable"=$1
         WHERE "id"=$2;
-      `, [ qtyRemaining, productToEdit ])
-    }
-  
-    return order
+      `,
+      [qtyRemaining, productToEdit]
+    );
   }
 
-  async function deleteOrder({ id }) {
-    const { rows: products } = await client.query(`
+  return order;
+}
+
+async function deleteOrder({ id }) {
+  const { rows: products } = await client.query(
+    `
       SELECT * FROM carts
       WHERE "orderId"=$1;
-    `, [ id ])
+    `,
+    [id]
+  );
 
-    for (let i=0; i<products.length; i++) {
-      let productId = products[i].productId
-      let qtyToReturn = products[i].productQty
+  for (let i = 0; i < products.length; i++) {
+    let productId = products[i].productId;
+    let qtyToReturn = products[i].productQty;
 
-      const { rows: [checkQtyAvailable] } = await client.query(`
+    const {
+      rows: [checkQtyAvailable],
+    } = await client.query(
+      `
         SELECT "qtyAvailable"
         FROM products
         WHERE id=$1;
-      `, [ productId ])
+      `,
+      [productId]
+    );
 
-      let newTotalQty = (checkQtyAvailable.qtyAvailable + qtyToReturn)
+    let newTotalQty = checkQtyAvailable.qtyAvailable + qtyToReturn;
 
-      await client.query(`
+    await client.query(
+      `
         UPDATE products
         SET "qtyAvailable"=$1
         WHERE id=$2;
-      `, [ newTotalQty, productId ])
-    }
+      `,
+      [newTotalQty, productId]
+    );
+  }
 
-    const { rows: [order] } = await client.query(`
+  const {
+    rows: [order],
+  } = await client.query(
+    `
       DELETE FROM orders
       WHERE id=$1
       RETURNING *;
-    `, [ id ])
-    return order
+    `,
+    [id]
+  );
+  return order;
+}
+
+async function getOrdersByUser(userId) {
+  const { rows } = await client.query(
+    `
+    SELECT orders.id, orders."isUserId", users.email
+    FROM orders
+    LEFT JOIN users
+    ON orders."isUserId"=users.id
+    WHERE orders."isUserId"=$1;
+    `,
+    [userId]
+  )
+
+  for (let i = 0; i < rows.length; i++) {
+    const { rows: products } = await client.query(
+      `
+    SELECT carts.id, carts."productQty", carts."productId", products.name, photos.link, photos.description
+    FROM carts
+    LEFT JOIN products
+    ON carts."productId"=products.id
+    FULL JOIN photos
+    ON products.id=photos."productId"
+    WHERE "orderId"=$1;
+    `,
+      [rows[i].id]
+    )
+    rows[i].products = products
   }
+  return rows
+}

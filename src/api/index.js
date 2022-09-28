@@ -220,9 +220,9 @@ export async function getAllOrders() {
 	}
 }
 
-export async function getUserOrders(userid) {
+export async function getUserOrders(userId) {
 	try {
-		return await fetch(`${BASE_URL}/order/user/${userid}`, {
+		return await fetch(`${BASE_URL}/order/user/${userId}`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
