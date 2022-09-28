@@ -4,8 +4,14 @@ import "../style/Login-Register.scss";
 import { logInUser, logIn } from "../api";
 
 const LoginForm = (props) => {
-  const { setLoggedIn, setUserToken, setUserAdmin, setUserId, setGuestId } =
-    props;
+  const {
+    setLoggedIn,
+    setUserToken,
+    setUserAdmin,
+    setUserId,
+    setGuestId,
+    isUserAdmin,
+  } = props;
   const [userNameString, setUserNameString] = useState("");
   const [passwordString, setPasswordString] = useState("");
 
@@ -18,9 +24,11 @@ const LoginForm = (props) => {
         className="form-wrapper"
         onSubmit={async (event) => {
           try {
+            console.log("isUserAdmin LoginForm:>> ", isUserAdmin);
             event.preventDefault();
             const response = await logInUser(userNameString, passwordString);
             const token = response.token;
+
             if (token) {
               logIn(JSON.stringify(token), userNameString);
               setUserToken(token);
@@ -28,8 +36,15 @@ const LoginForm = (props) => {
               setUserAdmin(response.user.isAdmin);
               setUserId(response.user.id);
               setGuestId(0);
-              navigate("/profile");
-            } else {
+      
+                if (response.user.isAdmin || isUserAdmin) {
+                  navigate("/admin");
+                } else {
+                  navigate("/profile");
+                }
+           
+
+            } else {        
               alert("Username or Password is incorrect");
             }
           } catch (error) {
