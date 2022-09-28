@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "../style/App.css";
-import { AdBanner, ItemCard, Header } from "./index";
+import { AdBanner, ItemCard, Header, AdminUsersTable } from "./index";
 import {
   Register,
   AdminPage,
@@ -12,6 +12,9 @@ import {
   WaxMeltsPage,
   UserProfile,
   Cart,
+  AdminProducts,
+  AdminUsers,
+  AdminOrders
 } from "../pages";
 import {
   getAllUsers,
@@ -77,7 +80,15 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Header isUserAdmin={isUserAdmin} isLoggedIn={isLoggedIn} />
+        <Header
+          isUserAdmin={isUserAdmin}
+          isLoggedIn={isLoggedIn}
+          getUserCartItems={getUserCartItems}
+          userId={userId}
+          guestId={guestId}
+          getUserToken={getUserToken}
+          setUserCartItems={setUserCartItems}
+        />
         {/* <AdBanner/> */}
         <Routes>
           <Route
@@ -101,6 +112,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -114,6 +128,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -127,6 +144,9 @@ const App = () => {
                 guestId={guestId}
                 setGuestId={setGuestId}
                 userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
               />
             }
           />
@@ -168,14 +188,69 @@ const App = () => {
             exact
             path="/admin"
             element={
-              isUserAdmin ? (
+              // isUserAdmin ? (
                 <AdminPage
                   isUserAdmin={isUserAdmin}
                   getUserCartItems={getUserCartItems}
                   isLoggedIn={isLoggedIn}
                   setItemAvailable={setItemAvailable}
                 />
-              ) : null
+              // ) : null
+            }
+          />
+
+          <Route
+            exact
+            path="/cart"
+            element={
+              <Cart
+                isLoggedIn={isLoggedIn}
+                getUserCartItems={getUserCartItems}
+                setUserCartItems={setUserCartItems}
+                getUserToken={getUserToken}
+                userId={userId}
+                guestId={guestId}
+                setGuestId={setGuestId}
+              />
+            }
+          ></Route>
+
+          <Route
+            exact
+            path="/admin/products"
+            element={
+              // isUserAdmin ?
+              <AdminProducts
+                products={products}
+                setProducts={setProducts}
+                guestId={guestId}
+                setGuestId={setGuestId}
+                userId={userId}
+                getUserToken={getUserToken}
+                setUserCartItems={setUserCartItems}
+                getUserCartItems={getUserCartItems}
+              />
+              // : null
+            }
+          />
+
+          <Route
+            exact
+            path="/admin/users"
+            element={
+              // isUserAdmin ?
+              <AdminUsers/>
+              // : null
+            }
+          />
+
+          <Route
+            exact
+            path="/admin/orders"
+            element={
+              // isUserAdmin ?
+              <AdminOrders/>
+              // : null
             }
           />
 

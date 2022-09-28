@@ -11,6 +11,7 @@ module.exports = {
   getOrdersByUser
 };
 
+<<<<<<< HEAD
 async function getAllOrders() {
   /* this adapter should fetch a list of users from your db */
   const { rows } = await client.query(`
@@ -18,6 +19,29 @@ async function getAllOrders() {
     `);
   return rows;
 }
+=======
+  async function getAllOrders() {
+    /* this adapter should fetch a list of users from your db */
+    const { rows } = await client.query(`
+      SELECT orders.id, orders."isGuestId", orders."isUserId", users.email 
+      FROM orders
+      LEFT JOIN users
+      ON orders."isUserId"=users.id;
+    `)
+
+    for (let i=0; i<rows.length; i++) {
+      const { rows: products } = await client.query(`
+        SELECT carts.id, carts."productQty", carts."productId", products.name FROM carts
+        LEFT JOIN products
+        ON carts."productId"=products.id
+        WHERE "orderId"=$1;
+      `, [ rows[i].id ])
+
+      rows[i].products = products
+    }
+    return rows
+  }
+>>>>>>> 1a67920c80c28401f9c4990deb1986e5b6decc9d
 
 async function getOrderById({ id }) {
   const {
@@ -55,6 +79,7 @@ async function createOrder({ isUserId = null, isGuestId = null }) {
     [isUserId, isGuestId]
   );
 
+<<<<<<< HEAD
   return order;
 }
 
@@ -62,6 +87,13 @@ async function createOrder({ isUserId = null, isGuestId = null }) {
 async function createOrderFromCart({ isUserId = null, isGuestId = null }) {
   const { rows: cart } = await client.query(
     `
+=======
+  // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
+  async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
+    console.log('createOrderFromCart:', isUserId);
+    console.log('createOrderFromCart:', isGuestId);
+    const { rows: cart } = await client.query(`
+>>>>>>> 1a67920c80c28401f9c4990deb1986e5b6decc9d
     SELECT * FROM carts
     WHERE ("cartUserId"=$1 OR "cartGuestId"=$2)
     AND ("isActive"=true);

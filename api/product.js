@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Product } = require('../db');
+const { Product, User } = require('../db');
 
 // GET /api/product
 router.get('/', async(req, res, next) => {
@@ -42,12 +42,17 @@ router.get('/:productId', async(req, res, next) => {
 // POST /api/product
 router.post('/', async(req, res, next) => {
     try {
-        // if (!req.user) {
-        //     throw new Error(`You must be logged in to perform this action`)
-        // }
+        if (!req.user) {
+            throw new Error(`You must be logged in to perform this action`)
+        }
+
+        // let adminCheck = await User.checkAdmi({ id: req.user.userId })
+        if (!req.user.isAdmin) {
+            throw new Error(`You must be an admin to perform this action`)
+        }
 
         const { name, description, price, qtyAvailable, category } = req.body
-        const newProduct = await Product.createProduct({ name, description, price, qtyAvailable, category});
+        const newProduct = await Product.createProduct({ name: name, description: description, price: price, qtyAvailable: qtyAvailable, category: category});
 
         res.send(newProduct)
     } catch (error) {
@@ -57,7 +62,7 @@ router.post('/', async(req, res, next) => {
 })
 
 // PATCH *UPDATE PRICE OF PRODUCT*
-router.patch('/:routineId', async(req, res, next) => {
+router.patch('/:productId', async(req, res, next) => {
     try {
             // if (!req.user) {
             //     throw new Error(`You must be logged in to perform this action`)
@@ -66,7 +71,7 @@ router.patch('/:routineId', async(req, res, next) => {
             const { name, description, price, qtyAvailable, category } = req.body;
             const { productId } = req.params;
             
-            const updatedProduct = await Product.updateProduct({ id: productId, name, description, price, qtyAvailable, category})
+            const updatedProduct = await Product.updateProduct({ id: productId, name: name, description: description, price: price, qtyAvailable: qtyAvailable, category: category})
 
             res.send(updatedProduct)
     } catch (error) {

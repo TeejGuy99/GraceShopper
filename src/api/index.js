@@ -122,14 +122,14 @@ export async function getSingleProduct({ productID }) {
 	}
 }
 
-export async function createNewProduct({
+export async function createNewProduct(
 	token,
 	name,
 	description,
 	price,
 	quantity,
 	category,
-}) {
+) {
 	try {
 		return fetch(`${BASE_URL}/product`, {
 			method: "POST",
@@ -141,7 +141,7 @@ export async function createNewProduct({
 				name: name,
 				description: description,
 				price: price,
-				quantity: quantity,
+				qtyAvailable: quantity,
 				category: category,
 			}),
 		})
@@ -154,7 +154,7 @@ export async function createNewProduct({
 	}
 }
 
-export async function deleteProduct({ token, productID }) {
+export async function deleteProduct( token, productID ) {
 	try {
 		return fetch(`${BASE_URL}/product/${productID}`, {
 			method: "DELETE",
@@ -267,6 +267,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		} else {
@@ -279,6 +284,11 @@ export async function getUserCart({token, userID, guestID}) {
 			})
 				.then((response) => response.json())
 				.then((result) => {
+					let total = 0;
+					for (let i=0; i<result.length; i++) {
+						total += result[i].productQty
+					}
+					result.total = total
 					return result;
 				});
 		}
@@ -321,12 +331,11 @@ export async function getAllGuests() {
 	}
 }
 
-export async function getGuest({ token, guestID }) {
+export async function getGuest( guestID ) {
 	try {
 		return await fetch(`${BASE_URL}/guest/${guestID}`, {
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json"
 			},
 		})
 			.then((response) => response.json())
@@ -341,6 +350,26 @@ export async function getGuest({ token, guestID }) {
 export async function makeUserAdmin( userID ) {
 	try {
 		return fetch(`${BASE_URL}/user/makeAdmin/${userID}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userID: userID
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function removeUserAdmin( userID ) {
+	try {
+		return fetch(`${BASE_URL}/user/removeAdmin/${userID}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -411,5 +440,130 @@ export async function getCandles() {
 			});
 	} catch (error) {
 		console.error(error);
+	}
+}
+
+export async function getCategory(category) {
+	try {
+		return fetch(`${BASE_URL}/product/?category=${category}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function updateCart(cartId, productQty) {
+	try {
+		return fetch(`${BASE_URL}/cart/${cartId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				productQty: productQty
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export async function createOrder(userId, guestId) {
+	try {
+		return fetch(`${BASE_URL}/order`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				isUserId: userId,
+				isGuestId: guestId
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export async function adminEditProduct(productId, productName, productDescription, productPrice, productQtyAvailable, productCategory) {
+	try {
+		return fetch(`${BASE_URL}/product/${productId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: productName,
+				description: productDescription,
+				price: productPrice,
+				qtyAvailable: productQtyAvailable,
+				category: productCategory
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export async function adminEditProductPhoto(photoId, photoDescription, photoLink, productId) {
+	try {
+		return fetch(`${BASE_URL}/photo/${photoId}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				description: photoDescription,
+				link: photoLink,
+				productId: productId,
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export async function adminCreatePhoto(photoDescription, photoLink, productId) {
+	try {
+		return fetch(`${BASE_URL}/photo`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				description: photoDescription,
+				link: photoLink,
+				productId: productId,
+			}),
+		})
+			.then((response) => response.json())
+			.then((result) => {
+				return result;
+			});
+	} catch (error) {
+		console.error(error)
 	}
 }

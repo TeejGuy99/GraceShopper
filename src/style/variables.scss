@@ -27,6 +27,8 @@ $header-height: 72px;
 
 // Breakpoints
 $sm: 37.5em;
+$mdd: 40em;
+$mddd: 58em;
 $md: 48em;
 $lg: 64em;
 $xl: 75em;
@@ -40,6 +42,12 @@ $xl: 75em;
 
   @if $point == sm {
     @media (max-width: $sm) {
+      @content;
+    }
+  }
+
+  @if $point == mddd {
+    @media (max-width: $mddd) {
       @content;
     }
   }

@@ -72,21 +72,20 @@ router.post('/', async(req, res, next) => {
 router.patch('/:cartId', async(req, res, next) => {
     try {
         const { cartId } = req.params;
-        const cartCheck = Cart.getCartItemById({ id: cartId });
+        // const cartCheck = Cart.getCartItemById({ id: cartId });
+        // console.log(cartCheck.cartGuestId);
 
-        const { userId } = req.user.userId
-        const { guestId } = localStorage.getItem('guestId')
+        const { productQty } = req.body
 
-        if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
-            throw new Error(`You are not allowed to edit this cart`)            
-        }
+        // if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
+        //     throw new Error(`You are not allowed to edit this cart`)            
+        // }
 
-        const { productQty } = req.body;
         if (productQty <= 0) {
             throw new Error(`Item quantity must be greater than zero`)
         }
 
-        const updatedCartItem = await Cart.updateCartItem({ id: cartId, productQty})
+        const updatedCartItem = await Cart.updateCartItem({ id: cartId, productQty: productQty})
 
         res.send(updatedCartItem)
     } catch (error) {

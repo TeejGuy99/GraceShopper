@@ -56,11 +56,11 @@ async function getAllCarts() {
 async function getCartByUserId({ cartUserId = null, cartGuestId = null }) {
   const { rows } = await client.query(
     `
-      SELECT carts.id AS "cartId", carts."productId", carts."productPrice", carts."productQty", products.name AS "productName"
+      SELECT carts.id AS "cartId", carts."productId", carts."productPrice", carts."productQty", carts."isActive", products.name AS "productName"
       FROM carts
       JOIN products ON carts."productId"=products.id
-      WHERE "cartUserId"=$1
-      OR "cartGuestId"=$2
+      WHERE ("cartUserId"=$1 AND carts."isActive" = true)
+      OR ("cartGuestId"=$2 AND carts."isActive" = true);
     `, [ cartUserId, cartGuestId ])
 
     for (i=0; i < rows.length; i++) {
@@ -94,13 +94,15 @@ async function getCartByUserId({ cartUserId = null, cartGuestId = null }) {
     if (setString.length === 0) {
       return;
     }
-  
+    console.log('updateCartItem:', setString);
     const { rows: [ cartItem ] } = await client.query(`
       UPDATE carts
       SET ${ setString }
       WHERE id=${id}
       RETURNING *;
     `, Object.values(fields))
+    console.log('updateCartItem fields:', fields)
+    console.log('updateCartItem return:', cartItem)
   
     return cartItem
   }
