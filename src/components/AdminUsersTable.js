@@ -17,7 +17,7 @@ const AdminUsersTable = () => {
   }, []);
 
   return (
-    <>
+    <div className="users-wrapper">
       <div className="user-table-container">
         {users
           .sort(function (a, b) {
@@ -67,7 +67,7 @@ const AdminUsersTable = () => {
             );
           })}
       </div>
-    </>
+    </div>
   );
 };
 
