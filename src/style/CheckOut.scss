@@ -1,5 +1,9 @@
 @import "src/style/variables.scss";
 
+// .Products {
+//   gap:2rem;
+// }
+
 .product-items {
   // margin-bottom: 2rem;
   display: flex;
@@ -99,6 +103,7 @@
   justify-content: center;
   flex-direction: column;
   font-family: $jost-font;
+  margin-top: 3rem;
 
   .thank-title {
     font-size: 5rem;
