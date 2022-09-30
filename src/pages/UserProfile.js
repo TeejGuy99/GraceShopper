@@ -25,8 +25,6 @@ function UserProfile(props) {
     handleRoutines()
   }, [])
   
-console.log(user);
-console.log(orders);
 
   return (
     <div className="userProfile" style={{display: 'flex', flexDirection: 'column', position: 'fixed', top: '20%', right: '0%'}}>

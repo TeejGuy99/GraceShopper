@@ -11,7 +11,6 @@ function Login(props) {
     isUserAdmin,
   } = props;
 
-  console.log('isUserAdmin :>> ', isUserAdmin);
   return (
     <>
       <LoginForm

@@ -22,7 +22,6 @@ function RegisterForm(props) {
         try {
           event.preventDefault()
            const response = await registerUser(userNameString, passwordString)
-           console.log(response)
           if (response.error) {
               alert('Username already exists')
           } else {

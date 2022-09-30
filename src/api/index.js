@@ -1,13 +1,10 @@
 export const BASE_URL = "http://localhost:4000/api";
 
-// LogIn helper function by setting localStorage token
 export const logIn = (token, username) => {
-    // setToken(true)
     localStorage.setItem('token', token)
     localStorage.setItem('username', username)
 }
 
-// LogOut helper function by clearing localStorage token
 export const logOut = () => {
     localStorage.setItem('token', null)
     localStorage.setItem('username', null)

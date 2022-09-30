@@ -39,45 +39,6 @@ const App = () => {
   const [guestId, setGuestId] = useState(0);
   const [userId, setUserId] = useState(null);
 
-  console.log('isUserAdmin :>> ', isUserAdmin);
-
-  //Helper Functions
-
-  //Reset all user state on logout
-  // const resetUserStates = () => {
-  //   setUserToken(localStorage.clear());
-  //   setLoggedIn(false);
-  //   setUserCartItems([]);
-  // }
-
-  const runTests = () => {
-    console.log("users: ");
-    console.log(getAllUsers());
-    console.log("guests: ");
-    console.log(getAllGuests());
-    console.log("carts: ");
-    console.log(getAllCarts());
-    console.log("products: ");
-    console.log(getAllProducts());
-    // console.log("reviews: ");
-    // console.log(getReviews());
-    console.log("photos: ");
-    console.log(getAllProductPhotos());
-    console.log("orders");
-    console.log(getAllOrders());
-    console.log("attempting to sign in as tim@seed.com: ");
-    console.log(logInUser("tim@seed.com", "tim01"));
-    console.log(
-      "attempting to create a new user TeejGuy with password of password: "
-    );
-    console.log(registerUser("TeejGuy", "password"));
-    console.log("attempting to make TeejGuy an admin: ");
-    console.log(makeUserAdmin(6));
-  };
-
-  useEffect(() => {
-    // runTests();
-  }, []);
 
   return (
     <Router>
@@ -253,21 +214,6 @@ const App = () => {
             element={isUserAdmin ? <AdminOrders /> : null}
           />
 
-          <Route
-            exact
-            path="/cart"
-            element={
-              <Cart
-                isLoggedIn={isLoggedIn}
-                getUserCartItems={getUserCartItems}
-                setUserCartItems={setUserCartItems}
-                getUserToken={getUserToken}
-                userId={userId}
-                guestId={guestId}
-                setGuestId={setGuestId}
-              />
-            }
-          ></Route>
         </Routes>
       </div>
     </Router>

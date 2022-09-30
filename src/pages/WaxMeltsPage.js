@@ -6,7 +6,6 @@ import "../style/Products.scss";
 const WaxMeltsPage = (props) => {
     const { products, setProducts, guestId, setGuestId, userId, getUserToken, setUserCartItems, getUserCartItems } = props;
     const handleRoutines = () =>{
-        // getWaxMelts()
         getCategory('Wax Melt')
         .then(results => {
             setProducts(results)                
@@ -25,7 +24,6 @@ const WaxMeltsPage = (props) => {
       {products.sort(function(a, b) {
         var keyA = (a.id),
           keyB = (b.id);
-        // Compare the 2 dates
         if (keyA < keyB) return -1;
         if (keyA > keyB) return 1;
         return 0;
@@ -47,7 +45,6 @@ const WaxMeltsPage = (props) => {
               <p className="slogan">{product.description}</p>
             </div>
 
-            {/* <p>Quantity Available: {product.qtyAvailable}</p> */}
             <button
               className="addCart-btn"
               onClick={async (event) => {

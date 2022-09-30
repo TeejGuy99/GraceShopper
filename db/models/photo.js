@@ -10,7 +10,6 @@ module.exports = {
   };
 
   async function getAllPhotos() {
-    /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
       SELECT * FROM photos;
     `)

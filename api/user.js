@@ -90,15 +90,7 @@ router.get('/', async(req, res, next) => {
 // GET /api/user/:userId
 router.get('/:userId', async(req, res, next) => {
     try {
-        // if (!req.user) {
-        //     throw new Error(`You must be logged in to perform this action`)
-        // }
-
         const { userId } = req.params;
-
-        // if (req.user.userId != userId) {
-        //     throw new Error(`You cannot view another user's information`)
-        // }
 
         let user = await User.getUserById({ id: userId })
 
@@ -113,15 +105,7 @@ router.get('/:userId', async(req, res, next) => {
 // PATCH /api/user/:userId
 router.patch('/:userId', async(req, res, next) => {
     try {
-        // if (!req.user) {
-        //     throw new Error(`You must be logged in to perform this action`)
-        // }
-
         const { userId } = req.params;
-
-        // if (req.user.userId != userId) {
-        //     throw new Error(`You cannot edit another user's information`)
-        // }
 
         const { email, password } = req.body;    
 
@@ -142,11 +126,6 @@ router.patch('/makeAdmin/:userId', async(req, res, next) => {
     try {
         const { userId } = req.params;
 
-        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
-        // if (!adminCheck) {
-        //     throw new Error(`You must be an admin to perform this action`)
-        // }
-
         let selectedUser = await User.getUserById({ id: userId });
         let selectedUserEmail = selectedUser.email;
 
@@ -164,11 +143,6 @@ router.patch('/makeAdmin/:userId', async(req, res, next) => {
 router.patch('/removeAdmin/:userId', async(req, res, next) => {
     try {
         const { userId } = req.params;
-
-        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
-        // if (!adminCheck) {
-        //     throw new Error(`You must be an admin to perform this action`)
-        // }
 
         let selectedUser = await User.getUserById({ id: userId });
         let selectedUserEmail = selectedUser.email;
