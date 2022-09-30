@@ -25,16 +25,11 @@ const AllProductsPage = (props) => {
     handleRoutines();
   }, [getUserCartItems.length]);
 
-  console.log('Products:', products)
-  console.log("Cart:", getUserCartItems)
-  console.log('User ID:', userId);
-  console.log('Guest ID:', guestId);
   return (
     <div className="Products">
       {products.sort(function(a, b) {
         var keyA = (a.id),
           keyB = (b.id);
-        // Compare the 2 dates
         if (keyA < keyB) return -1;
         if (keyA > keyB) return 1;
         return 0;
@@ -68,7 +63,6 @@ const AllProductsPage = (props) => {
                   } else {
                     const newCartItem = await addToCart(product.id, 1, userId, guestId);
                   }
-                  // handleRoutines();
                   refreshCart();
                 }}
               >

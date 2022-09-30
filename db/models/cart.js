@@ -16,7 +16,6 @@ module.exports = {
 
 
 async function getAllCarts() {
-  /* this adapter should fetch a list of users from your db */
   const { rows } = await client.query(`
       SELECT * FROM carts;
     `);
@@ -94,15 +93,12 @@ async function getCartByUserId({ cartUserId = null, cartGuestId = null }) {
     if (setString.length === 0) {
       return;
     }
-    console.log('updateCartItem:', setString);
     const { rows: [ cartItem ] } = await client.query(`
       UPDATE carts
       SET ${ setString }
       WHERE id=${id}
       RETURNING *;
     `, Object.values(fields))
-    console.log('updateCartItem fields:', fields)
-    console.log('updateCartItem return:', cartItem)
   
     return cartItem
   }

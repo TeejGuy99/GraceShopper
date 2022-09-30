@@ -49,16 +49,13 @@ router.post('/', async(req, res, next) => {
         const { productId, productQty, cartUserId, cartGuestId } = req.body
 
         if (cartUserId) {
-            console.log('There is a user here also')
             const createdCart = await Cart.addToCart({ productId, productQty, cartUserId, cartGuestId: null })
             res.send(createdCart)
         } else if (cartGuestId === 0) {
-            console.log("had to make a new guest")
             const newGuest = await Guest.createGuest({ isActive: true })
             const createdCart = await Cart.addToCart({ productId, productQty, cartUserId: null, cartGuestId: newGuest.guestId })
             res.send(createdCart)
         } else {
-            console.log("Reused a guest")
             const createdCart = await Cart.addToCart({ productId, productQty, cartUserId: null, cartGuestId })
             res.send(createdCart)
             }
@@ -72,14 +69,8 @@ router.post('/', async(req, res, next) => {
 router.patch('/:cartId', async(req, res, next) => {
     try {
         const { cartId } = req.params;
-        // const cartCheck = Cart.getCartItemById({ id: cartId });
-        // console.log(cartCheck.cartGuestId);
 
         const { productQty } = req.body
-
-        // if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
-        //     throw new Error(`You are not allowed to edit this cart`)            
-        // }
 
         if (productQty <= 0) {
             throw new Error(`Item quantity must be greater than zero`)
@@ -95,17 +86,9 @@ router.patch('/:cartId', async(req, res, next) => {
 })
 
 // DELETE /api/cart/:cartId *REMOVE FROM USER CART FOR GUESTS OR REGISTERED USERS 
-// (NEED A WAY TO PROTECT GUEST CARTS - Maybe assign a localStorage item with the guest id?)*
 router.delete('/:cartId', async(req, res, next) => {
     try {
         const { cartId } = req.params
-        // const cartCheck = Cart.getCartItemById({ id: cartId });
-
-        // const { userId } = req.user.userId
-
-        // if (cartCheck.cartUserId != userId || cartCheck.cartGuestId != guestId) {
-        //     throw new Error(`You are not allowed to edit this cart`)            
-        // }
         
         const deletedCartItem = await Cart.deleteCartItem({ id: cartId })
 

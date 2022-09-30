@@ -5,7 +5,6 @@ const { Product, User } = require('../db');
 // GET /api/product
 router.get('/', async(req, res, next) => {
     try {
-        // Checks if there is a category query (e.g., http://localhost:4000/api/product/?category=Candle)
         let category = req.query.category;
         if (category) {
             let products = await Product.getProductsByCategory({ category: category })
@@ -46,7 +45,6 @@ router.post('/', async(req, res, next) => {
             throw new Error(`You must be logged in to perform this action`)
         }
 
-        // let adminCheck = await User.checkAdmi({ id: req.user.userId })
         if (!req.user.isAdmin) {
             throw new Error(`You must be an admin to perform this action`)
         }
@@ -64,10 +62,6 @@ router.post('/', async(req, res, next) => {
 // PATCH *UPDATE PRICE OF PRODUCT*
 router.patch('/:productId', async(req, res, next) => {
     try {
-            // if (!req.user) {
-            //     throw new Error(`You must be logged in to perform this action`)
-            // }
-
             const { name, description, price, qtyAvailable, category } = req.body;
             const { productId } = req.params;
             
@@ -83,10 +77,6 @@ router.patch('/:productId', async(req, res, next) => {
 // DELETE /api/product/:productId
 router.delete('/:productId', async(req, res, next) => {
     try {
-        // if (!req.user) {
-        //     throw new Error(`You must be logged in to perform this action`)
-        // }
-
         const { productId } = req.params
         const deletedProduct = await Product.deleteProduct({ id: productId })
 

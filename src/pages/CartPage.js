@@ -48,7 +48,6 @@ const CartPage = (props) => {
   useEffect(() => {
     handleRoutines();
   }, []);
-  console.log("getUserCartItems:", getUserCartItems);
   let total = 0;
   for (let i = 0; i < getUserCartItems.length; i++) {
     total += getUserCartItems[i].productPrice * getUserCartItems[i].productQty;
@@ -62,7 +61,6 @@ const CartPage = (props) => {
             .sort(function (a, b) {
               var keyA = a.cartId,
                 keyB = b.cartId;
-              // Compare the 2 dates
               if (keyA < keyB) return -1;
               if (keyA > keyB) return 1;
               return 0;
@@ -81,7 +79,6 @@ const CartPage = (props) => {
                   </div>
                   <p className="quantity-box">QUANTITY</p>
                   <div className="item-quantity">
-                    {/*This is where the update productQty needs to go*/}
                     <button
                       className="minus"
                       onClick={async (event) => {
@@ -140,7 +137,6 @@ const CartPage = (props) => {
             <div className="checkout-btn">
               <h1>SUBTOTAL: {total}</h1>
               <button
-                // style={{color: "white", backgroundColor: "black", height: "30px", hover:"color: black, backgroundColor: white"}}
                 className="checkout-now"
                 onClick={async (event) => {
                   event.preventDefault();
@@ -153,10 +149,8 @@ const CartPage = (props) => {
                     createdOrder = await createOrder(userId, guestId);
                     handleRoutines();
                     setCheckedOut(true);
-                    console.log(createdOrder);
                     setOrderId(createdOrder.id);
                   }
-                  // navigate('/')
                 }}
               >
                 <BsFillCartFill size={30} />

@@ -24,7 +24,6 @@ const LoginForm = (props) => {
         className="form-wrapper"
         onSubmit={async (event) => {
           try {
-            console.log("isUserAdmin LoginForm:>> ", isUserAdmin);
             event.preventDefault();
             const response = await logInUser(userNameString, passwordString);
             const token = response.token;

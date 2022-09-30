@@ -17,11 +17,6 @@ router.get('/', async(req, res, next) => {
 // POST /api/photo
 router.post('/', async(req, res, next) => {
     try {
-        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
-        // if (!adminCheck) {
-        //     throw new Error(`You must be an admin to perform this action`)
-        // }
-
         const { description, link, productId } = req.body;
         const newPhoto = await Photo.createPhoto({ description, link, productId });
 
@@ -35,11 +30,6 @@ router.post('/', async(req, res, next) => {
 // PATCH /api/photo/:photoId
 router.patch('/:photoId', async(req, res, next) => {
     try {
-        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
-        // if (!adminCheck) {
-        //     throw new Error(`You must be an admin to perform this action`)
-        // }
-
         const { photoId } = req.params;
 
         const { description, link, productId } = req.body;
@@ -54,11 +44,6 @@ router.patch('/:photoId', async(req, res, next) => {
 // DELETE /api/photo/:photoId
 router.delete('/:photoId', async(req, res, next) => {
     try {
-        // let adminCheck = await User.checkAdmin({ id: req.user.userId })
-        // if (!adminCheck) {
-        //     throw new Error(`You must be an admin to perform this action`)
-        // }
-
         const { photoId } = req.params;
         const deletedPhoto = await Photo.deletedPhoto({ id: photoId });
 

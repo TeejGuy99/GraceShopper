@@ -14,7 +14,6 @@ module.exports = {
   };
 
   async function getAllProducts() {
-    /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
       SELECT * FROM products;
     `)
@@ -54,8 +53,6 @@ module.exports = {
   }
 
   async function getProductsByCategory({ category }) {
-    // const photos = await getPhotosByProductId({ productId: id })
-
     const { rows } = await client.query(`
       SELECT * FROM products
       WHERE category=$1;
@@ -69,7 +66,6 @@ module.exports = {
   }
 
   async function deleteProduct({ id }) {
-    //carts, photos, reviews
     await client.query(`
       DELETE FROM reviews
       WHERE "productId"=$1

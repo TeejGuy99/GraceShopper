@@ -7,9 +7,6 @@ import "../style/AdminPage.scss";
 import { AdminNav } from "../components";
 
 const AdminPage = () => {
-  // The `path` lets us build <Route> paths that are
-  // relative to the parent route, while the `url` lets
-  // us build relative links.
 
   return (
     <div className="dashboard-container">

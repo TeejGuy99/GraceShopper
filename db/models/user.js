@@ -15,7 +15,6 @@ module.exports = {
 };
 
 async function getAllUsers() {
-  /* this adapter should fetch a list of users from your db */
   const { rows } = await client.query(`
     SELECT id, email, "isAdmin" FROM users;
   `)

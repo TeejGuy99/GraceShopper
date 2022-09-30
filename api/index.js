@@ -14,11 +14,6 @@ apiRouter.use(async (req, res, next) => {
     const auth = req.header('Authorization');
 
     if (!auth) {
-      // try {
-      //   req.user = await Guest.createGuest({ isActive: true })
-      // } catch ({ name, message }) {
-      //     next({ name, message });
-      // }
         next();
     } else if (auth.startsWith(prefix)) {
         const token = auth.slice(prefix.length);
@@ -41,20 +36,6 @@ apiRouter.use(async (req, res, next) => {
     }
 });
 
-apiRouter.use((req, res, next) => {
-  if (req.user) {
-    console.log("User is set:", req.user);
-  }
-
-  next();
-});
-
-apiRouter.use((req, res, next) => {
-  console.log("<__Body Logger START__>");
-  console.log(req.body);
-  console.log("<__Body Logger END__>");
-  next();
-});
 
 apiRouter.get('/', (req, res, next) => {
   res.send({

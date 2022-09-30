@@ -12,7 +12,6 @@ module.exports = {
 };
 
   async function getAllOrders() {
-    /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
       SELECT orders.id, orders."isGuestId", orders."isUserId", users.email 
       FROM orders
@@ -71,10 +70,7 @@ async function createOrder({ isUserId = null, isGuestId = null }) {
   return order
 }
 
-  // FIX THIS TO UPDATE THE REMAINING QTY AVAILABLE
   async function createOrderFromCart({ isUserId=null, isGuestId=null }) {
-    console.log('createOrderFromCart:', isUserId);
-    console.log('createOrderFromCart:', isGuestId);
     const { rows: cart } = await client.query(`
     SELECT * FROM carts
     WHERE ("cartUserId"=$1 OR "cartGuestId"=$2)
@@ -115,8 +111,6 @@ async function createOrder({ isUserId = null, isGuestId = null }) {
     [isUserId, isGuestId]
   );
 
-  // This should adjust the total inventory when an order is placed
-  // (Remove the order qty from total inventory by looping through each item in the cart)
   for (i = 0; i < cart.length; i++) {
     let productToEdit = cart[i].productId;
 

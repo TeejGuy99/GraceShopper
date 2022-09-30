@@ -10,7 +10,6 @@ module.exports = {
   };
 
   async function getAllGuests() {
-    /* this adapter should fetch a list of users from your db */
     const { rows } = await client.query(`
       SELECT * FROM guests;
     `)

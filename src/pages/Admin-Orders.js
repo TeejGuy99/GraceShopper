@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AdminNav } from "../components";
 import { getAllOrders, getUserInfo, getGuest } from "../api";
+import { BsChatRight } from "react-icons/bs";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -16,11 +17,8 @@ const AdminOrders = () => {
     handleRoutines();
   }, []);
 
-  console.log(orders);
   return (
-    <div
-    // style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <div>
       <div className="dashboard-container">
         <AdminNav />
       </div>
@@ -29,6 +27,7 @@ const AdminOrders = () => {
           display: "flex",
           width: "80vw",
           justifyContent: "space-between",
+          margin: 'auto',
         }}
       >
         <h4 style={{ width: "10vw", textAlign: "center" }}>ORDER ID</h4>
@@ -55,7 +54,7 @@ const AdminOrders = () => {
                   display: "flex",
                   width: "80vw",
                   justifyContent: "space-between",
-                  margin: "20px",
+                  margin: "auto",
                 }}
               >
                 <p style={{ width: "10vw", textAlign: "center" }}>{order.id}</p>
@@ -64,13 +63,13 @@ const AdminOrders = () => {
                 </p>
                 <div
                   className="orderProductMap"
-                  style={{ width: "30vw", textAlign: "center" }}
+                  style={{ width: "30vw", textAlign: "center", display: 'flex', flexDirection: 'column' }}
                 >
-                  {order.products.map((product) => {
+                  {order.products.map((product, index) => {
                     return (
-                      <p style={{ display: "inline" }} key={product.id}>
-                        {product.id < order.products.length + 1
-                          ? `${product.name} (${product.productQty}),`
+                      <p style={{ display: "inline" }} key={index}>
+                        {index < order.products.length - 1
+                          ? `${product.name} (${product.productQty}), `
                           : `${product.name} (${product.productQty})`}
                       </p>
                     );
@@ -86,7 +85,7 @@ const AdminOrders = () => {
                   Placeholder
                 </p>
               </div>
-              <hr style={{ borderTop: "1px solid black" }}></hr>
+              <hr style={{ borderTop: "1px solid black", width: '80vw', margin: '15px auto' }}></hr>
             </div>
           );
         })}

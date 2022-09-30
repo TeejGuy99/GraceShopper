@@ -71,15 +71,11 @@ const AdminProducts = (props) => {
     getAllProducts().then((theProducts) => {
       setProducts(theProducts);
     });
-    // getUserInfo(5).then((result) => {
-    //   setUserInfo(result);
-    // });
   };
 
   useEffect(() => {
     handleRoutines();
   }, []);
-  console.log(userInfo);
   return (
     <div className="admin-products-container">
       <div className="dashboard-container">
@@ -149,7 +145,6 @@ const AdminProducts = (props) => {
               <img
                 src={editProduct.photos[0].link}
                 alt={editProduct.photos[0].description}
-                // style={{ height: "400px" }}
               />
               <form
                 onSubmit={async (event) => {
@@ -187,7 +182,6 @@ const AdminProducts = (props) => {
                     value={productName}
                     onChange={(event) => {
                       setProductName(event.target.value);
-                      console.log(productName);
                     }}
                   />
                 </div>
@@ -326,7 +320,6 @@ const AdminProducts = (props) => {
                     value={newProductName}
                     onChange={(event) => {
                       setNewProductName(event.target.value);
-                      console.log("newProductName:", newProductName);
                     }}
                   />
                 </div>
