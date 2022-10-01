@@ -34,10 +34,10 @@ const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(getUserToken ? true : false);
   const [getUserCartItems, setUserCartItems] = useState([]);
   const [isItemAvailable, setItemAvailable] = useState(true);
-  const [isUserAdmin, setUserAdmin] = useState(false);
   const [products, setProducts] = useState([]);
   const [guestId, setGuestId] = useState(0);
   const [userId, setUserId] = useState(getUserToken ? localStorage.getItem("userid") : null);
+  const [isUserAdmin, setUserAdmin] = useState(userId != 1 ? false : true);
 
   return (
     <Router>
