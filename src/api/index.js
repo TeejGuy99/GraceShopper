@@ -8,6 +8,7 @@ export const logIn = (token, username) => {
 export const logOut = () => {
     localStorage.setItem('token', null)
     localStorage.setItem('username', null)
+	localStorage.setItem('userid', null)
 }
 
 
