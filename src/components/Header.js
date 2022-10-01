@@ -3,20 +3,33 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { BsPersonFill, BsFillCartFill, BsBoxArrowLeft } from "react-icons/bs";
 import { FaBars, FaWindowClose } from "react-icons/fa";
 import styles from "../style/Header.scss";
-import { getUserCart, logOut } from "../api"
+import { getUserCart, logOut } from "../api";
 
 function Header(props) {
-  const { isUserAdmin, isLoggedIn, getUserCartItems, userId, guestId, getUserToken, setUserCartItems, setUserToken, setLoggedIn, setUserAdmin, setUserId } = props;
+  const {
+    isUserAdmin,
+    isLoggedIn,
+    getUserCartItems,
+    userId,
+    guestId,
+    getUserToken,
+    setUserCartItems,
+    setUserToken,
+    setLoggedIn,
+    setUserAdmin,
+    setUserId,
+  } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggler = () => setMenuOpen((p) => !p);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const handleRoutines = () => {
-    getUserCart({token: getUserToken, userID: userId, guestID: guestId }).then((results) => {
+    getUserCart({ token: getUserToken, userID: userId, guestID: guestId }).then(
+      (results) => {
         setUserCartItems(results);
-    });
+      }
+    );
   };
- 
 
   useEffect(() => {
     handleRoutines();
@@ -81,16 +94,18 @@ function Header(props) {
               <div className="user-icon">
                 {isLoggedIn ? (
                   <>
-                    <button onClick={async (event) => {
-                      event.preventDefault();
-                      logOut();
-                      setUserToken("");
-                      setLoggedIn(false);
-                      setUserAdmin(false);
-                      setUserId(null);
-                      navigate("/login")
-                    }}>
-                    <BsBoxArrowLeft size={25} />
+                    <button
+                      onClick={async (event) => {
+                        event.preventDefault();
+                        logOut();
+                        setUserToken("");
+                        setLoggedIn(false);
+                        setUserAdmin(false);
+                        setUserId(null);
+                        navigate("/login");
+                      }}
+                    >
+                      <BsBoxArrowLeft size={25} />
                     </button>
                     <NavLink to="/profile">
                       <BsPersonFill size={25} />
@@ -113,19 +128,20 @@ function Header(props) {
                   }
                 >
                   <BsFillCartFill size={25} />
-                  {getUserCartItems.length>0 ? 
-                  (<i style={{ 
-                    fontSize: '10px',
-                    color: 'white',
-                    margin: '0px -5px',
-                    padding: '0px 5px',
-                    backgroundColor: 'red',
-                    borderRadius: '50%' }}>
+                  {getUserCartItems.length > 0 ? (
+                    <i
+                      style={{
+                        fontSize: "10px",
+                        color: "white",
+                        margin: "0px -5px",
+                        padding: "0px 5px",
+                        backgroundColor: "red",
+                        borderRadius: "50%",
+                      }}
+                    >
                       {getUserCartItems.length}
-                  </i>)
-                  : null
-                }
-
+                    </i>
+                  ) : null}
                 </NavLink>
               </div>
             </div>
@@ -136,16 +152,18 @@ function Header(props) {
             <div className="user-icons">
               {isLoggedIn ? (
                 <>
-                  <button onClick={async (event) => {
-                    event.preventDefault();
-                    logOut();
-                    setUserToken("");
-                    setLoggedIn(false);
-                    setUserAdmin(false);
-                    setUserId(null);
-                    navigate("/login")
-                  }}>
-                  <BsBoxArrowLeft size={25} />
+                  <button
+                    onClick={async (event) => {
+                      event.preventDefault();
+                      logOut();
+                      setUserToken("");
+                      setLoggedIn(false);
+                      setUserAdmin(false);
+                      setUserId(null);
+                      navigate("/login");
+                    }}
+                  >
+                    <BsBoxArrowLeft size={25} />
                   </button>
                   <NavLink to="/profile">
                     <BsPersonFill size={25} />
@@ -166,21 +184,23 @@ function Header(props) {
                 className={({ isActive }) =>
                   isActive ? activeClassName : undefined
                 }
-                style={{textDecoration: 'none'}}
+                style={{ textDecoration: "none" }}
               >
                 <BsFillCartFill size={25} />
-                {getUserCartItems.length>0 ? 
-                  (<i style={{ 
-                    fontSize: '10px',
-                    color: 'white',
-                    margin: '0px -5px',
-                    padding: '0px 5px',
-                    backgroundColor: 'red',
-                    borderRadius: '50%' }}>
-                      {getUserCartItems.total}
-                  </i>)
-                  : null
-                }
+                {getUserCartItems.length > 0 ? (
+                  <i
+                    style={{
+                      fontSize: "10px",
+                      color: "white",
+                      margin: "0px -5px",
+                      padding: "0px 5px",
+                      backgroundColor: "red",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    {getUserCartItems.total}
+                  </i>
+                ) : null}
               </NavLink>
             </div>
           </div>

@@ -281,7 +281,7 @@ async function populateInitialData() {
 
     //TRY ADDING CART TO ORDER*********************************************************************
     const userId5Cart = await User.getUserById({ id: 5 });
-   
+
     const userId5NewCart = await Cart.addToCart({
       productId: 2,
       productQty: 3,
