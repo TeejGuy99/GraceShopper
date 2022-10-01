@@ -34,6 +34,7 @@ const LoginForm = (props) => {
               setLoggedIn(true);
               setUserAdmin(response.user.isAdmin);
               setUserId(response.user.id);
+              localStorage.setItem('userid', response.user.id)
               setGuestId(0);
       
                 if (response.user.isAdmin || isUserAdmin) {

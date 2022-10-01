@@ -30,15 +30,14 @@ import {
 
 const App = () => {
   //UseState for various properties
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [getUserToken, setUserToken] = useState("");
+  const [getUserToken, setUserToken] = useState(localStorage.getItem('token'));
+  const [isLoggedIn, setLoggedIn] = useState(getUserToken ? true : false);
   const [getUserCartItems, setUserCartItems] = useState([]);
   const [isItemAvailable, setItemAvailable] = useState(true);
   const [isUserAdmin, setUserAdmin] = useState(false);
   const [products, setProducts] = useState([]);
   const [guestId, setGuestId] = useState(0);
-  const [userId, setUserId] = useState(null);
-
+  const [userId, setUserId] = useState(getUserToken ? localStorage.getItem("userid") : null);
 
   return (
     <Router>
