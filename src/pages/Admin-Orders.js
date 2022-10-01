@@ -28,14 +28,12 @@ const AdminOrders = () => {
           width: "80vw",
           justifyContent: "space-between",
           margin: 'auto',
+          flexWrap: 'wrap'
         }}
       >
-        <h4 style={{ width: "10vw", textAlign: "center" }}>ORDER ID</h4>
-        <h4 style={{ width: "20vw", textAlign: "center" }}>CUSTOMER</h4>
-        <h4 style={{ width: "30vw", textAlign: "center" }}>ORDER</h4>
-        <h4 style={{ width: "10vw", textAlign: "center" }}>DELIVERY DATE</h4>
-        <h4 style={{ width: "15vw", textAlign: "center" }}>DELIVERY STATUS</h4>
-        <h4 style={{ width: "10vw", textAlign: "center" }}>PAYMENT TYPE</h4>
+        <h4 style={{ width: "10vw", textAlign: "center", minWidth: 'min-content'}}>ORDER ID</h4>
+        <h4 style={{ width: "20vw", textAlign: "center", minWidth: "min-content" }}>CUSTOMER</h4>
+        <h4 style={{ width: "30vw", textAlign: "center", minWidth: 'min-content' }}>ORDER</h4>
       </div>
       {orders
         .sort(function (a, b) {
@@ -55,15 +53,16 @@ const AdminOrders = () => {
                   width: "80vw",
                   justifyContent: "space-between",
                   margin: "auto",
+                  flexWrap: 'wrap'
                 }}
               >
-                <p style={{ width: "10vw", textAlign: "center" }}>{order.id}</p>
-                <p style={{ width: "20vw", textAlign: "center" }}>
+                <p style={{ width: "10vw", textAlign: "center", minWidth: 'min-content' }}>{order.id}</p>
+                <p style={{ width: "20vw", textAlign: "center", minWidth: 'min-content' }}>
                   {order.isUserId ? order.email : `Guest ${order.isGuestId}`}
                 </p>
                 <div
                   className="orderProductMap"
-                  style={{ width: "30vw", textAlign: "center", display: 'flex', flexDirection: 'column' }}
+                  style={{ width: "30vw", textAlign: "center", display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}
                 >
                   {order.products.map((product, index) => {
                     return (
@@ -75,15 +74,6 @@ const AdminOrders = () => {
                     );
                   })}
                 </div>
-                <p style={{ width: "10vw", textAlign: "center" }}>
-                  Placeholder
-                </p>
-                <p style={{ width: "15vw", textAlign: "center" }}>
-                  Placeholder
-                </p>
-                <p style={{ width: "10vw", textAlign: "center" }}>
-                  Placeholder
-                </p>
               </div>
               <hr style={{ borderTop: "1px solid black", width: '80vw', margin: '15px auto' }}></hr>
             </div>

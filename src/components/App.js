@@ -187,7 +187,7 @@ const App = () => {
             exact
             path="/admin/products"
             element={
-              isUserAdmin ? (
+              // isUserAdmin ? (
                 <AdminProducts
                   products={products}
                   setProducts={setProducts}
@@ -198,20 +198,28 @@ const App = () => {
                   setUserCartItems={setUserCartItems}
                   getUserCartItems={getUserCartItems}
                 />
-              ) : null
+              // ) : null
             }
           />
 
           <Route
             exact
             path="/admin/users"
-            element={isUserAdmin ? <AdminUsers /> : null}
+            element={
+              // isUserAdmin ? 
+              <AdminUsers /> 
+            // : null
+          }
           />
 
           <Route
             exact
             path="/admin/orders"
-            element={isUserAdmin ? <AdminOrders /> : null}
+            element={
+              // isUserAdmin ? 
+              <AdminOrders /> 
+              // : null
+            }
           />
 
         </Routes>

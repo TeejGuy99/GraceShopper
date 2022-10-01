@@ -25,7 +25,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 7rem;
+      gap: 5rem;
 
       @include breakpoint(sm) {
         gap: 0;
@@ -49,11 +49,12 @@
         text-decoration: none;
         border: 2px solid black;
         border-radius: 4px;
-        width: 373px;
+        width: 25vw;
         height: 143px;
         font-size: 40px;
         background-color: #f9f9f9;
         font-weight: bold;
+        min-width: min-content;
 
         // @include breakpoint(sm) {
         //   font-size: 2rem;
@@ -75,6 +76,7 @@
 
         svg {
           margin-right: 1rem;
+          flex-shrink: 0;
         }
       }
     }

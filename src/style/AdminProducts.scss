@@ -4,7 +4,7 @@
   overflow-y: AUTO;
 
   .products-wrapper {
-    height: 100%;
+    height: calc(100% - 400px);
     position: absolute;
     padding-top: 1rem;
     overflow-y: scroll;

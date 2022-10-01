@@ -7,12 +7,12 @@ import { AdminNav } from "../components";
 const AdminUsers = (props) => {
 
   return (
-    <>
+    <div className='admin-users-container'>
     <div className="dashboard-container">
         <AdminNav />
     </div>
     < AdminUsersTable/>
-    </>
+    </div>
   )
 }
 
