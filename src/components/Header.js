@@ -39,7 +39,6 @@ function Header(props) {
     textDecoration: "underline",
   };
 
-  let activeClassName = "underline";
   return (
     <div id="header-container">
       <div className="header__content">
@@ -49,30 +48,33 @@ function Header(props) {
         <div>
           <nav className={`${menuOpen ? `activated` : `close `}`}>
             <NavLink
-              to="/"
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            style={({ isActive }) =>
+              (isActive ? activeStyle : undefined)
+            }
+            to="/" end
             >
               HOME
             </NavLink>
             <NavLink
               to="/candles"
-              className={({ isActive }) =>
-                isActive ? activeClassName : undefined
+              style={({ isActive }) =>
+                (isActive ? activeStyle : undefined)
               }
             >
               CANDLES
             </NavLink>
-            <NavLink to="/wax-melts">
-              {({ isActive }) => (
-                <span className={isActive ? activeClassName : undefined}>
-                  WAX MELTS
-                </span>
-              )}
+            <NavLink 
+              to="/wax-melts" 
+              style={({ isActive }) =>
+                (isActive ? activeStyle : undefined)
+              }
+            >
+              WAX MELTS
             </NavLink>
             <NavLink
               to="/all-products"
-              className={({ isActive }) =>
-                isActive ? activeClassName : undefined
+              style={({ isActive }) =>
+                (isActive ? activeStyle : undefined)
               }
             >
               ALL PRODUCTS
@@ -81,8 +83,8 @@ function Header(props) {
               <>
                 <NavLink
                   to="/admin"
-                  className={({ isActive }) =>
-                    isActive ? activeClassName : undefined
+                  style={({ isActive }) =>
+                    (isActive ? activeStyle : undefined)
                   }
                 >
                   ADMIN
@@ -114,18 +116,12 @@ function Header(props) {
                 ) : (
                   <NavLink
                     to="/login"
-                    className={({ isActive }) =>
-                      isActive ? activeClassName : undefined
-                    }
                   >
                     <BsPersonFill size={25} />
                   </NavLink>
                 )}
                 <NavLink
                   to="/cart"
-                  className={({ isActive }) =>
-                    isActive ? activeClassName : undefined
-                  }
                 >
                   <BsFillCartFill size={25} />
                   {getUserCartItems.length > 0 ? (
@@ -172,19 +168,12 @@ function Header(props) {
               ) : (
                 <NavLink
                   to="/login"
-                  className={({ isActive }) =>
-                    isActive ? activeClassName : undefined
-                  }
                 >
                   <BsPersonFill size={25} />
                 </NavLink>
               )}
               <NavLink
                 to="/cart"
-                className={({ isActive }) =>
-                  isActive ? activeClassName : undefined
-                }
-                style={{ textDecoration: "none" }}
               >
                 <BsFillCartFill size={25} />
                 {getUserCartItems.length > 0 ? (
