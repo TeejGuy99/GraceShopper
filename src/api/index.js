@@ -11,7 +11,6 @@ export const logOut = () => {
 }
 
 
-
 export async function getAllUsers() {
 	try {
 		return await fetch(`${BASE_URL}/user`, {
